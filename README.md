@@ -1,8 +1,6 @@
-# Cat-Clicker
+# Cat-Clicker (Version 0.06)
 
 Code by Jonavinne Steadham
-
-Version 0.06
 
 Contains all custom-made code for my first game, Cat Clicker, made in Unity.
 This repository does NOT contain the data necessary to compile a Unity game. It is only the code I've written for the game.
