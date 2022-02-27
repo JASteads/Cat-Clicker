@@ -1,6 +1,7 @@
 # Cat-Clicker
 
 Code by Jonavinne Steadham
+
 Version 0.06
 
 Contains all custom-made code for my first game, Cat Clicker, made in Unity.
