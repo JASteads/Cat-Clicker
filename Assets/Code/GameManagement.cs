@@ -26,6 +26,15 @@ public class GameManagement : MonoBehaviour
         
         fileManager = new FileManagement();
         profile = new Profile();
+        
+        string savesDirectory = $"{System.IO.Directory.GetCurrentDirectory()}/Saves";
+
+        // If there are no saves, create a new save directory. This can be used to signify first time loading the game
+        if (!System.IO.Directory.Exists(savesDirectory))
+        {
+            Debug.Log("Saves directory doesn't exist! Creating new one ..");
+            System.IO.Directory.CreateDirectory(savesDirectory);
+        }
 
         LoadMainMenu();
     }
