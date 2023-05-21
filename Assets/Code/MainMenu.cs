@@ -86,14 +86,14 @@ public class MainMenu : MonoBehaviour
             if (!backObj.activeSelf) backObj.SetActive(true);
             InterfaceTool.Format_Rect(gameTitle.rectTransform, new Vector2(350, 120),
                 new Vector2(0, 1), new Vector2(0, 1), new Vector2(0, 1), new Vector2(80, -80));
-            InterfaceTool.Format_Text(gameTitle, GameManagement.defaultFont, 48, Color.white, TextAnchor.UpperLeft, FontStyle.Bold);
+            InterfaceTool.Format_Text(gameTitle, SysManager.defaultFont, 48, Color.white, TextAnchor.UpperLeft, FontStyle.Bold);
         }
         else
         {
             backObj.SetActive(false);
             InterfaceTool.Format_Rect(gameTitle.rectTransform, new Vector2(620, 200),
                 new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0), new Vector2(0, 50));
-            InterfaceTool.Format_Text(gameTitle, GameManagement.defaultFont, 64, Color.white, TextAnchor.MiddleCenter, FontStyle.Bold);
+            InterfaceTool.Format_Text(gameTitle, SysManager.defaultFont, 64, Color.white, TextAnchor.MiddleCenter, FontStyle.Bold);
         }
     }
 
@@ -134,7 +134,7 @@ public class MainMenu : MonoBehaviour
 
         // MENU-INDPENDENT OBJECTS
 
-        GameObject backdrop_obj = InterfaceTool.Img_Setup("Backdrop", menu_canvas.transform, out Image backdrop, GameManagement.uiSprites[5], false);
+        GameObject backdrop_obj = InterfaceTool.Img_Setup("Backdrop", menu_canvas.transform, out Image backdrop, SysManager.uiSprites[5], false);
         backdrop.type = Image.Type.Tiled;
         InterfaceTool.Format_Rect(backdrop.rectTransform, new Vector2(0, 0),
             new Vector2(0, 0), new Vector2(1, 1), new Vector2(0.5f, 0.5f));
@@ -142,34 +142,34 @@ public class MainMenu : MonoBehaviour
 
         GameObject title_obj = InterfaceTool.Text_Setup("Game Title", menu_canvas.transform, out gameTitle, false);
         InterfaceTool.Format_Rect(gameTitle.rectTransform, new Vector2(620, 200), new Vector2(0, 200));
-        InterfaceTool.Format_Text(gameTitle, GameManagement.defaultFont, 64, Color.white, TextAnchor.MiddleCenter, FontStyle.Bold);
+        InterfaceTool.Format_Text(gameTitle, SysManager.defaultFont, 64, Color.white, TextAnchor.MiddleCenter, FontStyle.Bold);
         gameTitle.text = "CAT CLICKER (2020)";
 
         GameObject version_num = InterfaceTool.Text_Setup("Version Num", menu_canvas.transform, out Text ver_text, false);
         InterfaceTool.Format_Rect(ver_text.rectTransform, new Vector2(240, 50),
             new Vector2(1, 0), new Vector2(1, 0), new Vector2(1, 0), new Vector2(-30, 0));
-        InterfaceTool.Format_Text(ver_text, GameManagement.defaultFont, 28, Color.white, TextAnchor.MiddleRight, FontStyle.Italic);
+        InterfaceTool.Format_Text(ver_text, SysManager.defaultFont, 28, Color.white, TextAnchor.MiddleRight, FontStyle.Italic);
         ver_text.text = $"ver. { Application.version }";
 
         GameObject copyright_obj = InterfaceTool.Text_Setup("Copyright", menu_canvas.transform, out Text cpy_text, false);
         InterfaceTool.Format_Rect(cpy_text.rectTransform, new Vector2(240, 50),
             new Vector2(0, 0), new Vector2(0, 0), new Vector2(0, 0), new Vector2(30, 0));
-        InterfaceTool.Format_Text(cpy_text, GameManagement.defaultFont, 28, Color.white, TextAnchor.MiddleLeft, FontStyle.Italic);
+        InterfaceTool.Format_Text(cpy_text, SysManager.defaultFont, 28, Color.white, TextAnchor.MiddleLeft, FontStyle.Italic);
         cpy_text.text = "District 4311";
 
-        backObj = InterfaceTool.Button_Setup("Back Button", menu_canvas.transform, out Image back_img, out backButton, GameManagement.defaultButton, ExitMenu);
+        backObj = InterfaceTool.Button_Setup("Back Button", menu_canvas.transform, out Image back_img, out backButton, SysManager.defaultButton, ExitMenu);
         InterfaceTool.Format_Rect(back_img.rectTransform, new Vector2(140, 80),
             new Vector2(0.5f, 0), new Vector2(0.5f, 0), new Vector2(0.5f, 0), new Vector2(-520, 40));
         GameObject back_text_obj = InterfaceTool.Text_Setup("Back Text", backObj.transform, out Text back_text, false);
         InterfaceTool.Format_Rect(back_text.rectTransform);
-        InterfaceTool.Format_Text(back_text, GameManagement.defaultFont, 48, black, TextAnchor.MiddleCenter, FontStyle.Bold);
+        InterfaceTool.Format_Text(back_text, SysManager.defaultFont, 48, black, TextAnchor.MiddleCenter, FontStyle.Bold);
         back_text.alignByGeometry = true;
         back_text.text = "<<";
 
 
         // START MENU
 
-        startScreen = InterfaceTool.Img_Setup("Start Menu", menu_canvas.transform, out Image start_img, GameManagement.defaultBox, false);
+        startScreen = InterfaceTool.Img_Setup("Start Menu", menu_canvas.transform, out Image start_img, SysManager.defaultBox, false);
         menus.Add(startScreen);
 
         InterfaceTool.Format_Rect_NPos(start_img.rectTransform, new Vector2(520, 480),
@@ -195,16 +195,16 @@ public class MainMenu : MonoBehaviour
                     AdvanceMenu("Select Menu");
                 }; break;
                 case 2: action = () => { AdvanceMenu("Options Menu"); }; break;
-                case 3: action = GameManagement.QuitGame; break;
+                case 3: action = SysManager.QuitGame; break;
                 default: action = null; break;
             }
             
-            GameObject s_button_obj = InterfaceTool.Button_Setup($"Start Button #{i}", menus[0].transform, out Image s_img, out Button s_button, GameManagement.defaultButton, action);
+            GameObject s_button_obj = InterfaceTool.Button_Setup($"Start Button #{i}", menus[0].transform, out Image s_img, out Button s_button, SysManager.defaultButton, action);
             InterfaceTool.Format_Rect(s_img.rectTransform, new Vector2(400, 90),
                 new Vector2(0.5f, 1), new Vector2(0.5f, 1), new Vector2(0.5f, 1), new Vector2(0, -(60 + (90 * i))));
             GameObject text_obj = InterfaceTool.Text_Setup("Text", s_button_obj.transform, out Text s_text, false);
             InterfaceTool.Format_Rect(s_text.rectTransform);
-            InterfaceTool.Format_Text(s_text, GameManagement.defaultFont, 36, black, TextAnchor.MiddleCenter, FontStyle.Normal);
+            InterfaceTool.Format_Text(s_text, SysManager.defaultFont, 36, black, TextAnchor.MiddleCenter, FontStyle.Normal);
             switch (i)
             {
                 case 0: s_text.text = "New Game"; break;
@@ -221,7 +221,7 @@ public class MainMenu : MonoBehaviour
 
         // SELECT MENU
 
-        menus.Add(InterfaceTool.Img_Setup("Select Menu", menu_canvas.transform, out Image load_img, GameManagement.defaultBox, false));
+        menus.Add(InterfaceTool.Img_Setup("Select Menu", menu_canvas.transform, out Image load_img, SysManager.defaultBox, false));
 
         InterfaceTool.Format_Rect_NPos(load_img.rectTransform, new Vector2(1200, 400),
             new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new Vector2(0.5f, 1));
@@ -232,7 +232,7 @@ public class MainMenu : MonoBehaviour
         {
             int fileChoice = i;
 
-            GameObject m_button_obj = InterfaceTool.Button_Setup($"File #{i}", menus[1].transform, out Image l_img, out fileSelectButtons[i], GameManagement.defaultButton,
+            GameObject m_button_obj = InterfaceTool.Button_Setup($"File #{i}", menus[1].transform, out Image l_img, out fileSelectButtons[i], SysManager.defaultButton,
                 () =>
                 {
                     activeFile = fileChoice;
@@ -240,8 +240,8 @@ public class MainMenu : MonoBehaviour
 
                     if (!newGame)
                     {
-                        GameManagement.fileManager.FileLoad(fileChoice);
-                        GameManagement.LoadAchievementsInterface();
+                        SysManager.fileManager.FileLoad(fileChoice);
+                        SysManager.LoadAchievementsInterface();
                     }
                     AdvanceMenu(newGame ? "New Game Menu" : "Profile Menu");
                 });
@@ -251,39 +251,39 @@ public class MainMenu : MonoBehaviour
             GameObject text_obj = InterfaceTool.Text_Setup("Text", m_button_obj.transform, out Text l_text, false);
             InterfaceTool.Format_Rect_NPos(l_text.rectTransform, new Vector2(320, 50),
                 new Vector2(0.5f, 0), new Vector2(0.5f, 0), new Vector2(0.5f, 1));
-            InterfaceTool.Format_Text(l_text, GameManagement.defaultFont, 32, Color.white, TextAnchor.MiddleCenter, FontStyle.Normal);
+            InterfaceTool.Format_Text(l_text, SysManager.defaultFont, 32, Color.white, TextAnchor.MiddleCenter, FontStyle.Normal);
             l_text.text = $"FILE { (char)('A' + i) }";
         }
 
 
         // NEW GAME MENU
 
-        menus.Add(InterfaceTool.Img_Setup("New Game Menu", menu_canvas.transform, out Image new_menu_img, GameManagement.defaultBox, false));
+        menus.Add(InterfaceTool.Img_Setup("New Game Menu", menu_canvas.transform, out Image new_menu_img, SysManager.defaultBox, false));
 
         InterfaceTool.Format_Rect(new_menu_img.rectTransform, new Vector2(1250, 620),
             new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new Vector2(0, -60));
         new_menu_img.color = menuColor;
 
-        GameObject header_obj = InterfaceTool.Img_Setup("Header", menus[2].transform, out Image header_img, GameManagement.defaultButton, false);
+        GameObject header_obj = InterfaceTool.Img_Setup("Header", menus[2].transform, out Image header_img, SysManager.defaultButton, false);
         InterfaceTool.Format_Rect_NPos(header_img.rectTransform, new Vector2(600, 120),
             new Vector2(0.5f, 1), new Vector2(0.5f, 1), new Vector2(0.5f, 0.5f));
         GameObject header_text_obj = InterfaceTool.Text_Setup("Header Text", header_obj.transform, out Text header_text, false);
         InterfaceTool.Format_Rect(header_text.rectTransform);
-        InterfaceTool.Format_Text(header_text, GameManagement.defaultFont, 36, black, TextAnchor.MiddleCenter, FontStyle.Normal);
+        InterfaceTool.Format_Text(header_text, SysManager.defaultFont, 36, black, TextAnchor.MiddleCenter, FontStyle.Normal);
         header_text.text = "Choose a Difficulty!";
 
         GameObject new_desc = InterfaceTool.Text_Setup("Desc", menus[2].transform, out Text desc_text, false);
         InterfaceTool.Format_Rect(desc_text.rectTransform, new Vector2(-200, 80),
             new Vector2(0, 0), new Vector2(1, 0), new Vector2(0.5f, 0), new Vector2(0, 30));
-        InterfaceTool.Format_Text(desc_text, GameManagement.defaultFont, 28, black, TextAnchor.MiddleLeft, FontStyle.Normal);
+        InterfaceTool.Format_Text(desc_text, SysManager.defaultFont, 28, black, TextAnchor.MiddleLeft, FontStyle.Normal);
 
         for (int i = 0; i < 3; i++)
         {
-            GameObject n_button_obj = InterfaceTool.Button_Setup($"Diff Option #{i}", menus[2].transform, out Image n_img, out Button n_button, GameManagement.defaultButton,
+            GameObject n_button_obj = InterfaceTool.Button_Setup($"Diff Option #{i}", menus[2].transform, out Image n_img, out Button n_button, SysManager.defaultButton,
                 () =>
                 {
-                    GameManagement.fileManager.NewFile(activeFile, (Difficulty)i);
-                    GameManagement.LoadAchievementsInterface();
+                    SysManager.fileManager.NewFile(activeFile, (Difficulty)i);
+                    SysManager.LoadAchievementsInterface();
 
                     fileCheck = CheckExistingFiles(out existingFiles);
                     newGame = false;
@@ -298,7 +298,7 @@ public class MainMenu : MonoBehaviour
             GameObject text_obj = InterfaceTool.Text_Setup("Text", n_button_obj.transform, out Text n_text, false);
             InterfaceTool.Format_Rect(n_text.rectTransform, new Vector2(0, 80),
                 new Vector2(0, 0), new Vector2(1, 0), new Vector2(0.5f, 0.5f), new Vector2(0, 40));
-            InterfaceTool.Format_Text(n_text, GameManagement.defaultFont, 36, black, TextAnchor.MiddleCenter, FontStyle.Normal);
+            InterfaceTool.Format_Text(n_text, SysManager.defaultFont, 36, black, TextAnchor.MiddleCenter, FontStyle.Normal);
 
             EventTrigger trigger = n_button_obj.AddComponent<EventTrigger>();
             EventTrigger.Entry entry = new EventTrigger.Entry{ eventID = EventTriggerType.PointerEnter };
@@ -333,17 +333,17 @@ public class MainMenu : MonoBehaviour
         
         // PROFILE MENU
 
-        menus.Add(InterfaceTool.Img_Setup("Profile Menu", menu_canvas.transform, out Image profile_img, GameManagement.defaultBox, false));
+        menus.Add(InterfaceTool.Img_Setup("Profile Menu", menu_canvas.transform, out Image profile_img, SysManager.defaultBox, false));
 
         InterfaceTool.Format_Rect(profile_img.rectTransform, new Vector2(1200, 700), new Vector2(0, -50));
         profile_img.color = menuColor;
 
-        GameObject profileName_obj = InterfaceTool.Img_Setup("File Name", menus[3].transform, out Image profileName_img, GameManagement.defaultBox, false);
+        GameObject profileName_obj = InterfaceTool.Img_Setup("File Name", menus[3].transform, out Image profileName_img, SysManager.defaultBox, false);
         InterfaceTool.Format_Rect(profileName_img.rectTransform, new Vector2(200, 100),
             new Vector2(1, 1), new Vector2(1, 1), new Vector2(1, 1), new Vector2(50, 80));
         GameObject profileName_text_obj = InterfaceTool.Text_Setup("File Name Text", profileName_obj.transform, out fileName, false);
         InterfaceTool.Format_Rect(fileName.rectTransform);
-        InterfaceTool.Format_Text(fileName, GameManagement.defaultFont, 36, Color.white, TextAnchor.MiddleCenter, FontStyle.Bold);
+        InterfaceTool.Format_Text(fileName, SysManager.defaultFont, 36, Color.white, TextAnchor.MiddleCenter, FontStyle.Bold);
 
         for (int i = 0; i < 5; i++)
         {
@@ -351,13 +351,13 @@ public class MainMenu : MonoBehaviour
             switch (i)
             {
                 case 0: action = () => { }; break;
-                case 1: action = () => { GameManagement.LoadClassicMode(); GameManagement.QuitMainMenu(); }; break;
+                case 1: action = () => { SysManager.LoadClassicMode(); SysManager.QuitMainMenu(); }; break;
                 case 2: action = () => { }; break;
                 case 3: action = () => AdvanceMenu("Records Menu"); break;
                 case 4: action = () => 
                 {
-                    GameManagement.fileManager.DeleteFile();
-                    GameManagement.QuitAchievementsInterface();
+                    SysManager.fileManager.DeleteFile();
+                    SysManager.QuitAchievementsInterface();
                     CheckExistingFiles(out existingFiles);
                     GoToStart();
                     
@@ -365,11 +365,11 @@ public class MainMenu : MonoBehaviour
                 default: action = null; break;
             }
 
-            GameObject p_button_obj = InterfaceTool.Button_Setup("Button", menus[3].transform, out Image p_button_bg, out Button p_button, GameManagement.defaultButton, action);
+            GameObject p_button_obj = InterfaceTool.Button_Setup("Button", menus[3].transform, out Image p_button_bg, out Button p_button, SysManager.defaultButton, action);
             GameObject p_text_obj = InterfaceTool.Text_Setup("Button Text", p_button_obj.transform, out Text p_text, false);
             InterfaceTool.Format_Rect_NPos(p_text.rectTransform, new Vector2(0, 110),
                 new Vector2(0, 0), new Vector2(1, 0), new Vector2(0.5f, 0));
-            InterfaceTool.Format_Text(p_text, GameManagement.defaultFont, 48, black, TextAnchor.MiddleCenter, FontStyle.Normal);
+            InterfaceTool.Format_Text(p_text, SysManager.defaultFont, 48, black, TextAnchor.MiddleCenter, FontStyle.Normal);
 
             switch (i)
             {
@@ -417,7 +417,7 @@ public class MainMenu : MonoBehaviour
 
         // OPTIONS
 
-        menus.Add(InterfaceTool.Img_Setup("Options Menu", menu_canvas.transform, out Image opts_img, GameManagement.defaultBox, false));
+        menus.Add(InterfaceTool.Img_Setup("Options Menu", menu_canvas.transform, out Image opts_img, SysManager.defaultBox, false));
 
         InterfaceTool.Format_Rect(opts_img.rectTransform, new Vector2(1200, 700), new Vector2(0, -50));
         opts_img.color = menuColor;
@@ -425,7 +425,7 @@ public class MainMenu : MonoBehaviour
         GameObject opts_header = InterfaceTool.Text_Setup("Options Header", menus[4].transform, out Text opts_header_text, false);
         InterfaceTool.Format_Rect(opts_header_text.rectTransform, new Vector2(0, 120),
             new Vector2(0, 1), new Vector2(1, 1), new Vector2(0.5f, 1), new Vector2(0, -20));
-        InterfaceTool.Format_Text(opts_header_text, GameManagement.defaultFont, 64, Color.white, TextAnchor.MiddleCenter, FontStyle.Bold);
+        InterfaceTool.Format_Text(opts_header_text, SysManager.defaultFont, 64, Color.white, TextAnchor.MiddleCenter, FontStyle.Bold);
         opts_header_text.text = "OPTIONS";
 
         for (int i = 0; i < 5; i++)
@@ -434,9 +434,9 @@ public class MainMenu : MonoBehaviour
             GameObject opt_name = InterfaceTool.Text_Setup($"Option Text #{i}", menus[4].transform, out Text opt_text, false);
             InterfaceTool.Format_Rect(opt_text.rectTransform, new Vector2(500, 80),
                 new Vector2(0, 0.5f), new Vector2(0, 0.5f), new Vector2(0, 0.5f), new Vector2(175, pos_y));
-            InterfaceTool.Format_Text(opt_text, GameManagement.defaultFont, 32, Color.white, TextAnchor.MiddleCenter, FontStyle.Normal);
+            InterfaceTool.Format_Text(opt_text, SysManager.defaultFont, 32, Color.white, TextAnchor.MiddleCenter, FontStyle.Normal);
 
-            GameObject opt_bar = InterfaceTool.Img_Setup($"Option #{i}", menus[4].transform, out Image opt_bar_img, GameManagement.uiSprites[3], false);
+            GameObject opt_bar = InterfaceTool.Img_Setup($"Option #{i}", menus[4].transform, out Image opt_bar_img, SysManager.uiSprites[3], false);
             InterfaceTool.Format_Rect(opt_bar_img.rectTransform, new Vector2(400, 80),
                 new Vector2(1, 0.5f), new Vector2(1, 0.5f), new Vector2(1, 0.5f), new Vector2(-125, pos_y));
             opt_bar_img.color = new Color(0.39f, 0.36f, 0.4f);
@@ -450,7 +450,7 @@ public class MainMenu : MonoBehaviour
                 GameObject indicator_obj = InterfaceTool.Text_Setup("Indicator", opt_bar.transform, out Text indicator_text, false);
                 InterfaceTool.Format_Rect_NPos(indicator_text.rectTransform, new Vector2(330, 80),
                     new Vector2(0, 0.5f), new Vector2(0, 0.5f), new Vector2(0, 0.5f));
-                InterfaceTool.Format_Text(indicator_text, GameManagement.defaultFont, 32, Color.white, TextAnchor.MiddleCenter, FontStyle.Normal);
+                InterfaceTool.Format_Text(indicator_text, SysManager.defaultFont, 32, Color.white, TextAnchor.MiddleCenter, FontStyle.Normal);
                 indicator_text.text = (i == 0) ? "High" : "Standard"; // Filler dialogue for now
             }
 
@@ -482,40 +482,40 @@ public class MainMenu : MonoBehaviour
 
         GameObject comingSoonTxtObj = InterfaceTool.Text_Setup("COMING SOON Text", comingSoonObj.transform, out Text comingSoonTxt, false);
         InterfaceTool.Format_Rect(comingSoonTxt.rectTransform);
-        InterfaceTool.Format_Text(comingSoonTxt, GameManagement.defaultFont, 128, Color.white, TextAnchor.MiddleCenter, FontStyle.Normal);
+        InterfaceTool.Format_Text(comingSoonTxt, SysManager.defaultFont, 128, Color.white, TextAnchor.MiddleCenter, FontStyle.Normal);
         comingSoonTxt.rectTransform.Rotate(new Vector3(0, 0, 20));
         comingSoonTxt.text = "Coming Soon";
         
 
         // RECORDS
 
-        menus.Add(InterfaceTool.Img_Setup("Records Menu", menu_canvas.transform, out Image records_img, GameManagement.defaultBox, false));
+        menus.Add(InterfaceTool.Img_Setup("Records Menu", menu_canvas.transform, out Image records_img, SysManager.defaultBox, false));
 
         InterfaceTool.Format_Rect_NPos(records_img.rectTransform, new Vector2(600, 700),
             new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new Vector2(1, 0.5f));
         records_img.color = new Color(0.7f, 0.7f, 0.75f);
 
         GameObject achievements_button_obj = InterfaceTool.Button_Setup("Achievements Button", menus[5].transform,
-            out Image achievements_img, out Button achievements_button, GameManagement.defaultButton, 
-            () => { GameManagement.achievementsInterface.Display_Achievements(true); });
+            out Image achievements_img, out Button achievements_button, SysManager.defaultButton, 
+            () => { SysManager.achievementsInterface.Display_Achievements(true); });
 
         InterfaceTool.Format_Rect(achievements_img.rectTransform, new Vector2(-80, 200),
             new Vector2(0, 1), new Vector2(1, 1), new Vector2(0.5f, 1), new Vector2(0, -50));
 
         GameObject achievement_button_txt = InterfaceTool.Text_Setup("A Button Text", achievements_button_obj.transform, out Text a_button_txt, false);
         InterfaceTool.Format_Rect(a_button_txt.rectTransform);
-        InterfaceTool.Format_Text(a_button_txt, GameManagement.defaultFont, 48, Color.black, TextAnchor.MiddleCenter, FontStyle.Normal);
+        InterfaceTool.Format_Text(a_button_txt, SysManager.defaultFont, 48, Color.black, TextAnchor.MiddleCenter, FontStyle.Normal);
         a_button_txt.text = "ACHIEVEMENTS";
 
         GameObject stats_header = InterfaceTool.Text_Setup("Stats Header", menus[5].transform, out Text stats_header_txt, false);
         InterfaceTool.Format_Rect(stats_header_txt.rectTransform, new Vector2(540, 60),
             new Vector2(1, 1), new Vector2(1, 1), new Vector2(0, 1), new Vector2(30, 0));
-        InterfaceTool.Format_Text(stats_header_txt, GameManagement.defaultFont, 36, Color.white, TextAnchor.MiddleCenter, FontStyle.Normal);
+        InterfaceTool.Format_Text(stats_header_txt, SysManager.defaultFont, 36, Color.white, TextAnchor.MiddleCenter, FontStyle.Normal);
         stats_header_txt.text = "STATS";
 
         GameObject stats = InterfaceTool.Text_Setup("Stats Text", stats_header.transform, out Text stats_txt, false);
         InterfaceTool.Format_Rect_NPos(stats_txt.rectTransform, new Vector2(0, 600), new Vector2(0, 0), new Vector2(1, 0), new Vector2(0.5f, 1));
-        InterfaceTool.Format_Text(stats_txt, GameManagement.defaultFont, 28, Color.white, TextAnchor.UpperLeft, FontStyle.Normal);
+        InterfaceTool.Format_Text(stats_txt, SysManager.defaultFont, 28, Color.white, TextAnchor.UpperLeft, FontStyle.Normal);
         stats_txt.lineSpacing = 1.5f;
         stats_txt.text = UpdateStats();
 
@@ -530,10 +530,10 @@ public class MainMenu : MonoBehaviour
 
     string UpdateStats()
     {
-        return GameManagement.profile.clscSaveData != null ? 
-            $"Current bits : { GameManagement.profile.clscSaveData.CurrencyCurrent.ToString("#,0.#") }\n" +
-            $"Total bits   : { GameManagement.profile.clscSaveData.CurrencyTotal.ToString("#,0.#") }\n" +
-            $"Current BPS  : { GameManagement.profile.clscSaveData.BitsPerSecond.ToString("#,0.#") }\n" +
+        return SysManager.profile.clscSaveData != null ? 
+            $"Current bits : { SysManager.profile.clscSaveData.CurrencyCurrent.ToString("#,0.#") }\n" +
+            $"Total bits   : { SysManager.profile.clscSaveData.CurrencyTotal.ToString("#,0.#") }\n" +
+            $"Current BPS  : { SysManager.profile.clscSaveData.BitsPerSecond.ToString("#,0.#") }\n" +
             $"Time played  : { "TIME PLAYED PLACEHOLDER" } seconds\n" +
             $"Time started : { "TIME STARTED PLACEHOLDER" }" : "";
     }

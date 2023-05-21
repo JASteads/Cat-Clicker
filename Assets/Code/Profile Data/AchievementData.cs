@@ -51,7 +51,7 @@ public class AchievementData
 
         onUnlock?.Invoke();
 
-        GameManagement.achievementsInterface.UpdateListing();
+        SysManager.achievementsInterface.UpdateListing();
     }
 
     public bool CheckCondition()

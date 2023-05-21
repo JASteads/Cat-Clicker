@@ -14,7 +14,7 @@ public class FileManagement
         BinaryFormatter formatter = new BinaryFormatter();
 
         // Where to save the file. Profile slot # is used to make the file name correct
-        string path = $"{ saveDirectory }File { (char)('A' + GameManagement.profile.Slot)}.nimmy";
+        string path = $"{ saveDirectory }File { (char)('A' + SysManager.profile.Slot)}.nimmy";
         
         // If file exists, overwrite it. Otherwise, create new file.
         if (File.Exists(path))
@@ -27,7 +27,7 @@ public class FileManagement
         }
 
         // Convert game data into a .nimmy file
-        formatter.Serialize(file, GameManagement.profile);
+        formatter.Serialize(file, SysManager.profile);
 
         file.Close();
     }
@@ -36,12 +36,12 @@ public class FileManagement
     {
         FileStream file;
         BinaryFormatter formatter = new BinaryFormatter();
-        string path = $"{ saveDirectory }File { (char)('A' + GameManagement.profile.Slot)}.nimmy";
+        string path = $"{ saveDirectory }File { (char)('A' + SysManager.profile.Slot)}.nimmy";
 
         if (File.Exists(path))
         {
             file = File.OpenRead(path);
-            GameManagement.profile = (Profile)formatter.Deserialize(file);
+            SysManager.profile = (Profile)formatter.Deserialize(file);
 
             file.Close();
         }
@@ -55,9 +55,9 @@ public class FileManagement
     {
         FileStream file;
         BinaryFormatter formatter = new BinaryFormatter();
-        string path = $"{ saveDirectory }File { (char)('A' + GameManagement.profile.Slot)}.nimmy";
+        string path = $"{ saveDirectory }File { (char)('A' + SysManager.profile.Slot)}.nimmy";
 
-        GameManagement.profile = new Profile(slot, difficulty);
+        SysManager.profile = new Profile(slot, difficulty);
         
         if (File.Exists(path))
         {
@@ -69,14 +69,14 @@ public class FileManagement
         }
 
         
-        formatter.Serialize(file, GameManagement.profile);
+        formatter.Serialize(file, SysManager.profile);
 
         file.Close();
     }
 
     public void DeleteFile()
     {
-        string path = $"{ saveDirectory }File { (char)('A' + GameManagement.profile.Slot)}.nimmy";
+        string path = $"{ saveDirectory }File { (char)('A' + SysManager.profile.Slot)}.nimmy";
 
         if (File.Exists(path))
         {

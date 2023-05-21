@@ -23,7 +23,7 @@ public class InterfaceTool
         GraphicRaycaster ray = obj.AddComponent<GraphicRaycaster>();
         RectMask2D mask = obj.AddComponent<RectMask2D>();
 
-        canvas.worldCamera = GameManagement.mainCam;
+        canvas.worldCamera = SysManager.mainCam;
         canvas.renderMode = RenderMode.ScreenSpaceCamera;
 
         scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
@@ -84,7 +84,7 @@ public class InterfaceTool
     }
     public static GameObject Scrollbar_Setup(Transform parent_tf, GameObject scroll_obj, RectTransform content_tf, int width)
     {
-        GameObject scrollbar = Img_Setup("Scrollbar", parent_tf, out Image scroll_img, GameManagement.uiSprites[3], true);
+        GameObject scrollbar = Img_Setup("Scrollbar", parent_tf, out Image scroll_img, SysManager.uiSprites[3], true);
         Format_Rect_NPos(scroll_img.rectTransform, new Vector2(width, 0), new Vector2(1, 0), new Vector2(1, 1), new Vector2(0, 0.5f));
         scroll_img.pixelsPerUnitMultiplier = 15;
         scroll_img.type = Image.Type.Sliced;
@@ -97,7 +97,7 @@ public class InterfaceTool
         Format_Rect_NPos(scroll_area.AddComponent<RectTransform>(), new Vector2(0, 0),
             new Vector2(0, 0), new Vector2(1, 1), new Vector2(0.5f, 0.5f));
 
-        GameObject scroll_handle = Img_Setup("Handle", scroll_area.transform, out Image scroll_handle_img, GameManagement.uiSprites[3], true);
+        GameObject scroll_handle = Img_Setup("Handle", scroll_area.transform, out Image scroll_handle_img, SysManager.uiSprites[3], true);
         Format_Rect_NPos(scroll_handle_img.rectTransform, new Vector2(0, 0),
             new Vector2(0, 0.5f), new Vector2(1, 0.5f), new Vector2(0.5f, 0.5f));
         scroll.handleRect = scroll_handle_img.rectTransform;
@@ -116,7 +116,7 @@ public class InterfaceTool
     public static GameObject Scrollbar_Setup(Transform parent_tf, GameObject scroll_obj, RectTransform content_tf, 
         Vector2 size, Vector2 a_min, Vector2 a_max, Vector2 pivot, Vector2 a_pos)
     {
-        GameObject scrollbar = Img_Setup("Scrollbar", parent_tf, out Image scroll_img, GameManagement.uiSprites[3], true);
+        GameObject scrollbar = Img_Setup("Scrollbar", parent_tf, out Image scroll_img, SysManager.uiSprites[3], true);
         Format_Rect(scroll_img.rectTransform, size, a_min, a_max, pivot, a_pos);
         scroll_img.pixelsPerUnitMultiplier = 15;
         scroll_img.type = Image.Type.Sliced;
@@ -129,7 +129,7 @@ public class InterfaceTool
         Format_Rect_NPos(scroll_area.AddComponent<RectTransform>(), new Vector2(0, 0),
             new Vector2(0, 0), new Vector2(1, 1), new Vector2(0.5f, 0.5f));
 
-        GameObject scroll_handle = Img_Setup("Handle", scroll_area.transform, out Image scroll_handle_img, GameManagement.uiSprites[3], true);
+        GameObject scroll_handle = Img_Setup("Handle", scroll_area.transform, out Image scroll_handle_img, SysManager.uiSprites[3], true);
         Format_Rect_NPos(scroll_handle_img.rectTransform, new Vector2(0, 0),
             new Vector2(0, 0.5f), new Vector2(1, 0.5f), new Vector2(0.5f, 0.5f));
         scroll.handleRect = scroll_handle_img.rectTransform;

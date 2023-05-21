@@ -8,7 +8,7 @@ public class CLSCSystem : MonoBehaviour
     public CLSCBuildings buildingSystem;
     public CLSCUpgrades upgradeSystem;
     public CLSCFeverSystem feverSystem = new CLSCFeverSystem();
-    public CLSCSaveData clscData = GameManagement.profile.clscSaveData;
+    public CLSCSaveData clscData = SysManager.profile.clscSaveData;
     public CLSCInterface clscInterface;
 
     void Start()
@@ -37,7 +37,7 @@ public class CLSCSystem : MonoBehaviour
         {
             ++clscData.misc.TimePlayed;
 
-            GameManagement.profile.achievements.CheckAchievements();
+            SysManager.profile.achievements.CheckAchievements();
 
             tickSecond = 0;
         }

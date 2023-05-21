@@ -20,7 +20,7 @@ public class CLSCStatusMessage
 
         GameObject messageObj = InterfaceTool.Text_Setup(name, parentTf,
             out message, false);
-        InterfaceTool.Format_Text(message, GameManagement.defaultFont, fontSize,
+        InterfaceTool.Format_Text(message, SysManager.defaultFont, fontSize,
             Color.white, TextAnchor.MiddleCenter, FontStyle.Bold);
 
         message.text = msg;
@@ -47,7 +47,7 @@ public class CLSCStatusMessage
 
         GameObject messageObj = InterfaceTool.Text_Setup(name, parentTf,
             out message, false);
-        InterfaceTool.Format_Text(message, GameManagement.defaultFont, fontSize,
+        InterfaceTool.Format_Text(message, SysManager.defaultFont, fontSize,
             Color.white, TextAnchor.MiddleCenter, FontStyle.Bold);
 
         message.text = msg;

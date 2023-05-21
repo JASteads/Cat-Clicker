@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-using static GameManagement;
+using static SysManager;
 
 public class CLSCFeverSystem
 {

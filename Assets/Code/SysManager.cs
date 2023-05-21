@@ -2,7 +2,7 @@
 
 // public delegate void Effect();  // Delegate for misc. effects for upgrades and achievements.
 
-public class GameManagement : MonoBehaviour
+public class SysManager : MonoBehaviour
 {
     public static Font defaultFont;
     public static Sprite defaultButton, defaultBox;
@@ -82,8 +82,8 @@ public class GameManagement : MonoBehaviour
         Destroy(achievementsInterface.gameObject);
     }
 
-    /* Creates the GameManagement when game starts. This allows game to start without the Database already being active */
+    /* Creates the SysManager when game starts. This allows game to start without the Database already being active */
     [RuntimeInitializeOnLoadMethod]
     static void StartGame()
-    { GameManagement gameManagement = new GameObject("GameManagement").AddComponent<GameManagement>(); }
+    { SysManager SysManager = new GameObject("SysManager").AddComponent<SysManager>(); }
 }

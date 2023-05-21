@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-using static GameManagement;
+using static SysManager;
 
 public class CLSCTooltip
 {

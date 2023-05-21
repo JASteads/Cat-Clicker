@@ -128,9 +128,9 @@ public class CLSCSaveData
             (up) => { return GetCurrencyTotal() >= 10000000; },
             () =>
             {
-                GameManagement.profile.achievements.data.Find(achievement => achievement.Title == "Beat the Game").Unlock();
-                GameManagement.fileManager.FileSave();
-                GameManagement.QuitGame();
+                SysManager.profile.achievements.data.Find(achievement => achievement.Title == "Beat the Game").Unlock();
+                SysManager.fileManager.FileSave();
+                SysManager.QuitGame();
             }),
 
             new UpgradeData("Fever Buff", "You've seen fever, now let's make it better: Increase fever progress per click by 1!", 7777, UpgradeType.SPECIAL,

@@ -61,7 +61,7 @@ public class UpgradeData
 
     public void Purchase()
     {
-        GameManagement.profile.clscSaveData.CurrencyCurrent -= Price;
+        SysManager.profile.clscSaveData.CurrencyCurrent -= Price;
         Status = Status.PURCHASED;
         Buy();
     }
@@ -90,7 +90,7 @@ public class UpgradeData
                 }
             }
 
-            return predicate(GameManagement.profile.clscSaveData);
+            return predicate(SysManager.profile.clscSaveData);
         }
 
         return false;
