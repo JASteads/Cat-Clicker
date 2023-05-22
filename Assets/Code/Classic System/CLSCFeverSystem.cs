@@ -126,20 +126,20 @@ public class CLSCFeverSystem
         feverMeter = new CLSCFeverMeter();
         feverMeterSecondary = new CLSCFeverMeter();
 
-        feverCanvas = InterfaceTool.Canvas_Setup("Fever Canvas", parentTf);
+        feverCanvas = InterfaceTool.CanvasSetup("Fever Canvas", parentTf, out Canvas canvas);
 
         feverBar = new GameObject("Fever Meter");
         feverBar.transform.SetParent(feverCanvas.transform, false);
         feverBar.transform.rotation = Quaternion.Euler(0, 0, 270);
         Image bar_img = feverBar.AddComponent<Image>();
-        InterfaceTool.Format_Rect(bar_img.rectTransform, new Vector2(100, 250),
+        InterfaceTool.FormatRect(bar_img.rectTransform, new Vector2(100, 250),
             new Vector2(0, 0), new Vector2(0, 0), new Vector2(0.5f, 0.5f), new Vector2(125, 250));
         bar_img.color = new Color(0.28f, 0.24f, 0.3f);
 
         points = new GameObject("Fever Points");
         points.transform.SetParent(feverBar.transform, false);
         points.AddComponent<Image>().color = new Color(0.4f, 0.36f, 0.4f);
-        InterfaceTool.Format_Rect_NPos(points.GetComponent<RectTransform>(), new Vector2(-30, -30),
+        InterfaceTool.FormatRectNPos(points.GetComponent<RectTransform>(), new Vector2(-30, -30),
             new Vector2(0, 0), new Vector2(1, 1), new Vector2(0.5f, 0.5f));
 
         tooltip.AssignTooltip(points, "Fever", DisplayFormat.FEVER);
@@ -155,12 +155,12 @@ public class CLSCFeverSystem
         feverMeterSecondary.transform = feverMeterSecondary.feverBar.rectTransform;
 
         feverMeter.transform.SetParent(points.transform, false);
-        InterfaceTool.Format_Rect_NPos(feverMeter.transform, new Vector2(70, 220),
+        InterfaceTool.FormatRectNPos(feverMeter.transform, new Vector2(70, 220),
             new Vector2(0.5f, 0), new Vector2(0.5f, 0), new Vector2(0.5f, 0));
         feverMeter.feverBar.raycastTarget = false;
 
         feverMeterSecondary.transform.SetParent(points.transform, false);
-        InterfaceTool.Format_Rect_NPos(feverMeterSecondary.transform, new Vector2(70, 220),
+        InterfaceTool.FormatRectNPos(feverMeterSecondary.transform, new Vector2(70, 220),
             new Vector2(0.5f, 0), new Vector2(0.5f, 0), new Vector2(0.5f, 0));
         feverMeterSecondary.feverBar.raycastTarget = false;
 
@@ -171,7 +171,7 @@ public class CLSCFeverSystem
         feverText.rectTransform.sizeDelta = new Vector2(500, 100);
         feverText.raycastTarget = false;
 
-        InterfaceTool.Format_Text(feverText, defaultFont, 64, new Color(0.9f, 0.7f, 0), TextAnchor.MiddleCenter, FontStyle.Bold);
+        InterfaceTool.FormatText(feverText, DEFAULT_FONT, 64, new Color(0.9f, 0.7f, 0), TextAnchor.MiddleCenter, FontStyle.Bold);
         feverText.text = "FEVER";
     }
 

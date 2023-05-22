@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 public class UI_Tool
 {
-    public static void Toggle_Canvas_Priority(GameObject parent, Canvas priority)
+    public static void ToggleCanvasPriority(GameObject parent, Canvas priority)
     {
         for (int i = 0; i < parent.transform.childCount; i++)
         {
@@ -13,7 +13,7 @@ public class UI_Tool
         priority.GetComponent<GraphicRaycaster>().enabled = true;
     }
 
-    public static GameObject Canvas_Setup(string name, Transform parent_tf)
+    public static GameObject CanvasSetup(string name, Transform parent_tf)
     {
         GameObject obj = new GameObject(name) { tag = "Canvas" };
         obj.transform.SetParent(parent_tf, false);
@@ -34,7 +34,7 @@ public class UI_Tool
 
         return obj;
     }
-    public static GameObject Img_Setup(string obj_name, Transform parent_tf, out Image img, bool raycasted)
+    public static GameObject ImgSetup(string obj_name, Transform parent_tf, out Image img, bool raycasted)
     {
         GameObject img_obj = new GameObject(obj_name);
         img_obj.transform.SetParent(parent_tf, false);
@@ -44,7 +44,7 @@ public class UI_Tool
 
         return img_obj;
     }
-    public static GameObject Img_Setup(string obj_name, Transform parent_tf, out Image img, Sprite sprite, bool raycasted)
+    public static GameObject ImgSetup(string obj_name, Transform parent_tf, out Image img, Sprite sprite, bool raycasted)
     {
         GameObject img_obj = new GameObject(obj_name);
         img_obj.transform.SetParent(parent_tf, false);
@@ -57,7 +57,7 @@ public class UI_Tool
 
         return img_obj;
     }
-    public static GameObject Text_Setup(string obj_name, Transform parent_tf, out Text txt, bool raycasted)
+    public static GameObject TextSetup(string obj_name, Transform parent_tf, out Text txt, bool raycasted)
     {
         GameObject txt_obj = new GameObject(obj_name);
         txt_obj.transform.SetParent(parent_tf, false);
@@ -67,7 +67,7 @@ public class UI_Tool
 
         return txt_obj;
     }
-    public static GameObject Button_Setup(string obj_name, Transform parent_tf, out Image img, out Button button, Sprite sprite, UnityEngine.Events.UnityAction call)
+    public static GameObject ButtonSetup(string obj_name, Transform parent_tf, out Image img, out Button button, Sprite sprite, UnityEngine.Events.UnityAction call)
     {
         GameObject button_obj = new GameObject(obj_name);
         button_obj.transform.SetParent(parent_tf, false);
@@ -82,10 +82,10 @@ public class UI_Tool
 
         return button_obj;
     }
-    public static GameObject Scrollbar_Setup(Transform parent_tf, GameObject scroll_obj, RectTransform content_tf, int width)
+    public static GameObject ScrollbarSetup(Transform parent_tf, GameObject scroll_obj, RectTransform content_tf, int width)
     {
-        GameObject scrollbar = Img_Setup("Scrollbar", parent_tf, out Image scroll_img, Database.ui_sprites[3], true);
-        Format_Rect_NPos(scroll_img.rectTransform, new Vector2(width, 0), new Vector2(1, 0), new Vector2(1, 1), new Vector2(0, 0.5f));
+        GameObject scrollbar = ImgSetup("Scrollbar", parent_tf, out Image scroll_img, Database.ui_sprites[3], true);
+        FormatRectNPos(scroll_img.rectTransform, new Vector2(width, 0), new Vector2(1, 0), new Vector2(1, 1), new Vector2(0, 0.5f));
         scroll_img.pixelsPerUnitMultiplier = 15;
         scroll_img.type = Image.Type.Sliced;
         Scrollbar scroll = scrollbar.AddComponent<Scrollbar>();
@@ -94,11 +94,11 @@ public class UI_Tool
 
         GameObject scroll_area = new GameObject("Sliding Area");
         scroll_area.transform.SetParent(scrollbar.transform, false);
-        Format_Rect_NPos(scroll_area.AddComponent<RectTransform>(), new Vector2(0, 0),
+        FormatRectNPos(scroll_area.AddComponent<RectTransform>(), new Vector2(0, 0),
             new Vector2(0, 0), new Vector2(1, 1), new Vector2(0.5f, 0.5f));
 
-        GameObject scroll_handle = Img_Setup("Handle", scroll_area.transform, out Image scroll_handle_img, Database.ui_sprites[3], true);
-        Format_Rect_NPos(scroll_handle_img.rectTransform, new Vector2(0, 0),
+        GameObject scroll_handle = ImgSetup("Handle", scroll_area.transform, out Image scroll_handle_img, Database.ui_sprites[3], true);
+        FormatRectNPos(scroll_handle_img.rectTransform, new Vector2(0, 0),
             new Vector2(0, 0.5f), new Vector2(1, 0.5f), new Vector2(0.5f, 0.5f));
         scroll.handleRect = scroll_handle_img.rectTransform;
         scroll_handle_img.pixelsPerUnitMultiplier = 15;
@@ -113,11 +113,11 @@ public class UI_Tool
 
         return scrollbar;
     }
-    public static GameObject Scrollbar_Setup(Transform parent_tf, GameObject scroll_obj, RectTransform content_tf, 
+    public static GameObject ScrollbarSetup(Transform parent_tf, GameObject scroll_obj, RectTransform content_tf, 
         Vector2 size, Vector2 a_min, Vector2 a_max, Vector2 pivot, Vector2 a_pos)
     {
-        GameObject scrollbar = Img_Setup("Scrollbar", parent_tf, out Image scroll_img, Database.ui_sprites[3], true);
-        Format_Rect(scroll_img.rectTransform, size, a_min, a_max, pivot, a_pos);
+        GameObject scrollbar = ImgSetup("Scrollbar", parent_tf, out Image scroll_img, Database.ui_sprites[3], true);
+        FormatRect(scroll_img.rectTransform, size, a_min, a_max, pivot, a_pos);
         scroll_img.pixelsPerUnitMultiplier = 15;
         scroll_img.type = Image.Type.Sliced;
         Scrollbar scroll = scrollbar.AddComponent<Scrollbar>();
@@ -126,11 +126,11 @@ public class UI_Tool
 
         GameObject scroll_area = new GameObject("Sliding Area");
         scroll_area.transform.SetParent(scrollbar.transform, false);
-        Format_Rect_NPos(scroll_area.AddComponent<RectTransform>(), new Vector2(0, 0),
+        FormatRectNPos(scroll_area.AddComponent<RectTransform>(), new Vector2(0, 0),
             new Vector2(0, 0), new Vector2(1, 1), new Vector2(0.5f, 0.5f));
 
-        GameObject scroll_handle = Img_Setup("Handle", scroll_area.transform, out Image scroll_handle_img, Database.ui_sprites[3], true);
-        Format_Rect_NPos(scroll_handle_img.rectTransform, new Vector2(0, 0),
+        GameObject scroll_handle = ImgSetup("Handle", scroll_area.transform, out Image scroll_handle_img, Database.ui_sprites[3], true);
+        FormatRectNPos(scroll_handle_img.rectTransform, new Vector2(0, 0),
             new Vector2(0, 0.5f), new Vector2(1, 0.5f), new Vector2(0.5f, 0.5f));
         scroll.handleRect = scroll_handle_img.rectTransform;
         scroll_handle_img.pixelsPerUnitMultiplier = 15;
@@ -146,7 +146,7 @@ public class UI_Tool
         return scrollbar;
     }
 
-    public static void Format_Text(Text txt, Font font, int font_size, Color color, TextAnchor alignment, FontStyle style)
+    public static void FormatText(Text txt, Font font, int font_size, Color color, TextAnchor alignment, FontStyle style)
     {
         txt.font = font;
         txt.color = color;
@@ -155,34 +155,34 @@ public class UI_Tool
         txt.fontStyle = style;
     }
 
-    public static void Format_Rect_NPos(RectTransform tf, Vector2 size, Vector2 a_min, Vector2 a_max, Vector2 pivot)
+    public static void FormatRectNPos(RectTransform tf, Vector2 size, Vector2 a_min, Vector2 a_max, Vector2 pivot)
     {
         tf.sizeDelta = size;
         tf.anchorMin = a_min;
         tf.anchorMax = a_max;
         tf.pivot = pivot;
     }
-    public static void Format_Rect_NPos(RectTransform tf, Vector2 size)
+    public static void FormatRectNPos(RectTransform tf, Vector2 size)
     { tf.sizeDelta = size; }
-    public static void Format_Rect(RectTransform tf) // For simple text objects : Stretch to fill parent area
+    public static void FormatRect(RectTransform tf) // For simple text objects : Stretch to fill parent area
     {
         tf.sizeDelta = new Vector2(0, 0);
         tf.anchorMin = new Vector2(0, 0);
         tf.anchorMax = new Vector2(1, 1);
     }
-    public static void Format_Rect(RectTransform tf, Vector2 size, Vector2 a_pos)
+    public static void FormatRect(RectTransform tf, Vector2 size, Vector2 a_pos)
     {
         tf.sizeDelta = size;
         tf.anchoredPosition = a_pos;
     }
-    public static void Format_Rect(RectTransform tf, Vector2 size, Vector2 a_min, Vector2 a_max, Vector2 a_pos)
+    public static void FormatRect(RectTransform tf, Vector2 size, Vector2 a_min, Vector2 a_max, Vector2 a_pos)
     {
         tf.sizeDelta = size;
         tf.anchorMin = a_min;
         tf.anchorMax = a_max;
         tf.anchoredPosition = a_pos;
     }
-    public static void Format_Rect(RectTransform tf, Vector2 size, Vector2 a_min, Vector2 a_max, Vector2 pivot, Vector2 a_pos)
+    public static void FormatRect(RectTransform tf, Vector2 size, Vector2 a_min, Vector2 a_max, Vector2 pivot, Vector2 a_pos)
     {
         tf.sizeDelta = size;
         tf.anchorMin = a_min;

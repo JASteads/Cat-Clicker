@@ -69,60 +69,60 @@ public class CLSCBuildings : MonoBehaviour
 
         saveData = profile.clscSaveData;
 
-        buildingsCanvas = InterfaceTool.Canvas_Setup("Buildings Canvas", parentTf);
+        buildingsCanvas = InterfaceTool.CanvasSetup("Buildings Canvas", parentTf, out Canvas canvas);
 
         // Length of shop panels (340 * 2), plus the width of each building and respective spacing,
         // minus the spacing for the first and last button.
         panelLength = 680 + (saveData.buildingsData.Count * 210) - 20;
 
-        buildingShop = InterfaceTool.Img_Setup("Building Shop", buildingsCanvas.transform, out panelBackground, uiSprites[2], true);
-        InterfaceTool.Format_Rect(panelBackground.rectTransform, new Vector2(0, 200),
+        buildingShop = InterfaceTool.ImgSetup("Building Shop", buildingsCanvas.transform, out panelBackground, uiSprites[2], true);
+        InterfaceTool.FormatRect(panelBackground.rectTransform, new Vector2(0, 200),
             new Vector2(0, 0), new Vector2(1, 0), new Vector2(0, 0), new Vector2(0, 0));
         panelBackground.color = new Color(0.6f, 0.6f, 0.6f);
         panelBackground.raycastTarget = false;
 
         buildingListTf = new GameObject("List").AddComponent<RectTransform>();
         buildingListTf.SetParent(buildingShop.transform, false);
-        InterfaceTool.Format_Rect(buildingListTf, new Vector2(620, 0),
+        InterfaceTool.FormatRect(buildingListTf, new Vector2(620, 0),
             new Vector2(0, 0), new Vector2(1, 1), new Vector2(0, 0.5f), new Vector2(310, 0));
 
-        panelL = InterfaceTool.Img_Setup("Building Panel Left", buildingsCanvas.transform, out Image pan_img_l, defaultBox, true);
-        InterfaceTool.Format_Rect(pan_img_l.rectTransform, new Vector2(310, 200),
+        panelL = InterfaceTool.ImgSetup("Building Panel Left", buildingsCanvas.transform, out Image pan_img_l, defaultBox, true);
+        InterfaceTool.FormatRect(pan_img_l.rectTransform, new Vector2(310, 200),
             new Vector2(0, 0), new Vector2(0, 0), new Vector2(0, 0), new Vector2(0, 0));
         pan_img_l.color = new Color(0.8f, 0.8f, 0.8f);
         pan_img_l.raycastTarget = false;
 
-        panelR = InterfaceTool.Img_Setup("Building Panel Right", buildingsCanvas.transform, out Image pan_img_r, defaultBox, true);
-        InterfaceTool.Format_Rect(pan_img_r.rectTransform, new Vector2(310, 200),
+        panelR = InterfaceTool.ImgSetup("Building Panel Right", buildingsCanvas.transform, out Image pan_img_r, defaultBox, true);
+        InterfaceTool.FormatRect(pan_img_r.rectTransform, new Vector2(310, 200),
             new Vector2(1, 0), new Vector2(1, 0), new Vector2(1, 0), new Vector2(0, 0));
         pan_img_r.color = new Color(0.8f, 0.8f, 0.8f);
         pan_img_r.raycastTarget = false;
 
-        seekL = InterfaceTool.Button_Setup("Seek Left", panelL.transform, out Image seek_img_l, out seekButtonL, uiSprites[3], () => SeekShop(buildingListTf, false));
-        InterfaceTool.Format_Rect(seek_img_l.rectTransform, new Vector2(70, BUTTON_HEIGHT),
+        seekL = InterfaceTool.ButtonSetup("Seek Left", panelL.transform, out Image seek_img_l, out seekButtonL, uiSprites[3], () => SeekShop(buildingListTf, false));
+        InterfaceTool.FormatRect(seek_img_l.rectTransform, new Vector2(70, BUTTON_HEIGHT),
             new Vector2(1, 0.5f), new Vector2(1, 0.5f), new Vector2(1, 0.5f), new Vector2(-35, 0));
         ColorBlock seek_colors_l = seekButtonL.colors;
         seek_img_l.color = Color.white;
         seek_colors_l.disabledColor = new Color(0.5f, 0.5f, 0.5f, 1);
         seekButtonL.colors = seek_colors_l;
 
-        seekTxtContainerL = InterfaceTool.Text_Setup("Seek Button Text Left", seekL.transform, out Text seek_txt_l, false);
-        InterfaceTool.Format_Rect(seek_txt_l.rectTransform);
-        InterfaceTool.Format_Text(seek_txt_l, defaultFont, 60, Color.black, TextAnchor.MiddleCenter, FontStyle.Bold);
+        seekTxtContainerL = InterfaceTool.TextSetup("Seek Button Text Left", seekL.transform, out Text seek_txt_l, false);
+        InterfaceTool.FormatRect(seek_txt_l.rectTransform);
+        InterfaceTool.FormatText(seek_txt_l, DEFAULT_FONT, 60, Color.black, TextAnchor.MiddleCenter, FontStyle.Bold);
         seek_txt_l.text = "<";
         seek_txt_l.alignByGeometry = true;
 
-        seekR = InterfaceTool.Button_Setup("Seek Right", panelR.transform, out Image seek_img_r, out seekButtonR, uiSprites[3], () => SeekShop(buildingListTf, true));
-        InterfaceTool.Format_Rect(seek_img_r.rectTransform, new Vector2(70, BUTTON_HEIGHT),
+        seekR = InterfaceTool.ButtonSetup("Seek Right", panelR.transform, out Image seek_img_r, out seekButtonR, uiSprites[3], () => SeekShop(buildingListTf, true));
+        InterfaceTool.FormatRect(seek_img_r.rectTransform, new Vector2(70, BUTTON_HEIGHT),
             new Vector2(0, 0.5f), new Vector2(0, 0.5f), new Vector2(0, 0.5f), new Vector2(35, 0));
         ColorBlock seek_colors_r = seekButtonR.colors;
         seek_img_r.color = Color.white;
         seek_colors_r.disabledColor = new Color(0.5f, 0.5f, 0.5f, 1);
         seekButtonR.colors = seek_colors_r;
 
-        seekTxtContainerR = InterfaceTool.Text_Setup("Seek Button Text Right", seekR.transform, out Text seek_txt_r, false);
-        InterfaceTool.Format_Rect(seek_txt_r.rectTransform);
-        InterfaceTool.Format_Text(seek_txt_r, defaultFont, 60, Color.black, TextAnchor.MiddleCenter, FontStyle.Bold);
+        seekTxtContainerR = InterfaceTool.TextSetup("Seek Button Text Right", seekR.transform, out Text seek_txt_r, false);
+        InterfaceTool.FormatRect(seek_txt_r.rectTransform);
+        InterfaceTool.FormatText(seek_txt_r, DEFAULT_FONT, 60, Color.black, TextAnchor.MiddleCenter, FontStyle.Bold);
         seek_txt_r.text = ">";
         seek_txt_r.alignByGeometry = true;
 
@@ -164,27 +164,27 @@ public class CLSCBuildings : MonoBehaviour
 
         CLSCBuildingButton buildingButton = new CLSCBuildingButton();
 
-        building = InterfaceTool.Button_Setup($"{targetBuilding.Name} Button", tf,
+        building = InterfaceTool.ButtonSetup($"{targetBuilding.Name} Button", tf,
             out buildingButton.image, out buildingButton.button, uiSprites[3], () => PurchaseBuilding(buildingButton, targetBuilding));
-        InterfaceTool.Format_Rect(buildingButton.image.rectTransform, new Vector2(200, 150),
+        InterfaceTool.FormatRect(buildingButton.image.rectTransform, new Vector2(200, 150),
             new Vector2(0, 0.5f), new Vector2(0, 0.5f), new Vector2(0, 0.5f), pos);
 
-        name = InterfaceTool.Text_Setup("Name", buildingButton.button.transform, out buildingButton.name, false);
-        InterfaceTool.Format_Rect_NPos(buildingButton.name.rectTransform, new Vector2(0, 50),
+        name = InterfaceTool.TextSetup("Name", buildingButton.button.transform, out buildingButton.name, false);
+        InterfaceTool.FormatRectNPos(buildingButton.name.rectTransform, new Vector2(0, 50),
             new Vector2(0, 0), new Vector2(1, 0), new Vector2(0.5f, 0));
-        InterfaceTool.Format_Text(buildingButton.name, defaultFont, 20, Color.black, TextAnchor.MiddleCenter, FontStyle.Bold);
+        InterfaceTool.FormatText(buildingButton.name, DEFAULT_FONT, 20, Color.black, TextAnchor.MiddleCenter, FontStyle.Bold);
         buildingButton.name.text = targetBuilding.Name;
 
-        count = InterfaceTool.Text_Setup("Count", buildingButton.button.transform, out buildingButton.count, false);
-        InterfaceTool.Format_Rect(buildingButton.count.rectTransform, new Vector2(-30, 50),
+        count = InterfaceTool.TextSetup("Count", buildingButton.button.transform, out buildingButton.count, false);
+        InterfaceTool.FormatRect(buildingButton.count.rectTransform, new Vector2(-30, 50),
             new Vector2(0, 1), new Vector2(1, 1), new Vector2(0.5f, 0.5f), new Vector2(0, -20));
-        InterfaceTool.Format_Text(buildingButton.count, defaultFont, 16, Color.black, TextAnchor.MiddleLeft, FontStyle.Normal);
+        InterfaceTool.FormatText(buildingButton.count, DEFAULT_FONT, 16, Color.black, TextAnchor.MiddleLeft, FontStyle.Normal);
         buildingButton.count.text = "0";
 
-        price = InterfaceTool.Text_Setup("Price", name.transform, out buildingButton.price, false);
-        InterfaceTool.Format_Rect_NPos(buildingButton.price.rectTransform, new Vector2(-30, 20),
+        price = InterfaceTool.TextSetup("Price", name.transform, out buildingButton.price, false);
+        InterfaceTool.FormatRectNPos(buildingButton.price.rectTransform, new Vector2(-30, 20),
             new Vector2(0, 1), new Vector2(1, 1), new Vector2(0.5f, 0));
-        InterfaceTool.Format_Text(buildingButton.price, defaultFont, 16, Color.black, TextAnchor.MiddleRight, FontStyle.Normal);
+        InterfaceTool.FormatText(buildingButton.price, DEFAULT_FONT, 16, Color.black, TextAnchor.MiddleRight, FontStyle.Normal);
         buildingButton.price.text = "$ 0";
 
         tooltip.AssignTooltip(building, targetBuilding.Name, DisplayFormat.BUILDING);

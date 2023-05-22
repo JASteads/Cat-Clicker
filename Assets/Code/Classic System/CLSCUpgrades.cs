@@ -78,53 +78,53 @@ public class CLSCUpgrades : MonoBehaviour
 
         system = sys;
 
-        upgradesCanvas = InterfaceTool.Canvas_Setup("Upgrades Canvas", transform);
+        upgradesCanvas = InterfaceTool.CanvasSetup("Upgrades Canvas", transform, out Canvas canvas);
 
         upgradesShop = new GameObject("Upgrades");
         upgradesShop.AddComponent<RectTransform>();
         upgradesShop.transform.SetParent(upgradesCanvas.transform, false);
-        InterfaceTool.Format_Rect(upgradesShop.GetComponent<RectTransform>(), new Vector2(460, 560),
+        InterfaceTool.FormatRect(upgradesShop.GetComponent<RectTransform>(), new Vector2(460, 560),
             new Vector2(1, 0.5f), new Vector2(1, 0.5f), new Vector2(0, 0.5f), new Vector2(0, 30));
 
-        title_box = InterfaceTool.Img_Setup("Upgrades Title", upgradesShop.transform, out Image title_img, defaultBox, false);
-        InterfaceTool.Format_Rect(title_img.rectTransform, new Vector2(0, 120),
+        title_box = InterfaceTool.ImgSetup("Upgrades Title", upgradesShop.transform, out Image title_img, defaultBox, false);
+        InterfaceTool.FormatRect(title_img.rectTransform, new Vector2(0, 120),
             new Vector2(0, 0), new Vector2(1, 1), new Vector2(0.5f, 0.5f), new Vector2(0, 30));
         title_img.color = new Color(.8f, .8f, 1);
 
-        title_text_container = InterfaceTool.Text_Setup("Upgrade Title Text", title_box.transform, out Text title_text, false);
-        InterfaceTool.Format_Rect(title_text.rectTransform, new Vector2(-30, 90),
+        title_text_container = InterfaceTool.TextSetup("Upgrade Title Text", title_box.transform, out Text title_text, false);
+        InterfaceTool.FormatRect(title_text.rectTransform, new Vector2(-30, 90),
             new Vector2(0, 1), new Vector2(1, 1), new Vector2(0.5f, 1), new Vector2(-15, 0));
-        InterfaceTool.Format_Text(title_text, defaultFont, 42, Color.white, TextAnchor.MiddleCenter, FontStyle.Bold);
+        InterfaceTool.FormatText(title_text, DEFAULT_FONT, 42, Color.white, TextAnchor.MiddleCenter, FontStyle.Bold);
         title_text.text = "UPGRADES";
 
-        upgrades_container = InterfaceTool.Img_Setup("Upgrades Container", upgradesShop.transform, out Image upgrades_container_img, defaultBox, true);
+        upgrades_container = InterfaceTool.ImgSetup("Upgrades Container", upgradesShop.transform, out Image upgrades_container_img, defaultBox, true);
         upgrades_container.AddComponent<RectMask2D>();
-        InterfaceTool.Format_Rect(upgrades_container_img.rectTransform);
+        InterfaceTool.FormatRect(upgrades_container_img.rectTransform);
         upgrades_container_img.color = new Color(0.6f, 0.6f, 1);
 
         upgradeList = new GameObject("Upgrades List");
         upgradeList.transform.SetParent(upgrades_container.transform, false);
         list_tf = upgradeList.AddComponent<RectTransform>();
-        InterfaceTool.Format_Rect(list_tf, new Vector2(-30, 0),
+        InterfaceTool.FormatRect(list_tf, new Vector2(-30, 0),
             new Vector2(0, 1), new Vector2(1, 1), new Vector2(0.5f, 1), new Vector2(0, -15));
 
-        shopToggle = InterfaceTool.Button_Setup("Upgrades Button", upgradesCanvas.transform, out Image up_toggle_img, out Button upgradeShopButton, uiSprites[3],
+        shopToggle = InterfaceTool.ButtonSetup("Upgrades Button", upgradesCanvas.transform, out Image up_toggle_img, out Button upgradeShopButton, uiSprites[3],
             () => ToggleUpgradesShop());
-        InterfaceTool.Format_Rect(up_toggle_img.rectTransform, new Vector2(140, BUTTON_HEIGHT),
+        InterfaceTool.FormatRect(up_toggle_img.rectTransform, new Vector2(140, BUTTON_HEIGHT),
             new Vector2(1, 0), new Vector2(1, 0), new Vector2(1, 0), new Vector2(-35, 25));
 
-        upgradeButtonTxtObj = InterfaceTool.Text_Setup("Upgrades Button Text", shopToggle.transform, out Text up_toggle_txt, false);
-        InterfaceTool.Format_Rect(up_toggle_txt.rectTransform);
-        InterfaceTool.Format_Text(up_toggle_txt, defaultFont, 24, Color.black, TextAnchor.MiddleCenter, FontStyle.Bold);
+        upgradeButtonTxtObj = InterfaceTool.TextSetup("Upgrades Button Text", shopToggle.transform, out Text up_toggle_txt, false);
+        InterfaceTool.FormatRect(up_toggle_txt.rectTransform);
+        InterfaceTool.FormatText(up_toggle_txt, DEFAULT_FONT, 24, Color.black, TextAnchor.MiddleCenter, FontStyle.Bold);
         up_toggle_txt.text = "UPGRADES";
 
         tabs_container = new GameObject("Tabs Containter");
         tabs_container.transform.SetParent(upgradesShop.transform, false);
         tabs_container.AddComponent<RectTransform>();
-        InterfaceTool.Format_Rect_NPos(tabs_container.GetComponent<RectTransform>(), new Vector2(50, 0),
+        InterfaceTool.FormatRectNPos(tabs_container.GetComponent<RectTransform>(), new Vector2(50, 0),
             new Vector2(0, 0), new Vector2(0, 1), new Vector2(1, 0.5f));
 
-        scrollbar = InterfaceTool.Scrollbar_Setup(upgradesShop.transform, upgrades_container, list_tf, 30);
+        scrollbar = InterfaceTool.ScrollbarSetup(upgradesShop.transform, upgrades_container, list_tf, 30);
 
 
         for (int i = 0; i < 4; i++)
@@ -156,10 +156,10 @@ public class CLSCUpgrades : MonoBehaviour
             data = targetUpgrade
         };
 
-        upgrade = InterfaceTool.Button_Setup($"Upgrade {targetUpgrade.Name}", upgradeList.transform,
+        upgrade = InterfaceTool.ButtonSetup($"Upgrade {targetUpgrade.Name}", upgradeList.transform,
             out upgradeButton.buttonImage, out upgradeButton.button, uiSprites[3], () => system.PurchaseUpgrade(upgradeButton));
 
-        InterfaceTool.Format_Rect(upgradeButton.buttonImage.rectTransform, new Vector2(-30, 80),
+        InterfaceTool.FormatRect(upgradeButton.buttonImage.rectTransform, new Vector2(-30, 80),
             new Vector2(0, 1), new Vector2(1, 1), new Vector2(0.5f, 1), new Vector2(0, -15));
         upgradeButton.buttonImage.color = new Color(1, 1, .8f);
         upgradeButton.rectTf = upgradeButton.buttonImage.rectTransform;
@@ -170,24 +170,24 @@ public class CLSCUpgrades : MonoBehaviour
         buttonColors.pressedColor = new Color(.4f, .4f, .4f);
         upgradeButton.button.colors = buttonColors;
 
-        icon = InterfaceTool.Img_Setup("Upgrade Icon", upgradeButton.rectTf, out upgradeButton.icon, false);
-        InterfaceTool.Format_Rect(upgradeButton.icon.rectTransform, new Vector2(60, 60),
+        icon = InterfaceTool.ImgSetup("Upgrade Icon", upgradeButton.rectTf, out upgradeButton.icon, false);
+        InterfaceTool.FormatRect(upgradeButton.icon.rectTransform, new Vector2(60, 60),
             new Vector2(0, 1), new Vector2(0, 1), new Vector2(0, 1), new Vector2(17, -10));
         upgradeButton.icon.color = new Color(0, .1f, 1);
 
-        title = InterfaceTool.Text_Setup("Upgrade Title", upgradeButton.rectTf, out upgradeButton.title, false);
-        InterfaceTool.Format_Rect(upgradeButton.title.rectTransform, new Vector2(340, 30),
+        title = InterfaceTool.TextSetup("Upgrade Title", upgradeButton.rectTf, out upgradeButton.title, false);
+        InterfaceTool.FormatRect(upgradeButton.title.rectTransform, new Vector2(340, 30),
             new Vector2(0, 1), new Vector2(0, 1), new Vector2(0, 1), new Vector2(90, -25));
-        InterfaceTool.Format_Text(upgradeButton.title, defaultFont, 16, Color.black, TextAnchor.MiddleLeft, FontStyle.Bold);
+        InterfaceTool.FormatText(upgradeButton.title, DEFAULT_FONT, 16, Color.black, TextAnchor.MiddleLeft, FontStyle.Bold);
         upgradeButton.title.text = targetUpgrade.Name;
         upgradeButton.title.alignByGeometry = true;
         upgradeButton.title.resizeTextForBestFit = true;
         upgradeButton.title.resizeTextMaxSize = 30;
 
-        price = InterfaceTool.Text_Setup("Upgrade Price", upgradeButton.rectTf, out upgradeButton.price, false);
-        InterfaceTool.Format_Rect(upgradeButton.price.rectTransform, new Vector2(250, 20),
+        price = InterfaceTool.TextSetup("Upgrade Price", upgradeButton.rectTf, out upgradeButton.price, false);
+        InterfaceTool.FormatRect(upgradeButton.price.rectTransform, new Vector2(250, 20),
             new Vector2(1, 1), new Vector2(1, 1), new Vector2(1, 1), new Vector2(-20, -7.5f));
-        InterfaceTool.Format_Text(upgradeButton.price, defaultFont, 16, Color.black, TextAnchor.MiddleRight, FontStyle.Italic);
+        InterfaceTool.FormatText(upgradeButton.price, DEFAULT_FONT, 16, Color.black, TextAnchor.MiddleRight, FontStyle.Italic);
         upgradeButton.price.text = $"$ {targetUpgrade.Price.ToString("0.##")}";
         upgradeButton.price.alignByGeometry = true;
 
@@ -204,14 +204,14 @@ public class CLSCUpgrades : MonoBehaviour
             type = tabType
         };
 
-        tab = InterfaceTool.Button_Setup($"{tabType} Tab", upgradesShop.transform.GetChild(2), out upgradeTab.image, out upgradeTab.button, uiSprites[3], () => RefreshUpgrades(tabType));
+        tab = InterfaceTool.ButtonSetup($"{tabType} Tab", upgradesShop.transform.GetChild(2), out upgradeTab.image, out upgradeTab.button, uiSprites[3], () => RefreshUpgrades(tabType));
         upgradeTab.image.rectTransform.sizeDelta = new Vector2(50, 100);
         upgradeTab.image.rectTransform.anchoredPosition = pos;
         upgradeTab.image.color = Color.white;
 
-        text = InterfaceTool.Text_Setup("Tab Text", upgradeTab.button.transform, out upgradeTab.text, false);
+        text = InterfaceTool.TextSetup("Tab Text", upgradeTab.button.transform, out upgradeTab.text, false);
         upgradeTab.text.rectTransform.sizeDelta = new Vector2(50, 150);
-        InterfaceTool.Format_Text(upgradeTab.text, defaultFont, 16, Color.black, TextAnchor.MiddleCenter, FontStyle.Normal);
+        InterfaceTool.FormatText(upgradeTab.text, DEFAULT_FONT, 16, Color.black, TextAnchor.MiddleCenter, FontStyle.Normal);
         upgradeTab.text.text = $"{(int)tabType + 1}";
 
         return upgradeTab;

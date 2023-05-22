@@ -64,9 +64,9 @@ public class Furnace_Interface : MonoBehaviour
 
     void Start()
     {
-        frame_canvas = UI_Tool.Canvas_Setup("Frame Canvas", transform);
-        shop_canvas = UI_Tool.Canvas_Setup("Shop Canvas", transform);
-        inv_canvas = UI_Tool.Canvas_Setup("Inventory Canvas", transform);
+        frame_canvas = UI_Tool.CanvasSetup("Frame Canvas", transform);
+        shop_canvas = UI_Tool.CanvasSetup("Shop Canvas", transform);
+        inv_canvas = UI_Tool.CanvasSetup("Inventory Canvas", transform);
     }
 
     void FixedUpdate()

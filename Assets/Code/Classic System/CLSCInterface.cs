@@ -26,8 +26,8 @@ public class CLSCInterface : MonoBehaviour
 
         gameObject.tag = "Main";
 
-        bitsCanvas = InterfaceTool.Canvas_Setup("Bits Canvas", transform);
-        infoCanvas = InterfaceTool.Canvas_Setup("Info Canvas", transform);
+        bitsCanvas = InterfaceTool.CanvasSetup("Bits Canvas", transform, out Canvas bCanvas);
+        infoCanvas = InterfaceTool.CanvasSetup("Info Canvas", transform, out Canvas iCanvas);
 
         tooltip = new CLSCTooltip(infoCanvas.transform);
 
@@ -72,28 +72,28 @@ public class CLSCInterface : MonoBehaviour
     {
         GameObject bit_counter_obj, bps_obj, click_obj, click_text_obj, opt_obj;
 
-        bit_counter_obj = InterfaceTool.Text_Setup("Bit Counter", bitsCanvas.transform, out bitCounter, false);
-        InterfaceTool.Format_Rect(bitCounter.rectTransform, new Vector2(1300, 60),
+        bit_counter_obj = InterfaceTool.TextSetup("Bit Counter", bitsCanvas.transform, out bitCounter, false);
+        InterfaceTool.FormatRect(bitCounter.rectTransform, new Vector2(1300, 60),
             new Vector2(0, 1), new Vector2(0, 1), new Vector2(0, 1), new Vector2(100, -160));
-        InterfaceTool.Format_Text(bitCounter, defaultFont, 42, Color.white, TextAnchor.MiddleLeft, FontStyle.Bold);
+        InterfaceTool.FormatText(bitCounter, DEFAULT_FONT, 42, Color.white, TextAnchor.MiddleLeft, FontStyle.Bold);
 
-        bps_obj = InterfaceTool.Text_Setup("BPS Counter", bit_counter_obj.transform, out BPSCounter, false);
-        InterfaceTool.Format_Rect(BPSCounter.rectTransform, new Vector2(800, 40),
+        bps_obj = InterfaceTool.TextSetup("BPS Counter", bit_counter_obj.transform, out BPSCounter, false);
+        InterfaceTool.FormatRect(BPSCounter.rectTransform, new Vector2(800, 40),
             new Vector2(0, 1), new Vector2(0, 1), new Vector2(0, 1), new Vector2(80, -bitCounter.rectTransform.rect.height));
-        InterfaceTool.Format_Text(BPSCounter, defaultFont, 32, Color.white, TextAnchor.MiddleLeft, FontStyle.Normal);
+        InterfaceTool.FormatText(BPSCounter, DEFAULT_FONT, 32, Color.white, TextAnchor.MiddleLeft, FontStyle.Normal);
 
-        click_obj = InterfaceTool.Button_Setup("Click Button", bitsCanvas.transform, out Image click_img, out clickButton, uiSprites[3], system.Click);
-        InterfaceTool.Format_Rect(click_img.rectTransform, new Vector2(270, 90),
+        click_obj = InterfaceTool.ButtonSetup("Click Button", bitsCanvas.transform, out Image click_img, out clickButton, uiSprites[3], system.Click);
+        InterfaceTool.FormatRect(click_img.rectTransform, new Vector2(270, 90),
             new Vector2(0, 1), new Vector2(0, 1), new Vector2(0, 1), new Vector2(180, -300));
 
-        click_text_obj = InterfaceTool.Text_Setup("Click Text", click_obj.transform, out Text click_text, false);
-        InterfaceTool.Format_Rect_NPos(click_text.rectTransform, new Vector2(0, 0),
+        click_text_obj = InterfaceTool.TextSetup("Click Text", click_obj.transform, out Text click_text, false);
+        InterfaceTool.FormatRectNPos(click_text.rectTransform, new Vector2(0, 0),
             new Vector2(0, 0), new Vector2(1, 1), new Vector2(0.5f, 0.5f));
-        InterfaceTool.Format_Text(click_text, defaultFont, 42, Color.black, TextAnchor.MiddleCenter, FontStyle.Bold);
+        InterfaceTool.FormatText(click_text, DEFAULT_FONT, 42, Color.black, TextAnchor.MiddleCenter, FontStyle.Bold);
         click_text.text = "CLICK";
 
-        opt_obj = InterfaceTool.Button_Setup("Options Button", bitsCanvas.transform, out Image opt_img, out optButton, uiSprites[5], Toggle_Options);
-        InterfaceTool.Format_Rect(opt_img.rectTransform, new Vector2(80, 80),
+        opt_obj = InterfaceTool.ButtonSetup("Options Button", bitsCanvas.transform, out Image opt_img, out optButton, uiSprites[5], Toggle_Options);
+        InterfaceTool.FormatRect(opt_img.rectTransform, new Vector2(80, 80),
             new Vector2(0, 1), new Vector2(0, 1), new Vector2(0, 1), new Vector2(15, -15));
         opt_img.type = Image.Type.Simple;
     }
@@ -106,35 +106,35 @@ public class CLSCInterface : MonoBehaviour
 
         optionsObj = new GameObject("Options").AddComponent<RectTransform>();
         optionsObj.SetParent(infoCanvas.transform, false);
-        InterfaceTool.Format_Rect(optionsObj);
+        InterfaceTool.FormatRect(optionsObj);
 
-        backdrop = InterfaceTool.Img_Setup("Backdrop", optionsObj.transform, out Image backdrop_img, false);
-        InterfaceTool.Format_Rect(backdrop_img.rectTransform);
+        backdrop = InterfaceTool.ImgSetup("Backdrop", optionsObj.transform, out Image backdrop_img, false);
+        InterfaceTool.FormatRect(backdrop_img.rectTransform);
         backdrop_img.color = new Color(0, 0, 0, 0.3f);
 
-        options_panel = InterfaceTool.Img_Setup("Options Panel", optionsObj.transform, out Image panel_img, defaultBox, false);
+        options_panel = InterfaceTool.ImgSetup("Options Panel", optionsObj.transform, out Image panel_img, defaultBox, false);
         panel_img.rectTransform.localPosition = new Vector2(0, 100);
         panel_img.rectTransform.sizeDelta = new Vector2(400, 500);
         panel_img.color = new Color(0.6f, 0.6f, 0.6f);
 
-        title = InterfaceTool.Img_Setup("Options Title", options_panel.transform, out Image title_img, defaultBox, false);
-        InterfaceTool.Format_Rect_NPos(title_img.rectTransform, new Vector2(0, 100),
+        title = InterfaceTool.ImgSetup("Options Title", options_panel.transform, out Image title_img, defaultBox, false);
+        InterfaceTool.FormatRectNPos(title_img.rectTransform, new Vector2(0, 100),
             new Vector2(0, 1), new Vector2(1, 1), new Vector2(0.5f, 1));
         title_img.color = Color.white;
 
-        title_text_container = InterfaceTool.Text_Setup("Title Text", title.transform, out Text title_text, false);
-        InterfaceTool.Format_Rect(title_text.rectTransform);
-        InterfaceTool.Format_Text(title_text, defaultFont, 48, Color.white, TextAnchor.MiddleCenter, FontStyle.Bold);
+        title_text_container = InterfaceTool.TextSetup("Title Text", title.transform, out Text title_text, false);
+        InterfaceTool.FormatRect(title_text.rectTransform);
+        InterfaceTool.FormatText(title_text, DEFAULT_FONT, 48, Color.white, TextAnchor.MiddleCenter, FontStyle.Bold);
         title_text.alignByGeometry = true;
         title_text.text = "OPTIONS";
 
-        close = InterfaceTool.Button_Setup("Close", options_panel.transform, out Image close_img, out Button close_button, uiSprites[3], Toggle_Options);
-        InterfaceTool.Format_Rect(close_img.rectTransform, new Vector2(50, 50),
+        close = InterfaceTool.ButtonSetup("Close", options_panel.transform, out Image close_img, out Button close_button, uiSprites[3], Toggle_Options);
+        InterfaceTool.FormatRect(close_img.rectTransform, new Vector2(50, 50),
             new Vector2(0, 1), new Vector2(0, 1), new Vector2(1, 1), new Vector2(-15, 0));
 
-        close_text_container = InterfaceTool.Text_Setup("Close Text", close.transform, out Text close_text, false);
-        InterfaceTool.Format_Rect(close_text.rectTransform);
-        InterfaceTool.Format_Text(close_text, defaultFont, 28, Color.black, TextAnchor.MiddleCenter, FontStyle.Bold);
+        close_text_container = InterfaceTool.TextSetup("Close Text", close.transform, out Text close_text, false);
+        InterfaceTool.FormatRect(close_text.rectTransform);
+        InterfaceTool.FormatText(close_text, DEFAULT_FONT, 28, Color.black, TextAnchor.MiddleCenter, FontStyle.Bold);
         close_text.alignByGeometry = true;
         close_text.text = "X";
 
@@ -143,13 +143,13 @@ public class CLSCInterface : MonoBehaviour
         {
             GameObject opt_obj, opt_txt_obj;
 
-            opt_obj = InterfaceTool.Button_Setup($"Option {i}", options_panel.transform, out Image opt_img, out options[i], uiSprites[3], null);
-            InterfaceTool.Format_Rect(opt_img.rectTransform, new Vector2(300, 70),
+            opt_obj = InterfaceTool.ButtonSetup($"Option {i}", options_panel.transform, out Image opt_img, out options[i], uiSprites[3], null);
+            InterfaceTool.FormatRect(opt_img.rectTransform, new Vector2(300, 70),
                 new Vector2(0.5f, 1), new Vector2(0.5f, 1), new Vector2(0.5f, 0.5f), new Vector2(0, -160 - (90 * i)));
 
-            opt_txt_obj = InterfaceTool.Text_Setup("Option Text", opt_obj.transform, out opt_txt[i], false);
-            InterfaceTool.Format_Rect(opt_txt[i].rectTransform);
-            InterfaceTool.Format_Text(opt_txt[i], defaultFont, 32, Color.black, TextAnchor.MiddleCenter, FontStyle.Normal);
+            opt_txt_obj = InterfaceTool.TextSetup("Option Text", opt_obj.transform, out opt_txt[i], false);
+            InterfaceTool.FormatRect(opt_txt[i].rectTransform);
+            InterfaceTool.FormatText(opt_txt[i], DEFAULT_FONT, 32, Color.black, TextAnchor.MiddleCenter, FontStyle.Normal);
             opt_txt[i].alignByGeometry = true;
         }
         opt_txt[0].text = "Save";
@@ -171,7 +171,7 @@ public class CLSCInterface : MonoBehaviour
     public void Toggle_Options()
     {
         optionsObj.gameObject.SetActive(!optionsObj.gameObject.activeSelf);
-        InterfaceTool.Toggle_Canvas_Priority(gameObject, infoCanvas.GetComponent<Canvas>());
+        InterfaceTool.ToggleCanvasPriority(gameObject, infoCanvas.GetComponent<Canvas>());
     }
     void Toggle_Fullscreen()
     {

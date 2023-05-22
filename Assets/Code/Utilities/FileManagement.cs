@@ -5,6 +5,16 @@ public class FileManagement
 {
     readonly string saveDirectory = $"{ Directory.GetCurrentDirectory() }/Saves/";
 
+    public FileManagement()
+    {
+        // If there are no saves, create a new save directory. This can be used to signify first time loading the game
+        if (!Directory.Exists(saveDirectory))
+        {
+            UnityEngine.Debug.Log("Saves directory doesn't exist! Creating new one ..");
+            Directory.CreateDirectory(saveDirectory);
+        }
+    }
+
     public void FileSave()
     {
         // File to save in

@@ -122,28 +122,28 @@ public class Classic_Interface : MonoBehaviour
     {
         GameObject bit_counter_obj, bps_obj, click_obj, click_text_obj, opt_obj;
 
-        bit_counter_obj = UI_Tool.Text_Setup("Bit Counter", bits_canvas.transform, out bit_counter, false);
-        UI_Tool.Format_Rect(bit_counter.rectTransform, new Vector2(1300, 60),
+        bit_counter_obj = UI_Tool.TextSetup("Bit Counter", bits_canvas.transform, out bit_counter, false);
+        UI_Tool.FormatRect(bit_counter.rectTransform, new Vector2(1300, 60),
             new Vector2(0, 1), new Vector2(0, 1), new Vector2(0, 1), new Vector2(100, -160));
-        UI_Tool.Format_Text(bit_counter, arial, 42, Color.white, TextAnchor.MiddleLeft, FontStyle.Bold);
+        UI_Tool.FormatText(bit_counter, arial, 42, Color.white, TextAnchor.MiddleLeft, FontStyle.Bold);
 
-        bps_obj = UI_Tool.Text_Setup("BPS Counter", bit_counter_obj.transform, out bps_counter, false);
-        UI_Tool.Format_Rect(bps_counter.rectTransform, new Vector2(800, 40),
+        bps_obj = UI_Tool.TextSetup("BPS Counter", bit_counter_obj.transform, out bps_counter, false);
+        UI_Tool.FormatRect(bps_counter.rectTransform, new Vector2(800, 40),
             new Vector2(0, 1), new Vector2(0, 1), new Vector2(0, 1), new Vector2(80, -bit_counter.rectTransform.rect.height));
-        UI_Tool.Format_Text(bps_counter, arial, 32, Color.white, TextAnchor.MiddleLeft, FontStyle.Normal);
+        UI_Tool.FormatText(bps_counter, arial, 32, Color.white, TextAnchor.MiddleLeft, FontStyle.Normal);
 
-        click_obj = UI_Tool.Button_Setup("Click Button", bits_canvas.transform, out Image click_img, out click_button, ui_sprites[3], () => system.Click());
-        UI_Tool.Format_Rect(click_img.rectTransform, new Vector2(270, 90),
+        click_obj = UI_Tool.ButtonSetup("Click Button", bits_canvas.transform, out Image click_img, out click_button, ui_sprites[3], () => system.Click());
+        UI_Tool.FormatRect(click_img.rectTransform, new Vector2(270, 90),
             new Vector2(0, 1), new Vector2(0, 1), new Vector2(0, 1), new Vector2(180, -300));
 
-        click_text_obj = UI_Tool.Text_Setup("Click Text", click_obj.transform, out Text click_text, false);
-        UI_Tool.Format_Rect_NPos(click_text.rectTransform, new Vector2(0, 0),
+        click_text_obj = UI_Tool.TextSetup("Click Text", click_obj.transform, out Text click_text, false);
+        UI_Tool.FormatRectNPos(click_text.rectTransform, new Vector2(0, 0),
             new Vector2(0, 0), new Vector2(1, 1), new Vector2(0.5f, 0.5f));
-        UI_Tool.Format_Text(click_text, arial, 42, pure_black, TextAnchor.MiddleCenter, FontStyle.Bold);
+        UI_Tool.FormatText(click_text, arial, 42, pure_black, TextAnchor.MiddleCenter, FontStyle.Bold);
         click_text.text = "CLICK";
 
-        opt_obj = UI_Tool.Button_Setup("Options Button", bits_canvas.transform, out Image opt_img, out opt_button, ui_sprites[5], () => Toggle_Options());
-        UI_Tool.Format_Rect(opt_img.rectTransform, new Vector2(80, 80),
+        opt_obj = UI_Tool.ButtonSetup("Options Button", bits_canvas.transform, out Image opt_img, out opt_button, ui_sprites[5], () => Toggle_Options());
+        UI_Tool.FormatRect(opt_img.rectTransform, new Vector2(80, 80),
             new Vector2(0, 1), new Vector2(0, 1), new Vector2(0, 1), new Vector2(15, -15));
         opt_img.type = Image.Type.Simple;
     }
@@ -161,61 +161,61 @@ public class Classic_Interface : MonoBehaviour
         // minus the spacing for the first and last button.
         building_shop_len = 680 + (data.b_data.Length * 210) - 20;
 
-        building_shop = UI_Tool.Img_Setup("Building Shop", buildings_canvas.transform, out b_shop_bg, ui_sprites[2], true);
-        UI_Tool.Format_Rect(b_shop_bg.rectTransform, new Vector2(0, 200),
+        building_shop = UI_Tool.ImgSetup("Building Shop", buildings_canvas.transform, out b_shop_bg, ui_sprites[2], true);
+        UI_Tool.FormatRect(b_shop_bg.rectTransform, new Vector2(0, 200),
             new Vector2(0, 0), new Vector2(1, 0), new Vector2(0, 0), new Vector2(0, 0));
         b_shop_bg.color = new Color(0.6f, 0.6f, 0.6f);
 
         building_list = new GameObject("List").AddComponent<RectTransform>();
         building_list.SetParent(building_shop.transform, false);
-        UI_Tool.Format_Rect(building_list, new Vector2(620, 0),
+        UI_Tool.FormatRect(building_list, new Vector2(620, 0),
             new Vector2(0, 0), new Vector2(1, 1), new Vector2(0, 0.5f), new Vector2(310, 0));
 
-        panel_l = UI_Tool.Img_Setup("Building Panel Left", buildings_canvas.transform, out Image pan_img_l, default_box, true);
-        UI_Tool.Format_Rect(pan_img_l.rectTransform, new Vector2(310, 200),
+        panel_l = UI_Tool.ImgSetup("Building Panel Left", buildings_canvas.transform, out Image pan_img_l, default_box, true);
+        UI_Tool.FormatRect(pan_img_l.rectTransform, new Vector2(310, 200),
             new Vector2(0, 0), new Vector2(0, 0), new Vector2(0, 0), new Vector2(0, 0));
         pan_img_l.color = new Color(0.8f, 0.8f, 0.8f);
 
-        panel_r = UI_Tool.Img_Setup("Building Panel Right", buildings_canvas.transform, out Image pan_img_r, default_box, true);
-        UI_Tool.Format_Rect(pan_img_r.rectTransform, new Vector2(310, 200),
+        panel_r = UI_Tool.ImgSetup("Building Panel Right", buildings_canvas.transform, out Image pan_img_r, default_box, true);
+        UI_Tool.FormatRect(pan_img_r.rectTransform, new Vector2(310, 200),
             new Vector2(1, 0), new Vector2(1, 0), new Vector2(1, 0), new Vector2(0, 0));
         pan_img_r.color = new Color(0.8f, 0.8f, 0.8f);
 
-        upgrade_toggle = UI_Tool.Button_Setup("Upgrades Button", panel_r.transform, out Image up_toggle_img, out up_toggle_button, ui_sprites[3], () => Toggle_Upgrades_Shop(up_toggle_button.gameObject));
-        UI_Tool.Format_Rect(up_toggle_img.rectTransform, new Vector2(140, button_height),
+        upgrade_toggle = UI_Tool.ButtonSetup("Upgrades Button", panel_r.transform, out Image up_toggle_img, out up_toggle_button, ui_sprites[3], () => Toggle_Upgrades_Shop(up_toggle_button.gameObject));
+        UI_Tool.FormatRect(up_toggle_img.rectTransform, new Vector2(140, button_height),
             new Vector2(1, 0.5f), new Vector2(1, 0.5f), new Vector2(1, 0.5f), new Vector2(-35, 0));
 
-        seek_l = UI_Tool.Button_Setup("Seek Left", panel_l.transform, out Image seek_img_l, out seek_button_l, ui_sprites[3], () => Seek_Shop(building_list, false));
-        UI_Tool.Format_Rect(seek_img_l.rectTransform, new Vector2(70, button_height),
+        seek_l = UI_Tool.ButtonSetup("Seek Left", panel_l.transform, out Image seek_img_l, out seek_button_l, ui_sprites[3], () => Seek_Shop(building_list, false));
+        UI_Tool.FormatRect(seek_img_l.rectTransform, new Vector2(70, button_height),
             new Vector2(1, 0.5f), new Vector2(1, 0.5f), new Vector2(1, 0.5f), new Vector2(-35, 0));
         ColorBlock seek_colors_l = seek_button_l.colors;
         seek_img_l.color = Color.white;
         seek_colors_l.disabledColor = new Color(0.5f, 0.5f, 0.5f, 1);
         seek_button_l.colors = seek_colors_l;
 
-        seek_txt_container_l = UI_Tool.Text_Setup("Seek Button Text Left", seek_l.transform, out Text seek_txt_l, false);
-        UI_Tool.Format_Rect(seek_txt_l.rectTransform);
-        UI_Tool.Format_Text(seek_txt_l, arial, 60, pure_black, TextAnchor.MiddleCenter, FontStyle.Bold);
+        seek_txt_container_l = UI_Tool.TextSetup("Seek Button Text Left", seek_l.transform, out Text seek_txt_l, false);
+        UI_Tool.FormatRect(seek_txt_l.rectTransform);
+        UI_Tool.FormatText(seek_txt_l, arial, 60, pure_black, TextAnchor.MiddleCenter, FontStyle.Bold);
         seek_txt_l.text = "<";
         seek_txt_l.alignByGeometry = true;
 
-        seek_r = UI_Tool.Button_Setup("Seek Right", panel_r.transform, out Image seek_img_r, out seek_button_r, ui_sprites[3], () => Seek_Shop(building_list, true));
-        UI_Tool.Format_Rect(seek_img_r.rectTransform, new Vector2(70, button_height),
+        seek_r = UI_Tool.ButtonSetup("Seek Right", panel_r.transform, out Image seek_img_r, out seek_button_r, ui_sprites[3], () => Seek_Shop(building_list, true));
+        UI_Tool.FormatRect(seek_img_r.rectTransform, new Vector2(70, button_height),
             new Vector2(0, 0.5f), new Vector2(0, 0.5f), new Vector2(0, 0.5f), new Vector2(35, 0));
         ColorBlock seek_colors_r = seek_button_r.colors;
         seek_img_r.color = Color.white;
         seek_colors_r.disabledColor = new Color(0.5f, 0.5f, 0.5f, 1);
         seek_button_r.colors = seek_colors_r;
 
-        seek_txt_container_r = UI_Tool.Text_Setup("Seek Button Text Right", seek_r.transform, out Text seek_txt_r, false);
-        UI_Tool.Format_Rect(seek_txt_r.rectTransform);
-        UI_Tool.Format_Text(seek_txt_r, arial, 60, pure_black, TextAnchor.MiddleCenter, FontStyle.Bold);
+        seek_txt_container_r = UI_Tool.TextSetup("Seek Button Text Right", seek_r.transform, out Text seek_txt_r, false);
+        UI_Tool.FormatRect(seek_txt_r.rectTransform);
+        UI_Tool.FormatText(seek_txt_r, arial, 60, pure_black, TextAnchor.MiddleCenter, FontStyle.Bold);
         seek_txt_r.text = ">";
         seek_txt_r.alignByGeometry = true;
 
-        up_toggle_txt_container = UI_Tool.Text_Setup("Upgrades Button Text", upgrade_toggle.transform, out Text up_toggle_txt, false);
-        UI_Tool.Format_Rect(up_toggle_txt.rectTransform);
-        UI_Tool.Format_Text(up_toggle_txt, arial, 24, pure_black, TextAnchor.MiddleCenter, FontStyle.Bold);
+        up_toggle_txt_container = UI_Tool.TextSetup("Upgrades Button Text", upgrade_toggle.transform, out Text up_toggle_txt, false);
+        UI_Tool.FormatRect(up_toggle_txt.rectTransform);
+        UI_Tool.FormatText(up_toggle_txt, arial, 24, pure_black, TextAnchor.MiddleCenter, FontStyle.Bold);
         up_toggle_txt.text = "UPGRADES";
         
         for (int i = 0; i < system.buildings_system.buildings.Length; i++)
@@ -248,28 +248,28 @@ public class Classic_Interface : MonoBehaviour
 
         Building_Button building_button = new Building_Button { id = id_num };
 
-        building = UI_Tool.Button_Setup($"Building #{id_num}", tf,
+        building = UI_Tool.ButtonSetup($"Building #{id_num}", tf,
             out building_button.image, out building_button.button, ui_sprites[3], () => system.Purchase_Building(building_button));
-        UI_Tool.Format_Rect(building_button.image.rectTransform, new Vector2(200, 150),
+        UI_Tool.FormatRect(building_button.image.rectTransform, new Vector2(200, 150),
             new Vector2(0, 0.5f), new Vector2(0, 0.5f), new Vector2(0, 0.5f), pos);
         Assign_Tooltip(building, id_num);
 
-        name = UI_Tool.Text_Setup("Name", building_button.button.transform, out building_button.name, false);
-        UI_Tool.Format_Rect_NPos(building_button.name.rectTransform, new Vector2(0, 50),
+        name = UI_Tool.TextSetup("Name", building_button.button.transform, out building_button.name, false);
+        UI_Tool.FormatRectNPos(building_button.name.rectTransform, new Vector2(0, 50),
             new Vector2(0, 0), new Vector2(1, 0), new Vector2(0.5f, 0));
-        UI_Tool.Format_Text(building_button.name, arial, 20, pure_black, TextAnchor.MiddleCenter, FontStyle.Bold);
+        UI_Tool.FormatText(building_button.name, arial, 20, pure_black, TextAnchor.MiddleCenter, FontStyle.Bold);
         building_button.name.text = system.buildings_system.buildings[id_num].name;
 
-        count = UI_Tool.Text_Setup("Count", building_button.button.transform, out building_button.count, false);
-        UI_Tool.Format_Rect(building_button.count.rectTransform, new Vector2(-30, 50),
+        count = UI_Tool.TextSetup("Count", building_button.button.transform, out building_button.count, false);
+        UI_Tool.FormatRect(building_button.count.rectTransform, new Vector2(-30, 50),
             new Vector2(0, 1), new Vector2(1, 1), new Vector2(0.5f, 0.5f), new Vector2(0, -20));
-        UI_Tool.Format_Text(building_button.count, arial, 16, pure_black, TextAnchor.MiddleLeft, FontStyle.Normal);
+        UI_Tool.FormatText(building_button.count, arial, 16, pure_black, TextAnchor.MiddleLeft, FontStyle.Normal);
         building_button.count.text = "0";
 
-        price = UI_Tool.Text_Setup("Price", name.transform, out building_button.price, false);
-        UI_Tool.Format_Rect_NPos(building_button.price.rectTransform, new Vector2(-30, 20),
+        price = UI_Tool.TextSetup("Price", name.transform, out building_button.price, false);
+        UI_Tool.FormatRectNPos(building_button.price.rectTransform, new Vector2(-30, 20),
             new Vector2(0, 1), new Vector2(1, 1), new Vector2(0.5f, 0));
-        UI_Tool.Format_Text(building_button.price, arial, 16, pure_black, TextAnchor.MiddleRight, FontStyle.Normal);
+        UI_Tool.FormatText(building_button.price, arial, 16, pure_black, TextAnchor.MiddleRight, FontStyle.Normal);
         building_button.price.text = "$ 0";
 
         return building_button;
@@ -300,38 +300,38 @@ public class Classic_Interface : MonoBehaviour
         upgrades_shop = new GameObject("Upgrades");
         upgrades_shop.AddComponent<RectTransform>();
         upgrades_shop.transform.SetParent(upgrades_canvas.transform, false);
-        UI_Tool.Format_Rect(upgrades_shop.GetComponent<RectTransform>(), new Vector2(460, 560),
+        UI_Tool.FormatRect(upgrades_shop.GetComponent<RectTransform>(), new Vector2(460, 560),
             new Vector2(1, 0.5f), new Vector2(1, 0.5f), new Vector2(0, 0.5f), new Vector2(0, 30));
 
-        title_box = UI_Tool.Img_Setup("Upgrades Title", upgrades_shop.transform, out Image title_img, default_box, false);
-        UI_Tool.Format_Rect(title_img.rectTransform, new Vector2(0, 120),
+        title_box = UI_Tool.ImgSetup("Upgrades Title", upgrades_shop.transform, out Image title_img, default_box, false);
+        UI_Tool.FormatRect(title_img.rectTransform, new Vector2(0, 120),
             new Vector2(0, 0), new Vector2(1, 1), new Vector2(0.5f, 0.5f), new Vector2(0, 30));
         title_img.color = new Color(.8f, .8f, 1);
 
-        title_text_container = UI_Tool.Text_Setup("Upgrade Title Text", title_box.transform, out Text title_text, false);
-        UI_Tool.Format_Rect(title_text.rectTransform, new Vector2(-30, 90),
+        title_text_container = UI_Tool.TextSetup("Upgrade Title Text", title_box.transform, out Text title_text, false);
+        UI_Tool.FormatRect(title_text.rectTransform, new Vector2(-30, 90),
             new Vector2(0, 1), new Vector2(1, 1), new Vector2(0.5f, 1), new Vector2(-15, 0));
-        UI_Tool.Format_Text(title_text, arial, 42, Color.white, TextAnchor.MiddleCenter, FontStyle.Bold);
+        UI_Tool.FormatText(title_text, arial, 42, Color.white, TextAnchor.MiddleCenter, FontStyle.Bold);
         title_text.text = "UPGRADES";
 
-        upgrades_container = UI_Tool.Img_Setup("Upgrades Container", upgrades_shop.transform, out Image upgrades_container_img, default_box, true);
+        upgrades_container = UI_Tool.ImgSetup("Upgrades Container", upgrades_shop.transform, out Image upgrades_container_img, default_box, true);
         upgrades_container.AddComponent<RectMask2D>();
-        UI_Tool.Format_Rect(upgrades_container_img.rectTransform);
+        UI_Tool.FormatRect(upgrades_container_img.rectTransform);
         upgrades_container_img.color = new Color(0.6f, 0.6f, 1);
 
         upgrades_list = new GameObject("Upgrades List");
         upgrades_list.transform.SetParent(upgrades_container.transform, false);
         list_tf = upgrades_list.AddComponent<RectTransform>();
-        UI_Tool.Format_Rect(list_tf, new Vector2(-30, 0), 
+        UI_Tool.FormatRect(list_tf, new Vector2(-30, 0), 
             new Vector2(0, 1), new Vector2(1, 1), new Vector2(0.5f, 1), new Vector2(0, -15));
         
         tabs_container = new GameObject("Tabs Containter");
         tabs_container.transform.SetParent(upgrades_shop.transform, false);
         tabs_container.AddComponent<RectTransform>();
-        UI_Tool.Format_Rect_NPos(tabs_container.GetComponent<RectTransform>(), new Vector2(50, 0),
+        UI_Tool.FormatRectNPos(tabs_container.GetComponent<RectTransform>(), new Vector2(50, 0),
             new Vector2(0, 0), new Vector2(0, 1), new Vector2(1, 0.5f));
 
-        scrollbar = UI_Tool.Scrollbar_Setup(upgrades_shop.transform, upgrades_container, list_tf, 30);
+        scrollbar = UI_Tool.ScrollbarSetup(upgrades_shop.transform, upgrades_container, list_tf, 30);
 
         upgrade_buttons = new Upgrade_Button[system.upgrades_system.upgrades.Length];
 
@@ -349,9 +349,9 @@ public class Classic_Interface : MonoBehaviour
         GameObject upgrade, icon, title, price;
         Upgrade_Button upgrade_button = new Upgrade_Button { id = id_num };
 
-        upgrade = UI_Tool.Button_Setup($"Upgrade #{upgrade_button.id}", upgrades_shop.transform.GetChild(1).GetChild(0),
+        upgrade = UI_Tool.ButtonSetup($"Upgrade #{upgrade_button.id}", upgrades_shop.transform.GetChild(1).GetChild(0),
             out upgrade_button.button_image, out upgrade_button.button, ui_sprites[3], () => system.Purchase_Upgrade(upgrade_button));
-        UI_Tool.Format_Rect(upgrade_button.button_image.rectTransform, new Vector2(-30, 80),
+        UI_Tool.FormatRect(upgrade_button.button_image.rectTransform, new Vector2(-30, 80),
             new Vector2(0, 1), new Vector2(1, 1), new Vector2(0.5f, 1), new Vector2(0, -15));
         upgrade_button.button_image.color = new Color(1, 1, .8f);
 
@@ -363,24 +363,24 @@ public class Classic_Interface : MonoBehaviour
         button_colors.pressedColor = new Color(.4f, .4f, .4f);
         upgrade_button.button.colors = button_colors;
 
-        icon = UI_Tool.Img_Setup("Upgrade Icon", upgrade_button.rect_tf, out upgrade_button.icon, false);
-        UI_Tool.Format_Rect(upgrade_button.icon.rectTransform, new Vector2(60, 60),
+        icon = UI_Tool.ImgSetup("Upgrade Icon", upgrade_button.rect_tf, out upgrade_button.icon, false);
+        UI_Tool.FormatRect(upgrade_button.icon.rectTransform, new Vector2(60, 60),
             new Vector2(0, 1), new Vector2(0, 1), new Vector2(0, 1), new Vector2(17, -10));
         upgrade_button.icon.color = new Color(0, .1f, 1);
 
-        title = UI_Tool.Text_Setup("Upgrade Title", upgrade_button.rect_tf, out upgrade_button.title, false);
-        UI_Tool.Format_Rect(upgrade_button.title.rectTransform, new Vector2(340, 30),
+        title = UI_Tool.TextSetup("Upgrade Title", upgrade_button.rect_tf, out upgrade_button.title, false);
+        UI_Tool.FormatRect(upgrade_button.title.rectTransform, new Vector2(340, 30),
             new Vector2(0, 1), new Vector2(0, 1), new Vector2(0, 1), new Vector2(90, -25));
-        UI_Tool.Format_Text(upgrade_button.title, arial, 16, pure_black, TextAnchor.MiddleLeft, FontStyle.Bold);
+        UI_Tool.FormatText(upgrade_button.title, arial, 16, pure_black, TextAnchor.MiddleLeft, FontStyle.Bold);
         upgrade_button.title.text = system.upgrades_system.upgrades[id_num].title;
         upgrade_button.title.alignByGeometry = true;
         upgrade_button.title.resizeTextForBestFit = true;
         upgrade_button.title.resizeTextMaxSize = 30;
 
-        price = UI_Tool.Text_Setup("Upgrade Price", upgrade_button.rect_tf, out upgrade_button.price, false);
-        UI_Tool.Format_Rect(upgrade_button.price.rectTransform, new Vector2(250, 20),
+        price = UI_Tool.TextSetup("Upgrade Price", upgrade_button.rect_tf, out upgrade_button.price, false);
+        UI_Tool.FormatRect(upgrade_button.price.rectTransform, new Vector2(250, 20),
             new Vector2(1, 1), new Vector2(1, 1), new Vector2(1, 1), new Vector2(-20, -7.5f));
-        UI_Tool.Format_Text(upgrade_button.price, arial, 16, pure_black, TextAnchor.MiddleRight, FontStyle.Italic);
+        UI_Tool.FormatText(upgrade_button.price, arial, 16, pure_black, TextAnchor.MiddleRight, FontStyle.Italic);
         upgrade_button.price.text = $"$ {system.upgrades_system.upgrades[id_num].price.ToString("0.##")}";
         upgrade_button.price.alignByGeometry = true;
         
@@ -394,14 +394,14 @@ public class Classic_Interface : MonoBehaviour
         GameObject tab, text;
         Upgrade_Tab upgrade_tab = new Upgrade_Tab { id = tab_num };
 
-        tab = UI_Tool.Button_Setup($"Tab #{tab_num}", upgrades_shop.transform.GetChild(2), out upgrade_tab.image, out upgrade_tab.button, ui_sprites[3], () => Refresh_Upgrades(tab_num, true));
+        tab = UI_Tool.ButtonSetup($"Tab #{tab_num}", upgrades_shop.transform.GetChild(2), out upgrade_tab.image, out upgrade_tab.button, ui_sprites[3], () => Refresh_Upgrades(tab_num, true));
         upgrade_tab.image.rectTransform.sizeDelta = new Vector2(50, 100);
         upgrade_tab.image.rectTransform.anchoredPosition = pos;
         upgrade_tab.image.color = Color.white;
 
-        text = UI_Tool.Text_Setup("Tab Text", upgrade_tab.button.transform, out upgrade_tab.text, false);
+        text = UI_Tool.TextSetup("Tab Text", upgrade_tab.button.transform, out upgrade_tab.text, false);
         upgrade_tab.text.rectTransform.sizeDelta = new Vector2(50, 150);
-        UI_Tool.Format_Text(upgrade_tab.text, arial, 16, pure_black, TextAnchor.MiddleCenter, FontStyle.Normal);
+        UI_Tool.FormatText(upgrade_tab.text, arial, 16, pure_black, TextAnchor.MiddleCenter, FontStyle.Normal);
         upgrade_tab.text.text = $"{tab_num + 1}";
 
         return upgrade_tab;
@@ -495,14 +495,14 @@ public class Classic_Interface : MonoBehaviour
         fever_bar.transform.SetParent(fever_canvas.transform, false);
         fever_bar.transform.rotation = Quaternion.Euler(0, 0, 270);
         Image bar_img = fever_bar.AddComponent<Image>();
-        UI_Tool.Format_Rect(bar_img.rectTransform, new Vector2(100, 250),
+        UI_Tool.FormatRect(bar_img.rectTransform, new Vector2(100, 250),
             new Vector2(0, 0), new Vector2(0, 0), new Vector2(0.5f, 0.5f), new Vector2(125, 250));
         bar_img.color = new Color(0.28f, 0.24f, 0.3f);
         
         inside = new GameObject("Fever Inside");
         inside.transform.SetParent(fever_bar.transform, false);
         inside.AddComponent<Image>().color = new Color(0.4f, 0.36f, 0.4f);
-        UI_Tool.Format_Rect_NPos(inside.GetComponent<RectTransform>(), new Vector2(-30, -30),
+        UI_Tool.FormatRectNPos(inside.GetComponent<RectTransform>(), new Vector2(-30, -30),
             new Vector2(0, 0), new Vector2(1, 1), new Vector2(0.5f, 0.5f));
 
         Assign_Tooltip(inside, -1);
@@ -518,12 +518,12 @@ public class Classic_Interface : MonoBehaviour
         fever_meter_secondary.tf = fever_meter_secondary.fever_bar.rectTransform;
 
         fever_meter.tf.SetParent(inside.transform, false);
-        UI_Tool.Format_Rect_NPos(fever_meter.tf, new Vector2(70, 220),
+        UI_Tool.FormatRectNPos(fever_meter.tf, new Vector2(70, 220),
             new Vector2(0.5f, 0), new Vector2(0.5f, 0), new Vector2(0.5f, 0));
         fever_meter.fever_bar.raycastTarget = false;
 
         fever_meter_secondary.tf.SetParent(inside.transform, false);
-        UI_Tool.Format_Rect_NPos(fever_meter_secondary.tf, new Vector2(70, 220),
+        UI_Tool.FormatRectNPos(fever_meter_secondary.tf, new Vector2(70, 220),
             new Vector2(0.5f, 0), new Vector2(0.5f, 0), new Vector2(0.5f, 0));
         fever_meter_secondary.fever_bar.raycastTarget = false;
 
@@ -534,7 +534,7 @@ public class Classic_Interface : MonoBehaviour
         fever_text.rectTransform.sizeDelta = new Vector2(500, 100);
         fever_text.raycastTarget = false;
 
-        UI_Tool.Format_Text(fever_text, arial, 64, new Color(0.9f, 0.7f, 0), TextAnchor.MiddleCenter, FontStyle.Bold);
+        UI_Tool.FormatText(fever_text, arial, 64, new Color(0.9f, 0.7f, 0), TextAnchor.MiddleCenter, FontStyle.Bold);
         fever_text.text = "FEVER";
     }
     
@@ -627,7 +627,7 @@ public class Classic_Interface : MonoBehaviour
         {
             if (tooltip.format != Tooltip.Display_Format.Building) Format_Tooltip(Tooltip.Display_Format.Building);
 
-            UI_Tool.Format_Rect(tooltip.tf, tooltip.tf.sizeDelta,
+            UI_Tool.FormatRect(tooltip.tf, tooltip.tf.sizeDelta,
                 new Vector2(1, 0), new Vector2(1, 0), new Vector2(1, 0), new Vector2(-340, 220));
 
             tooltip.title.text = building_buttons[id].name.text;
@@ -695,88 +695,88 @@ public class Classic_Interface : MonoBehaviour
         {
             case Tooltip.Display_Format.Building:
             {
-                UI_Tool.Format_Rect_NPos(tooltip.tf, new Vector2(550, 250),
+                UI_Tool.FormatRectNPos(tooltip.tf, new Vector2(550, 250),
                     new Vector2(0, 0), new Vector2(0, 0), new Vector2(0, 0));
-                UI_Tool.Format_Rect(tooltip.icon_tf, new Vector2(60, 60),
+                UI_Tool.FormatRect(tooltip.icon_tf, new Vector2(60, 60),
                     new Vector2(0, 1), new Vector2(0, 1), new Vector2(0, 1), new Vector2(30, -30));
-                UI_Tool.Format_Rect(tooltip.title_tf, new Vector2(165, 60),
+                UI_Tool.FormatRect(tooltip.title_tf, new Vector2(165, 60),
                     new Vector2(0, 1), new Vector2(0, 1), new Vector2(0, 1), new Vector2(100, -30));
-                UI_Tool.Format_Rect(tooltip.desc_tf, new Vector2(490, 80),
+                UI_Tool.FormatRect(tooltip.desc_tf, new Vector2(490, 80),
                     new Vector2(0, 1), new Vector2(0, 1), new Vector2(0, 0.5f), new Vector2(30, -145));
-                UI_Tool.Format_Rect(tooltip.price_tf, new Vector2(230, 60),
+                UI_Tool.FormatRect(tooltip.price_tf, new Vector2(230, 60),
                     new Vector2(1, 1), new Vector2(1, 1), new Vector2(1, 1), new Vector2(-30, -30));
-                UI_Tool.Format_Rect(tooltip.extra_1_tf, new Vector2(170, 40),
+                UI_Tool.FormatRect(tooltip.extra_1_tf, new Vector2(170, 40),
                     new Vector2(0, 0), new Vector2(0, 0), new Vector2(0, 0), new Vector2(30, 25));
-                UI_Tool.Format_Rect(tooltip.extra_2_tf, new Vector2(170, 40),
+                UI_Tool.FormatRect(tooltip.extra_2_tf, new Vector2(170, 40),
                     new Vector2(1, 0), new Vector2(1, 0), new Vector2(1, 0), new Vector2(-30, 25));
 
                 // Text Formatting
 
-                UI_Tool.Format_Text(tooltip.title, arial, 24, Color.white, TextAnchor.UpperLeft, FontStyle.Bold);
-                UI_Tool.Format_Text(tooltip.price, arial, 24, Color.white, TextAnchor.UpperRight, FontStyle.Normal);
-                UI_Tool.Format_Text(tooltip.desc, arial, 24, Color.white, TextAnchor.UpperLeft, FontStyle.Normal);
-                UI_Tool.Format_Text(tooltip.extra_1, arial, 14, Color.white, TextAnchor.MiddleLeft, FontStyle.Normal);
-                UI_Tool.Format_Text(tooltip.extra_2, arial, 14, Color.white, TextAnchor.MiddleRight, FontStyle.Normal);
+                UI_Tool.FormatText(tooltip.title, arial, 24, Color.white, TextAnchor.UpperLeft, FontStyle.Bold);
+                UI_Tool.FormatText(tooltip.price, arial, 24, Color.white, TextAnchor.UpperRight, FontStyle.Normal);
+                UI_Tool.FormatText(tooltip.desc, arial, 24, Color.white, TextAnchor.UpperLeft, FontStyle.Normal);
+                UI_Tool.FormatText(tooltip.extra_1, arial, 14, Color.white, TextAnchor.MiddleLeft, FontStyle.Normal);
+                UI_Tool.FormatText(tooltip.extra_2, arial, 14, Color.white, TextAnchor.MiddleRight, FontStyle.Normal);
                 break;
             }
             case Tooltip.Display_Format.Upgrade:
             {
-                UI_Tool.Format_Rect(tooltip.tf, new Vector2(550, 230),
+                UI_Tool.FormatRect(tooltip.tf, new Vector2(550, 230),
                     new Vector2(0.5f, 0), new Vector2(0.5f, 0), new Vector2(0.5f, 0), new Vector2(-670, 310));
-                UI_Tool.Format_Rect(tooltip.icon_tf, new Vector2(60, 60),
+                UI_Tool.FormatRect(tooltip.icon_tf, new Vector2(60, 60),
                     new Vector2(0, 1), new Vector2(0, 1), new Vector2(0, 1), new Vector2(30, -30));
-                UI_Tool.Format_Rect(tooltip.title_tf, new Vector2(190, 60),
+                UI_Tool.FormatRect(tooltip.title_tf, new Vector2(190, 60),
                     new Vector2(0, 1), new Vector2(0, 1), new Vector2(0, 1), new Vector2(100, -30));
-                UI_Tool.Format_Rect(tooltip.desc_tf, new Vector2(490, 70),
+                UI_Tool.FormatRect(tooltip.desc_tf, new Vector2(490, 70),
                     new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new Vector2(0, -20));
-                UI_Tool.Format_Rect(tooltip.price_tf, new Vector2(230, 60),
+                UI_Tool.FormatRect(tooltip.price_tf, new Vector2(230, 60),
                     new Vector2(1, 1), new Vector2(1, 1), new Vector2(1, 1), new Vector2(-30, -30));
-                UI_Tool.Format_Rect(tooltip.extra_1_tf, new Vector2(100, 40),
+                UI_Tool.FormatRect(tooltip.extra_1_tf, new Vector2(100, 40),
                     new Vector2(0, 0), new Vector2(0, 0), new Vector2(0, 0), new Vector2(115, 20));
-                UI_Tool.Format_Rect(tooltip.extra_2_tf, new Vector2(220, 40),
+                UI_Tool.FormatRect(tooltip.extra_2_tf, new Vector2(220, 40),
                     new Vector2(1, 0), new Vector2(1, 0), new Vector2(1, 0), new Vector2(-115, 20));
                     
                 // Text Formatting
 
-                UI_Tool.Format_Text(tooltip.title, arial, 24, Color.white, TextAnchor.UpperCenter, FontStyle.Bold);
-                UI_Tool.Format_Text(tooltip.price, arial, 24, Color.white, TextAnchor.UpperRight, FontStyle.Normal);
-                UI_Tool.Format_Text(tooltip.desc, arial, 20, Color.white, TextAnchor.MiddleLeft, FontStyle.Normal);
-                UI_Tool.Format_Text(tooltip.extra_1, arial, 14, Color.white, TextAnchor.MiddleLeft, FontStyle.Normal);
-                UI_Tool.Format_Text(tooltip.extra_2, arial, 18, Color.white, TextAnchor.MiddleRight, FontStyle.Normal);
+                UI_Tool.FormatText(tooltip.title, arial, 24, Color.white, TextAnchor.UpperCenter, FontStyle.Bold);
+                UI_Tool.FormatText(tooltip.price, arial, 24, Color.white, TextAnchor.UpperRight, FontStyle.Normal);
+                UI_Tool.FormatText(tooltip.desc, arial, 20, Color.white, TextAnchor.MiddleLeft, FontStyle.Normal);
+                UI_Tool.FormatText(tooltip.extra_1, arial, 14, Color.white, TextAnchor.MiddleLeft, FontStyle.Normal);
+                UI_Tool.FormatText(tooltip.extra_2, arial, 18, Color.white, TextAnchor.MiddleRight, FontStyle.Normal);
                 break;
             }
             case Tooltip.Display_Format.Fever:
             {
-                UI_Tool.Format_Rect(tooltip.tf, new Vector2(550, 220),
+                UI_Tool.FormatRect(tooltip.tf, new Vector2(550, 220),
                     new Vector2(0, 0), new Vector2(0, 0), new Vector2(0, 0), new Vector2(15, 310));
-                UI_Tool.Format_Rect(tooltip.icon_tf, new Vector2(60, 60),
+                UI_Tool.FormatRect(tooltip.icon_tf, new Vector2(60, 60),
                     new Vector2(0, 1), new Vector2(0, 1), new Vector2(0, 1), new Vector2(30, -25));
-                UI_Tool.Format_Rect(tooltip.title_tf, new Vector2(300, 60),
+                UI_Tool.FormatRect(tooltip.title_tf, new Vector2(300, 60),
                     new Vector2(0.5f, 1), new Vector2(0.5f, 1), new Vector2(0.5f, 1), new Vector2(0, -25));
-                UI_Tool.Format_Rect(tooltip.desc_tf, new Vector2(490, 70),
+                UI_Tool.FormatRect(tooltip.desc_tf, new Vector2(490, 70),
                     new Vector2(0.5f, 0), new Vector2(0.5f, 0), new Vector2(0.5f, 0), new Vector2(0, 25));
-                UI_Tool.Format_Rect(tooltip.price_tf, new Vector2(170, 40),
+                UI_Tool.FormatRect(tooltip.price_tf, new Vector2(170, 40),
                     new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new Vector2(0, 5));
-                UI_Tool.Format_Rect(tooltip.extra_1_tf, new Vector2(160, 40),
+                UI_Tool.FormatRect(tooltip.extra_1_tf, new Vector2(160, 40),
                     new Vector2(0, 0.5f), new Vector2(0, 0.5f), new Vector2(0, 0.5f), new Vector2(30, 5));
-                UI_Tool.Format_Rect(tooltip.extra_2_tf, new Vector2(160, 40),
+                UI_Tool.FormatRect(tooltip.extra_2_tf, new Vector2(160, 40),
                     new Vector2(1, 0.5f), new Vector2(1, 0.5f), new Vector2(1, 0.5f), new Vector2(-30, 5));
 
                 // Text Formatting
 
-                UI_Tool.Format_Text(tooltip.title, arial, 36, new Color(1, 0.8f, 0), TextAnchor.UpperCenter, FontStyle.Bold);
+                UI_Tool.FormatText(tooltip.title, arial, 36, new Color(1, 0.8f, 0), TextAnchor.UpperCenter, FontStyle.Bold);
                 tooltip.title.text = "FEVER BAR";
                 
-                UI_Tool.Format_Text(tooltip.price, arial, 14, Color.white, TextAnchor.MiddleCenter, FontStyle.Normal);
+                UI_Tool.FormatText(tooltip.price, arial, 14, Color.white, TextAnchor.MiddleCenter, FontStyle.Normal);
                 tooltip.price.text = $"Drain   |   {data.fever_data.drain * 100}%";
                 
-                UI_Tool.Format_Text(tooltip.extra_1, arial, 14, Color.white, TextAnchor.MiddleLeft, FontStyle.Normal);
+                UI_Tool.FormatText(tooltip.extra_1, arial, 14, Color.white, TextAnchor.MiddleLeft, FontStyle.Normal);
                 tooltip.extra_1.text = $"MAX   |   {(system.fever_system.max / data.fever_data.gain).ToString("#,0")}";
                 
-                UI_Tool.Format_Text(tooltip.extra_2, arial, 14, Color.white, TextAnchor.MiddleRight, FontStyle.Normal);
+                UI_Tool.FormatText(tooltip.extra_2, arial, 14, Color.white, TextAnchor.MiddleRight, FontStyle.Normal);
                 tooltip.extra_2.text = $"Persistence   |   {data.fever_data.persistence * 100}%";
 
-                UI_Tool.Format_Text(tooltip.desc, arial, 14, Color.white, TextAnchor.MiddleLeft, FontStyle.Normal);
+                UI_Tool.FormatText(tooltip.desc, arial, 14, Color.white, TextAnchor.MiddleLeft, FontStyle.Normal);
                 tooltip.desc.text =
                     $"<i><size=14><color=#cccccc>When active...</color></size></i>\nClick Power Multi : <color=#ffcc00>{data.fever_data.click_multi * 100f}%</color>\n" +
                     $"BPS Multiplier      : <color=#ffcc00>{data.fever_data.bps_multi * 100f}%</color>";
@@ -847,35 +847,35 @@ public class Classic_Interface : MonoBehaviour
 
         options_obj = new GameObject("Options").AddComponent<RectTransform>();
         options_obj.SetParent(info_canvas.transform, false);
-        UI_Tool.Format_Rect(options_obj);
+        UI_Tool.FormatRect(options_obj);
 
-        backdrop = UI_Tool.Img_Setup("Backdrop", options_obj.transform, out Image backdrop_img, false);
-        UI_Tool.Format_Rect(backdrop_img.rectTransform);
+        backdrop = UI_Tool.ImgSetup("Backdrop", options_obj.transform, out Image backdrop_img, false);
+        UI_Tool.FormatRect(backdrop_img.rectTransform);
         backdrop_img.color = new Color(0, 0, 0, 0.3f);
 
-        options_panel = UI_Tool.Img_Setup("Options Panel", options_obj.transform, out Image panel_img, default_box, false);
+        options_panel = UI_Tool.ImgSetup("Options Panel", options_obj.transform, out Image panel_img, default_box, false);
         panel_img.rectTransform.localPosition = new Vector2(0, 100);
         panel_img.rectTransform.sizeDelta = new Vector2(400, 500);
         panel_img.color = new Color(0.6f, 0.6f, 0.6f);
 
-        title = UI_Tool.Img_Setup("Options Title", options_panel.transform, out Image title_img, default_box, false);
-        UI_Tool.Format_Rect_NPos(title_img.rectTransform, new Vector2(0, 100),
+        title = UI_Tool.ImgSetup("Options Title", options_panel.transform, out Image title_img, default_box, false);
+        UI_Tool.FormatRectNPos(title_img.rectTransform, new Vector2(0, 100),
             new Vector2(0, 1), new Vector2(1, 1), new Vector2(0.5f, 1));
         title_img.color = Color.white;
 
-        title_text_container = UI_Tool.Text_Setup("Title Text", title.transform, out Text title_text, false);
-        UI_Tool.Format_Rect(title_text.rectTransform);
-        UI_Tool.Format_Text(title_text, arial, 48, Color.white, TextAnchor.MiddleCenter, FontStyle.Bold);
+        title_text_container = UI_Tool.TextSetup("Title Text", title.transform, out Text title_text, false);
+        UI_Tool.FormatRect(title_text.rectTransform);
+        UI_Tool.FormatText(title_text, arial, 48, Color.white, TextAnchor.MiddleCenter, FontStyle.Bold);
         title_text.alignByGeometry = true;
         title_text.text = "OPTIONS";
 
-        close = UI_Tool.Button_Setup("Close", options_panel.transform, out Image close_img, out Button close_button, ui_sprites[3], Toggle_Options);
-        UI_Tool.Format_Rect(close_img.rectTransform, new Vector2(50, 50),
+        close = UI_Tool.ButtonSetup("Close", options_panel.transform, out Image close_img, out Button close_button, ui_sprites[3], Toggle_Options);
+        UI_Tool.FormatRect(close_img.rectTransform, new Vector2(50, 50),
             new Vector2(0, 1), new Vector2(0, 1), new Vector2(1, 1), new Vector2(-15, 0));
 
-        close_text_container = UI_Tool.Text_Setup("Close Text", close.transform, out Text close_text, false);
-        UI_Tool.Format_Rect(close_text.rectTransform);
-        UI_Tool.Format_Text(close_text, arial, 28, pure_black, TextAnchor.MiddleCenter, FontStyle.Bold);
+        close_text_container = UI_Tool.TextSetup("Close Text", close.transform, out Text close_text, false);
+        UI_Tool.FormatRect(close_text.rectTransform);
+        UI_Tool.FormatText(close_text, arial, 28, pure_black, TextAnchor.MiddleCenter, FontStyle.Bold);
         close_text.alignByGeometry = true;
         close_text.text = "X";
 
@@ -884,13 +884,13 @@ public class Classic_Interface : MonoBehaviour
         {
             GameObject opt_obj, opt_txt_obj;
 
-            opt_obj = UI_Tool.Button_Setup($"Option {i}", options_panel.transform, out Image opt_img, out options[i], ui_sprites[3], null);
-            UI_Tool.Format_Rect(opt_img.rectTransform, new Vector2(300, 70),
+            opt_obj = UI_Tool.ButtonSetup($"Option {i}", options_panel.transform, out Image opt_img, out options[i], ui_sprites[3], null);
+            UI_Tool.FormatRect(opt_img.rectTransform, new Vector2(300, 70),
                 new Vector2(0.5f, 1), new Vector2(0.5f, 1), new Vector2(0.5f, 0.5f), new Vector2(0, -160 - (90 * i)));
 
-            opt_txt_obj = UI_Tool.Text_Setup("Option Text", opt_obj.transform, out opt_txt[i], false);
-            UI_Tool.Format_Rect(opt_txt[i].rectTransform);
-            UI_Tool.Format_Text(opt_txt[i], arial, 32, pure_black, TextAnchor.MiddleCenter, FontStyle.Normal);
+            opt_txt_obj = UI_Tool.TextSetup("Option Text", opt_obj.transform, out opt_txt[i], false);
+            UI_Tool.FormatRect(opt_txt[i].rectTransform);
+            UI_Tool.FormatText(opt_txt[i], arial, 32, pure_black, TextAnchor.MiddleCenter, FontStyle.Normal);
             opt_txt[i].alignByGeometry = true;
         }
         opt_txt[0].text = "Save";
@@ -908,7 +908,7 @@ public class Classic_Interface : MonoBehaviour
     public void Toggle_Options()
     {
         options_obj.gameObject.SetActive(!options_obj.gameObject.activeSelf);
-        UI_Tool.Toggle_Canvas_Priority(gameObject, info_canvas.GetComponent<Canvas>());
+        UI_Tool.ToggleCanvasPriority(gameObject, info_canvas.GetComponent<Canvas>());
     }
     void Toggle_Fullscreen()
     {
@@ -926,12 +926,12 @@ public class Classic_Interface : MonoBehaviour
 
         gameObject.tag = "Main";
         
-        buildings_canvas = UI_Tool.Canvas_Setup("Buildings Canvas", gameObject.transform);
-        upgrades_canvas = UI_Tool.Canvas_Setup("Upgrades Canvas", gameObject.transform);
-        bits_canvas = UI_Tool.Canvas_Setup("Bits Canvas", gameObject.transform);
-        messages_canvas = UI_Tool.Canvas_Setup("Messages Canvas", gameObject.transform);
-        fever_canvas = UI_Tool.Canvas_Setup("Fever Canvas", gameObject.transform);
-        info_canvas = UI_Tool.Canvas_Setup("Info Canvas", gameObject.transform);
+        buildings_canvas = UI_Tool.CanvasSetup("Buildings Canvas", gameObject.transform);
+        upgrades_canvas = UI_Tool.CanvasSetup("Upgrades Canvas", gameObject.transform);
+        bits_canvas = UI_Tool.CanvasSetup("Bits Canvas", gameObject.transform);
+        messages_canvas = UI_Tool.CanvasSetup("Messages Canvas", gameObject.transform);
+        fever_canvas = UI_Tool.CanvasSetup("Fever Canvas", gameObject.transform);
+        info_canvas = UI_Tool.CanvasSetup("Info Canvas", gameObject.transform);
 
         Init_Bits();
         Init_Building_Shop();

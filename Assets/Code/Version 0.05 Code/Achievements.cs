@@ -177,42 +177,42 @@ public class Achievements : MonoBehaviour
     
     void Awake()
     {
-        achievement_interface = UI_Tool.Canvas_Setup("Achievements Canvas", gameObject.transform);
+        achievement_interface = UI_Tool.CanvasSetup("Achievements Canvas", gameObject.transform);
 
-        GameObject backdrop = UI_Tool.Img_Setup("Backdrop", achievement_interface.transform, out Image backdrop_img, true);
-        UI_Tool.Format_Rect(backdrop_img.rectTransform);
+        GameObject backdrop = UI_Tool.ImgSetup("Backdrop", achievement_interface.transform, out Image backdrop_img, true);
+        UI_Tool.FormatRect(backdrop_img.rectTransform);
         backdrop_img.color = new Color(0, 0, 0, 0.3f);
 
-        GameObject a_panel = UI_Tool.Img_Setup("Panel", achievement_interface.transform, out Image panel_img, Database.default_box, false);
+        GameObject a_panel = UI_Tool.ImgSetup("Panel", achievement_interface.transform, out Image panel_img, Database.default_box, false);
         panel_img.color = Color.white;
-        UI_Tool.Format_Rect_NPos(panel_img.rectTransform, new Vector2(1300, 900));
+        UI_Tool.FormatRectNPos(panel_img.rectTransform, new Vector2(1300, 900));
 
-        GameObject a_content = UI_Tool.Img_Setup("Contents", a_panel.transform, out Image content_img, false);
+        GameObject a_content = UI_Tool.ImgSetup("Contents", a_panel.transform, out Image content_img, false);
         content_img.color = new Color(0.29f, 0.27f, 0.3f);
-        UI_Tool.Format_Rect(content_img.rectTransform, new Vector2(-90, -90), new Vector2(0, 0), new Vector2(1, 1), new Vector2(-15, -15));
+        UI_Tool.FormatRect(content_img.rectTransform, new Vector2(-90, -90), new Vector2(0, 0), new Vector2(1, 1), new Vector2(-15, -15));
         a_content.AddComponent<RectMask2D>();
 
         a_list = new GameObject("List").AddComponent<RectTransform>();
         a_list.transform.SetParent(a_content.transform, false);
-        UI_Tool.Format_Rect_NPos(a_list, new Vector2(0, 185 * Achievements_Data.achievements.Length), new Vector2(0, 1), new Vector2(1, 1), new Vector2(0.5f, 1));
+        UI_Tool.FormatRectNPos(a_list, new Vector2(0, 185 * Achievements_Data.achievements.Length), new Vector2(0, 1), new Vector2(1, 1), new Vector2(0.5f, 1));
 
-        GameObject a_header = UI_Tool.Img_Setup("Header", a_panel.transform, out Image header_img, Database.default_box, false);
-        UI_Tool.Format_Rect_NPos(header_img.rectTransform, new Vector2(760, 120), new Vector2(0.5f, 1), new Vector2(0.5f, 1), new Vector2(0.5f, 0.5f));
-        GameObject a_header_txt_obj = UI_Tool.Text_Setup("Title", a_header.transform, out Text a_header_txt, false);
-        UI_Tool.Format_Rect(a_header_txt.rectTransform);
-        UI_Tool.Format_Text(a_header_txt, Database.arial, 48, Color.white, TextAnchor.MiddleCenter, FontStyle.Normal);
+        GameObject a_header = UI_Tool.ImgSetup("Header", a_panel.transform, out Image header_img, Database.default_box, false);
+        UI_Tool.FormatRectNPos(header_img.rectTransform, new Vector2(760, 120), new Vector2(0.5f, 1), new Vector2(0.5f, 1), new Vector2(0.5f, 0.5f));
+        GameObject a_header_txt_obj = UI_Tool.TextSetup("Title", a_header.transform, out Text a_header_txt, false);
+        UI_Tool.FormatRect(a_header_txt.rectTransform);
+        UI_Tool.FormatText(a_header_txt, Database.arial, 48, Color.white, TextAnchor.MiddleCenter, FontStyle.Normal);
         a_header_txt.text = "ACHIEVEMENTS";
 
-        GameObject scrollbar_obj = UI_Tool.Scrollbar_Setup(a_panel.transform, a_content, a_list, 
+        GameObject scrollbar_obj = UI_Tool.ScrollbarSetup(a_panel.transform, a_content, a_list, 
             new Vector2(30, -90), new Vector2(1, 0), new Vector2(1, 1), new Vector2(1, 0.5f), new Vector2(-30, -15));
 
-        GameObject back_button_obj = UI_Tool.Button_Setup("Back Button", a_panel.transform, out Image back_img, out Button back_button, Database.default_button,
+        GameObject back_button_obj = UI_Tool.ButtonSetup("Back Button", a_panel.transform, out Image back_img, out Button back_button, Database.default_button,
             () => Display_Achievements(false));
-        UI_Tool.Format_Rect(back_img.rectTransform, new Vector2(70, 70),
+        UI_Tool.FormatRect(back_img.rectTransform, new Vector2(70, 70),
             new Vector2(0, 1), new Vector2(0, 1), new Vector2(0.5f, 0.5f), new Vector2(10, -10));
-        GameObject back_button_txt_obj = UI_Tool.Text_Setup("B Button Text", back_button_obj.transform, out Text back_button_txt, false);
-        UI_Tool.Format_Rect(back_button_txt.rectTransform);
-        UI_Tool.Format_Text(back_button_txt, Database.arial, 36, Color.black, TextAnchor.MiddleCenter, FontStyle.Normal);
+        GameObject back_button_txt_obj = UI_Tool.TextSetup("B Button Text", back_button_obj.transform, out Text back_button_txt, false);
+        UI_Tool.FormatRect(back_button_txt.rectTransform);
+        UI_Tool.FormatText(back_button_txt, Database.arial, 36, Color.black, TextAnchor.MiddleCenter, FontStyle.Normal);
         back_button_txt.text = "X";
 
         gameObject.SetActive(false);
@@ -223,7 +223,7 @@ public class Achievements : MonoBehaviour
         if (set_active) Update_Listing();
         gameObject.SetActive(set_active);
 
-        UI_Tool.Toggle_Canvas_Priority(GameObject.FindWithTag("Main"), achievement_interface.GetComponent<Canvas>());
+        UI_Tool.ToggleCanvasPriority(GameObject.FindWithTag("Main"), achievement_interface.GetComponent<Canvas>());
     }
 
 
@@ -248,13 +248,13 @@ public class Achievements : MonoBehaviour
                 GameObject icon_obj, value_obj, progress_bar_obj, cover_obj;
                 GameObject title_obj, desc_obj, date_obj, bar_obj, progress_txt_obj;
 
-                a_blocks[i].block_obj = UI_Tool.Img_Setup($"Achievement #{i}", a_list, out a_blocks[i].block, Database.default_box, false);
+                a_blocks[i].block_obj = UI_Tool.ImgSetup($"Achievement #{i}", a_list, out a_blocks[i].block, Database.default_box, false);
                 a_blocks[i].block.color = new Color(0.75f, 0.72f, 0.8f);
-                UI_Tool.Format_Rect(a_blocks[i].block.rectTransform, new Vector2(0, 185), new Vector2(0, 1), new Vector2(1, 1),
+                UI_Tool.FormatRect(a_blocks[i].block.rectTransform, new Vector2(0, 185), new Vector2(0, 1), new Vector2(1, 1),
                     new Vector2(0.5f, 1), new Vector2(0, -185 * i));
 
-                icon_obj = UI_Tool.Img_Setup("Icon", a_blocks[i].block_obj.transform, out Image icon, false);
-                UI_Tool.Format_Rect(icon.rectTransform, new Vector2(100, 100), new Vector2(0, 1), new Vector2(0, 1), new Vector2(0, 1), new Vector2(40, -40));
+                icon_obj = UI_Tool.ImgSetup("Icon", a_blocks[i].block_obj.transform, out Image icon, false);
+                UI_Tool.FormatRect(icon.rectTransform, new Vector2(100, 100), new Vector2(0, 1), new Vector2(0, 1), new Vector2(0, 1), new Vector2(40, -40));
 
                 switch (Achievements_Data.achievements[i].type)
                 {
@@ -272,45 +272,45 @@ public class Achievements : MonoBehaviour
                         Debug.Log("Invalid index color bit assignment"); break;
                 }
 
-                title_obj = UI_Tool.Text_Setup("Title", icon_obj.transform, out a_blocks[i].title, false);
-                UI_Tool.Format_Rect(a_blocks[i].title.rectTransform, new Vector2(800, 40), new Vector2(1, 1), new Vector2(1, 1), new Vector2(0, 1), new Vector2(30, 0));
-                UI_Tool.Format_Text(a_blocks[i].title, Database.arial, 32, Color.white, TextAnchor.UpperLeft, FontStyle.Bold);
+                title_obj = UI_Tool.TextSetup("Title", icon_obj.transform, out a_blocks[i].title, false);
+                UI_Tool.FormatRect(a_blocks[i].title.rectTransform, new Vector2(800, 40), new Vector2(1, 1), new Vector2(1, 1), new Vector2(0, 1), new Vector2(30, 0));
+                UI_Tool.FormatText(a_blocks[i].title, Database.arial, 32, Color.white, TextAnchor.UpperLeft, FontStyle.Bold);
                 a_blocks[i].title.text = Achievements_Data.achievements[i].title;
 
-                desc_obj = UI_Tool.Text_Setup("Desc", title_obj.transform, out Text desc, false);
-                UI_Tool.Format_Rect_NPos(desc.rectTransform, new Vector2(800, 80), new Vector2(0, 0), new Vector2(0, 0), new Vector2(0, 1));
-                UI_Tool.Format_Text(desc, Database.arial, 24, Color.white, TextAnchor.UpperLeft, FontStyle.Normal);
+                desc_obj = UI_Tool.TextSetup("Desc", title_obj.transform, out Text desc, false);
+                UI_Tool.FormatRectNPos(desc.rectTransform, new Vector2(800, 80), new Vector2(0, 0), new Vector2(0, 0), new Vector2(0, 1));
+                UI_Tool.FormatText(desc, Database.arial, 24, Color.white, TextAnchor.UpperLeft, FontStyle.Normal);
                 desc.text = Achievements_Data.achievements[i].desc;
 
-                value_obj = UI_Tool.Text_Setup("Value", a_blocks[i].block_obj.transform, out a_blocks[i].value, false);
-                UI_Tool.Format_Rect(a_blocks[i].value.rectTransform, new Vector2(190, 40), new Vector2(1, 1), new Vector2(1, 1), new Vector2(1, 1), new Vector2(-15, -15));
-                UI_Tool.Format_Text(a_blocks[i].value, Database.arial, 32, Color.white, TextAnchor.UpperRight, FontStyle.Italic);
+                value_obj = UI_Tool.TextSetup("Value", a_blocks[i].block_obj.transform, out a_blocks[i].value, false);
+                UI_Tool.FormatRect(a_blocks[i].value.rectTransform, new Vector2(190, 40), new Vector2(1, 1), new Vector2(1, 1), new Vector2(1, 1), new Vector2(-15, -15));
+                UI_Tool.FormatText(a_blocks[i].value, Database.arial, 32, Color.white, TextAnchor.UpperRight, FontStyle.Italic);
                 a_blocks[i].value.text = $"{Achievements_Data.achievements[i].value}";
 
-                date_obj = UI_Tool.Text_Setup("Date", value_obj.transform, out a_blocks[i].date, false);
-                UI_Tool.Format_Rect_NPos(a_blocks[i].date.rectTransform, new Vector2(190, 80), new Vector2(1, 0), new Vector2(1, 0), new Vector2(1, 1));
-                UI_Tool.Format_Text(a_blocks[i].date, Database.arial, 28, Color.white, TextAnchor.UpperRight, FontStyle.Normal);
+                date_obj = UI_Tool.TextSetup("Date", value_obj.transform, out a_blocks[i].date, false);
+                UI_Tool.FormatRectNPos(a_blocks[i].date.rectTransform, new Vector2(190, 80), new Vector2(1, 0), new Vector2(1, 0), new Vector2(1, 1));
+                UI_Tool.FormatText(a_blocks[i].date, Database.arial, 28, Color.white, TextAnchor.UpperRight, FontStyle.Normal);
                 a_blocks[i].date.text = $"" +
                     $"{ (Achievements_Data.achievements[i].date_earned == DateTime.FromBinary(0) ? "" : Achievements_Data.achievements[i].date_earned.ToString()) }";
 
-                progress_bar_obj = UI_Tool.Img_Setup("Progress Bar", a_blocks[i].block_obj.transform, out a_blocks[i].progress_bar, false);
-                UI_Tool.Format_Rect(a_blocks[i].progress_bar.rectTransform, new Vector2(1020, 40), new Vector2(1, 0), new Vector2(1, 0), new Vector2(1, 0), new Vector2(-15, 10));
+                progress_bar_obj = UI_Tool.ImgSetup("Progress Bar", a_blocks[i].block_obj.transform, out a_blocks[i].progress_bar, false);
+                UI_Tool.FormatRect(a_blocks[i].progress_bar.rectTransform, new Vector2(1020, 40), new Vector2(1, 0), new Vector2(1, 0), new Vector2(1, 0), new Vector2(-15, 10));
                 a_blocks[i].progress_bar.color = new Color(0.4f, 0.4f, 0.4f);
 
-                bar_obj = UI_Tool.Img_Setup("Bar", progress_bar_obj.transform, out a_blocks[i].bar, false);
-                UI_Tool.Format_Rect_NPos(a_blocks[i].bar.rectTransform, new Vector2(a_blocks[i].progress_bar.rectTransform.sizeDelta.x, 0),
+                bar_obj = UI_Tool.ImgSetup("Bar", progress_bar_obj.transform, out a_blocks[i].bar, false);
+                UI_Tool.FormatRectNPos(a_blocks[i].bar.rectTransform, new Vector2(a_blocks[i].progress_bar.rectTransform.sizeDelta.x, 0),
                     new Vector2(0, 0), new Vector2(0, 1), new Vector2(0, 0.5f));
                 a_blocks[i].bar.color = new Color(0.9f, 0.75f, 0);
                 a_blocks[i].bar.rectTransform.localScale = new Vector2(Achievements_Data.achievements[i].status == 0 ?
                     1 : (float)(Achievements_Data.achievements[i].progress / Achievements_Data.achievements[i].max), 1);
 
-                progress_txt_obj = UI_Tool.Text_Setup("Value", progress_bar_obj.transform, out a_blocks[i].progress_txt, false);
-                UI_Tool.Format_Rect(a_blocks[i].progress_txt.rectTransform);
-                UI_Tool.Format_Text(a_blocks[i].progress_txt, Database.arial, 32, Color.black, TextAnchor.MiddleCenter, FontStyle.Normal);
+                progress_txt_obj = UI_Tool.TextSetup("Value", progress_bar_obj.transform, out a_blocks[i].progress_txt, false);
+                UI_Tool.FormatRect(a_blocks[i].progress_txt.rectTransform);
+                UI_Tool.FormatText(a_blocks[i].progress_txt, Database.arial, 32, Color.black, TextAnchor.MiddleCenter, FontStyle.Normal);
                 a_blocks[i].progress_txt.text = $"{ Database.To_Bit_Notation(Achievements_Data.achievements[i].progress, "#,0.#") } / { Achievements_Data.achievements[i].max }";
 
-                cover_obj = UI_Tool.Img_Setup("Cover", a_blocks[i].block_obj.transform, out a_blocks[i].cover, true);
-                UI_Tool.Format_Rect(a_blocks[i].cover.rectTransform);
+                cover_obj = UI_Tool.ImgSetup("Cover", a_blocks[i].block_obj.transform, out a_blocks[i].cover, true);
+                UI_Tool.FormatRect(a_blocks[i].cover.rectTransform);
                 a_blocks[i].cover.color = new Color(0, 0, 0, 0.3f);
                 a_blocks[i].cover.enabled = Achievements_Data.achievements[i].status == 0 ? false : true;
             }

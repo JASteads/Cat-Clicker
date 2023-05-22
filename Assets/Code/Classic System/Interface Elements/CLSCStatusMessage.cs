@@ -18,9 +18,9 @@ public class CLSCStatusMessage
         Duration = DEFAULTDURATION;
         msgType = type;
 
-        GameObject messageObj = InterfaceTool.Text_Setup(name, parentTf,
+        GameObject messageObj = InterfaceTool.TextSetup(name, parentTf,
             out message, false);
-        InterfaceTool.Format_Text(message, SysManager.defaultFont, fontSize,
+        InterfaceTool.FormatText(message, SysManager.DEFAULT_FONT, fontSize,
             Color.white, TextAnchor.MiddleCenter, FontStyle.Bold);
 
         message.text = msg;
@@ -45,9 +45,9 @@ public class CLSCStatusMessage
         Duration = duration;
         msgType = type;
 
-        GameObject messageObj = InterfaceTool.Text_Setup(name, parentTf,
+        GameObject messageObj = InterfaceTool.TextSetup(name, parentTf,
             out message, false);
-        InterfaceTool.Format_Text(message, SysManager.defaultFont, fontSize,
+        InterfaceTool.FormatText(message, SysManager.DEFAULT_FONT, fontSize,
             Color.white, TextAnchor.MiddleCenter, FontStyle.Bold);
 
         message.text = msg;

@@ -110,7 +110,7 @@ public class CLSCTooltip
             extra_1.text = $"BPS   |   {BitNotation.ToBitNotation(building.BaseValue * building.Amount, "#,0.#")}";
             extra_2.text = $"Value   |   {BitNotation.ToBitNotation(building.AccumulativeValue, "#,0.#")}";
 
-            InterfaceTool.Format_Rect(tf, tf.sizeDelta,
+            InterfaceTool.FormatRect(tf, tf.sizeDelta,
                 new Vector2(1, 0), new Vector2(1, 0), new Vector2(1, 0), new Vector2(-340, 220));
         }
         else if (profile.clscSaveData.upgradesData.Exists(up => up.Name == targetName))
@@ -182,90 +182,90 @@ public class CLSCTooltip
         {
             case DisplayFormat.BUILDING:
             {
-                InterfaceTool.Format_Rect_NPos(tf, new Vector2(550, 250),
+                InterfaceTool.FormatRectNPos(tf, new Vector2(550, 250),
                     new Vector2(0, 0), new Vector2(0, 0), new Vector2(0, 0));
-                InterfaceTool.Format_Rect(icon_tf, new Vector2(60, 60),
+                InterfaceTool.FormatRect(icon_tf, new Vector2(60, 60),
                     new Vector2(0, 1), new Vector2(0, 1), new Vector2(0, 1), new Vector2(30, -30));
-                InterfaceTool.Format_Rect(title_tf, new Vector2(165, 60),
+                InterfaceTool.FormatRect(title_tf, new Vector2(165, 60),
                     new Vector2(0, 1), new Vector2(0, 1), new Vector2(0, 1), new Vector2(100, -30));
-                InterfaceTool.Format_Rect(desc_tf, new Vector2(490, 80),
+                InterfaceTool.FormatRect(desc_tf, new Vector2(490, 80),
                     new Vector2(0, 1), new Vector2(0, 1), new Vector2(0, 0.5f), new Vector2(30, -145));
-                InterfaceTool.Format_Rect(price_tf, new Vector2(230, 60),
+                InterfaceTool.FormatRect(price_tf, new Vector2(230, 60),
                     new Vector2(1, 1), new Vector2(1, 1), new Vector2(1, 1), new Vector2(-30, -30));
-                InterfaceTool.Format_Rect(extra_1_tf, new Vector2(170, 40),
+                InterfaceTool.FormatRect(extra_1_tf, new Vector2(170, 40),
                     new Vector2(0, 0), new Vector2(0, 0), new Vector2(0, 0), new Vector2(30, 25));
-                InterfaceTool.Format_Rect(extra_2_tf, new Vector2(170, 40),
+                InterfaceTool.FormatRect(extra_2_tf, new Vector2(170, 40),
                     new Vector2(1, 0), new Vector2(1, 0), new Vector2(1, 0), new Vector2(-30, 25));
 
                 // Text Formatting
 
-                InterfaceTool.Format_Text(title, defaultFont, 24, Color.white, TextAnchor.UpperLeft, FontStyle.Bold);
-                InterfaceTool.Format_Text(price, defaultFont, 24, Color.white, TextAnchor.UpperRight, FontStyle.Normal);
-                InterfaceTool.Format_Text(desc, defaultFont, 24, Color.white, TextAnchor.UpperLeft, FontStyle.Normal);
-                InterfaceTool.Format_Text(extra_1, defaultFont, 14, Color.white, TextAnchor.MiddleLeft, FontStyle.Normal);
-                InterfaceTool.Format_Text(extra_2, defaultFont, 14, Color.white, TextAnchor.MiddleRight, FontStyle.Normal);
+                InterfaceTool.FormatText(title, DEFAULT_FONT, 24, Color.white, TextAnchor.UpperLeft, FontStyle.Bold);
+                InterfaceTool.FormatText(price, DEFAULT_FONT, 24, Color.white, TextAnchor.UpperRight, FontStyle.Normal);
+                InterfaceTool.FormatText(desc, DEFAULT_FONT, 24, Color.white, TextAnchor.UpperLeft, FontStyle.Normal);
+                InterfaceTool.FormatText(extra_1, DEFAULT_FONT, 14, Color.white, TextAnchor.MiddleLeft, FontStyle.Normal);
+                InterfaceTool.FormatText(extra_2, DEFAULT_FONT, 14, Color.white, TextAnchor.MiddleRight, FontStyle.Normal);
                 break;
             }
             case DisplayFormat.UPGRADE:
             {
-                InterfaceTool.Format_Rect(tf, new Vector2(550, 230),
+                InterfaceTool.FormatRect(tf, new Vector2(550, 230),
                     new Vector2(0.5f, 0), new Vector2(0.5f, 0), new Vector2(0.5f, 0), new Vector2(-670, 310));
-                InterfaceTool.Format_Rect(icon_tf, new Vector2(60, 60),
+                InterfaceTool.FormatRect(icon_tf, new Vector2(60, 60),
                     new Vector2(0, 1), new Vector2(0, 1), new Vector2(0, 1), new Vector2(30, -30));
-                InterfaceTool.Format_Rect(title_tf, new Vector2(190, 60),
+                InterfaceTool.FormatRect(title_tf, new Vector2(190, 60),
                     new Vector2(0, 1), new Vector2(0, 1), new Vector2(0, 1), new Vector2(100, -30));
-                InterfaceTool.Format_Rect(desc_tf, new Vector2(490, 70),
+                InterfaceTool.FormatRect(desc_tf, new Vector2(490, 70),
                     new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new Vector2(0, -20));
-                InterfaceTool.Format_Rect(price_tf, new Vector2(230, 60),
+                InterfaceTool.FormatRect(price_tf, new Vector2(230, 60),
                     new Vector2(1, 1), new Vector2(1, 1), new Vector2(1, 1), new Vector2(-30, -30));
-                InterfaceTool.Format_Rect(extra_1_tf, new Vector2(100, 40),
+                InterfaceTool.FormatRect(extra_1_tf, new Vector2(100, 40),
                     new Vector2(0, 0), new Vector2(0, 0), new Vector2(0, 0), new Vector2(115, 20));
-                InterfaceTool.Format_Rect(extra_2_tf, new Vector2(220, 40),
+                InterfaceTool.FormatRect(extra_2_tf, new Vector2(220, 40),
                     new Vector2(1, 0), new Vector2(1, 0), new Vector2(1, 0), new Vector2(-115, 20));
 
                 // Text Formatting
 
-                InterfaceTool.Format_Text(title, defaultFont, 24, Color.white, TextAnchor.UpperCenter, FontStyle.Bold);
-                InterfaceTool.Format_Text(price, defaultFont, 24, Color.white, TextAnchor.UpperRight, FontStyle.Normal);
-                InterfaceTool.Format_Text(desc, defaultFont, 20, Color.white, TextAnchor.MiddleLeft, FontStyle.Normal);
-                InterfaceTool.Format_Text(extra_1, defaultFont, 14, Color.white, TextAnchor.MiddleLeft, FontStyle.Normal);
-                InterfaceTool.Format_Text(extra_2, defaultFont, 18, Color.white, TextAnchor.MiddleRight, FontStyle.Normal);
+                InterfaceTool.FormatText(title, DEFAULT_FONT, 24, Color.white, TextAnchor.UpperCenter, FontStyle.Bold);
+                InterfaceTool.FormatText(price, DEFAULT_FONT, 24, Color.white, TextAnchor.UpperRight, FontStyle.Normal);
+                InterfaceTool.FormatText(desc, DEFAULT_FONT, 20, Color.white, TextAnchor.MiddleLeft, FontStyle.Normal);
+                InterfaceTool.FormatText(extra_1, DEFAULT_FONT, 14, Color.white, TextAnchor.MiddleLeft, FontStyle.Normal);
+                InterfaceTool.FormatText(extra_2, DEFAULT_FONT, 18, Color.white, TextAnchor.MiddleRight, FontStyle.Normal);
                 break;
             }
             case DisplayFormat.FEVER:
             {
                 FeverData feverData = profile.clscSaveData.feverData;
 
-                InterfaceTool.Format_Rect(tf, new Vector2(550, 220),
+                InterfaceTool.FormatRect(tf, new Vector2(550, 220),
                     new Vector2(0, 0), new Vector2(0, 0), new Vector2(0, 0), new Vector2(15, 315));
-                InterfaceTool.Format_Rect(icon_tf, new Vector2(60, 60),
+                InterfaceTool.FormatRect(icon_tf, new Vector2(60, 60),
                     new Vector2(0, 1), new Vector2(0, 1), new Vector2(0, 1), new Vector2(30, -25));
-                InterfaceTool.Format_Rect(title_tf, new Vector2(300, 60),
+                InterfaceTool.FormatRect(title_tf, new Vector2(300, 60),
                     new Vector2(0.5f, 1), new Vector2(0.5f, 1), new Vector2(0.5f, 1), new Vector2(0, -25));
-                InterfaceTool.Format_Rect(desc_tf, new Vector2(490, 70),
+                InterfaceTool.FormatRect(desc_tf, new Vector2(490, 70),
                     new Vector2(0.5f, 0), new Vector2(0.5f, 0), new Vector2(0.5f, 0), new Vector2(0, 25));
-                InterfaceTool.Format_Rect(price_tf, new Vector2(170, 40),
+                InterfaceTool.FormatRect(price_tf, new Vector2(170, 40),
                     new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new Vector2(0, 5));
-                InterfaceTool.Format_Rect(extra_1_tf, new Vector2(160, 40),
+                InterfaceTool.FormatRect(extra_1_tf, new Vector2(160, 40),
                     new Vector2(0, 0.5f), new Vector2(0, 0.5f), new Vector2(0, 0.5f), new Vector2(30, 5));
-                InterfaceTool.Format_Rect(extra_2_tf, new Vector2(160, 40),
+                InterfaceTool.FormatRect(extra_2_tf, new Vector2(160, 40),
                     new Vector2(1, 0.5f), new Vector2(1, 0.5f), new Vector2(1, 0.5f), new Vector2(-30, 5));
 
                 // Text Formatting
 
-                InterfaceTool.Format_Text(title, defaultFont, 36, new Color(1, 0.8f, 0), TextAnchor.UpperCenter, FontStyle.Bold);
+                InterfaceTool.FormatText(title, DEFAULT_FONT, 36, new Color(1, 0.8f, 0), TextAnchor.UpperCenter, FontStyle.Bold);
                 title.text = "FEVER BAR";
 
-                InterfaceTool.Format_Text(price, defaultFont, 14, Color.white, TextAnchor.MiddleCenter, FontStyle.Normal);
+                InterfaceTool.FormatText(price, DEFAULT_FONT, 14, Color.white, TextAnchor.MiddleCenter, FontStyle.Normal);
                 price.text = $"Drain   |   {feverData.Drain * 100}%";
 
-                InterfaceTool.Format_Text(extra_1, defaultFont, 14, Color.white, TextAnchor.MiddleLeft, FontStyle.Normal);
+                InterfaceTool.FormatText(extra_1, DEFAULT_FONT, 14, Color.white, TextAnchor.MiddleLeft, FontStyle.Normal);
                 extra_1.text = $"MAX   |   {(feverData.Max / feverData.Gain).ToString("#,0")}";
 
-                InterfaceTool.Format_Text(extra_2, defaultFont, 14, Color.white, TextAnchor.MiddleRight, FontStyle.Normal);
+                InterfaceTool.FormatText(extra_2, DEFAULT_FONT, 14, Color.white, TextAnchor.MiddleRight, FontStyle.Normal);
                 extra_2.text = $"Persistence   |   {feverData.Persistence * 100}%";
 
-                InterfaceTool.Format_Text(desc, defaultFont, 14, Color.white, TextAnchor.MiddleLeft, FontStyle.Normal);
+                InterfaceTool.FormatText(desc, DEFAULT_FONT, 14, Color.white, TextAnchor.MiddleLeft, FontStyle.Normal);
                 desc.text =
                     $"<i><size=14><color=#cccccc>When active...</color></size></i>\nClick Power Multi : <color=#ffcc00>{feverData.ClickMultiplier * 100f}%</color>\n" +
                     $"BPS Multiplier      : <color=#ffcc00>{feverData.BPSMultiplier * 100f}%</color>";
