@@ -1,4 +1,4 @@
-# Cat-Clicker (Version 0.05a)
+# Cat-Clicker (Version 0.06a)
 
 Code by Jonavinne Steadham
 
