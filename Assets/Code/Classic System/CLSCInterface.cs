@@ -26,8 +26,12 @@ public class CLSCInterface : MonoBehaviour
 
         gameObject.tag = "Main";
 
-        bitsCanvas = InterfaceTool.CanvasSetup("Bits Canvas", transform, out Canvas bCanvas);
-        infoCanvas = InterfaceTool.CanvasSetup("Info Canvas", transform, out Canvas iCanvas);
+        bitsCanvas = InterfaceTool.CanvasSetup("Bits Canvas",
+            transform, out Canvas bCanvas);
+        infoCanvas = InterfaceTool.CanvasSetup("Info Canvas",
+            transform, out Canvas iCanvas);
+        
+        InterfaceTool.FormatRect(infoCanvas.GetComponent<RectTransform>());
 
         tooltip = new CLSCTooltip(infoCanvas.transform);
 
@@ -45,7 +49,6 @@ public class CLSCInterface : MonoBehaviour
         Init_Options();
 
 
-
         // POST SETUP
 
         generalMessages = gameObject.AddComponent<CLSCStatusMessagesList>();
@@ -59,8 +62,8 @@ public class CLSCInterface : MonoBehaviour
     
     void Update()
     {
-        bitCounter.text = $"Bits : {BitNotation.ToBitNotation(profile.clscSaveData.GetCurrencyCurrent(), "#,0")}";
-        BPSCounter.text = $"Bits per second : {BitNotation.ToBitNotation(profile.clscSaveData.BitsPerSecond * (system.feverSystem.isActive ? 1.5f : 1), "#,0.#")}";
+        bitCounter.text = $"Bits : {BitNotation.ToBitNotation(activeProfile.cl.GetCurrencyCurrent())}";
+        BPSCounter.text = $"Bits per second : {BitNotation.ToBitNotation(activeProfile.cl.BitsPerSecond * (system.feverSystem.isActive ? 1.5f : 1))}";
         
         if (tooltip.tooltipObj.activeSelf)
         {
@@ -71,6 +74,8 @@ public class CLSCInterface : MonoBehaviour
     void Init_Bits()
     {
         GameObject bit_counter_obj, bps_obj, click_obj, click_text_obj, opt_obj;
+
+        InterfaceTool.FormatRect(bitsCanvas.GetComponent<RectTransform>());
 
         bit_counter_obj = InterfaceTool.TextSetup("Bit Counter", bitsCanvas.transform, out bitCounter, false);
         InterfaceTool.FormatRect(bitCounter.rectTransform, new Vector2(1300, 60),
@@ -162,16 +167,17 @@ public class CLSCInterface : MonoBehaviour
             fileManager.FileSave();
             generalMessages.Broadcast("File saved!", StatusType.BONUS);
         });
-        options[1].onClick.AddListener(() => achievementsInterface.Display_Achievements(true));
+        options[1].onClick.AddListener(
+            () => DisplayAchievements());
         options[2].onClick.AddListener(Toggle_Fullscreen);
-        options[3].onClick.AddListener(QuitClassic);
+        options[3].onClick.AddListener(LoadMainMenu);
 
         optionsObj.gameObject.SetActive(false);
     }
     public void Toggle_Options()
     {
         optionsObj.gameObject.SetActive(!optionsObj.gameObject.activeSelf);
-        InterfaceTool.ToggleCanvasPriority(gameObject, infoCanvas.GetComponent<Canvas>());
+        InterfaceTool.ToggleCanvasPriority(transform, infoCanvas.GetComponent<Canvas>());
     }
     void Toggle_Fullscreen()
     {

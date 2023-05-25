@@ -1,7 +1,7 @@
 ﻿[System.Serializable]
 public class UpgradeData
 {
-    public delegate bool Predicate(CLSCSaveData clscSaveData);
+    public delegate bool Predicate(CLSaveData cl);
     public delegate void Effect();
 
     public string Name { get; }
@@ -61,7 +61,7 @@ public class UpgradeData
 
     public void Purchase()
     {
-        SysManager.profile.clscSaveData.CurrencyCurrent -= Price;
+        SysManager.activeProfile.cl.CurrencyCurrent -= Price;
         Status = Status.PURCHASED;
         Buy();
     }
@@ -90,7 +90,7 @@ public class UpgradeData
                 }
             }
 
-            return predicate(SysManager.profile.clscSaveData);
+            return predicate(SysManager.activeProfile.cl);
         }
 
         return false;

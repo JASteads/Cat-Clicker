@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class MainMenu
+public class MainMenu : GameMode
 {
     int activeFile;
     bool newGame, fileCheck;
@@ -11,7 +11,6 @@ public class MainMenu
 
     readonly Color black = new Color(0.2f, 0.2f, 0.2f),
                    menuColor = new Color(0.7f, 0.7f, 0.75f);
-    readonly Transform transform;
 
     readonly List<GameObject> menuStack = new List<GameObject>();
     GameObject startMenu, selectMenu, newGameMenu,
@@ -21,11 +20,8 @@ public class MainMenu
     Button contButton, backButton;
     Text fileName, gameTitle;
 
-    public MainMenu(Transform parent)
+    public MainMenu()
     {
-        transform = InterfaceTool.CanvasSetup("Main Menu",
-            parent.transform, out _).transform;
-        
         CreateMenuObjects();
         CreateStartMenu();
         CreateSelectMenu();
@@ -35,18 +31,16 @@ public class MainMenu
         CreateRecordsMenu();
 
         fileCheck = CheckExistingFiles();
-
         GoToStart();
     }
 
     void LoadScreen(GameObject screen)
     {
-        Debug.Log($"Loading screen : {screen.name}");
         if (menuStack.Count > 0)
             menuStack[menuStack.Count - 1].SetActive(false);
         menuStack.Add(screen);
         screen.SetActive(true);
-        backButton.gameObject.SetActive(true);
+        TryTitleFormat();
     }
 
     void ExitScreen()
@@ -56,10 +50,9 @@ public class MainMenu
         menuStack[topIndex].SetActive(false);
         menuStack[topIndex - 1].SetActive(true);
         menuStack.RemoveAt(topIndex);
-        backButton.gameObject.SetActive(topIndex > 1);
+        TryTitleFormat();
     }
 
-    /* GoToStart : Clears the menu stack and loads the start menu */
     void GoToStart()
     {
         if (menuStack.Count > 0)
@@ -68,30 +61,29 @@ public class MainMenu
             menuStack.Clear();
         }
         LoadScreen(startMenu);
-        AttemptTitleFormat();
     }
 
-    /* AttemptTitleFormat : Move title and toggle back button depending on 
-     * whether or not the start menu is the current menu.
-     */
-    void AttemptTitleFormat()
+    /* TryTitleFormat : Move title and toggle back button depending 
+     * on whether or not the start menu is the current menu. */
+    void TryTitleFormat()
     {
-        GameObject topMenu = menuStack[menuStack.Count - 1],
-            backObj = backButton.gameObject;
-        if (topMenu != startMenu)
-        {
-            backObj.SetActive(!backObj.activeSelf);
+        GameObject backObj = backButton.gameObject;
+        bool prevState = backObj.activeSelf;
 
+        backObj.SetActive(menuStack.Count > 1);
+
+        if (backObj.activeSelf == prevState) return;
+        if (backObj.activeSelf)
+        {
             InterfaceTool.FormatRect(gameTitle.rectTransform,
-                new Vector2(350, 120), Vector2.up, Vector2.up, Vector2.up,
-                new Vector2(80, -80));
+                new Vector2(350, 120), Vector2.up, Vector2.up,
+                Vector2.up, new Vector2(80, -80));
             InterfaceTool.FormatText(gameTitle,
                 SysManager.DEFAULT_FONT, 48, Color.white,
                 TextAnchor.UpperLeft, FontStyle.Bold);
         }
         else
         {
-            backObj.SetActive(false);
             InterfaceTool.FormatRect(gameTitle.rectTransform,
                 new Vector2(620, 200), new Vector2(0.5f, 0.5f),
                 new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0),
@@ -100,45 +92,6 @@ public class MainMenu
                 SysManager.DEFAULT_FONT, 64, Color.white,
                 TextAnchor.MiddleCenter, FontStyle.Bold);
         }
-    }
-
-    /* CheckExistingFiles : Checks the Saves folder for existing files */
-    bool CheckExistingFiles()
-    {
-        contButton.interactable = false;
-
-        for (int i = 0; i < 3; i++)
-        {
-            existingFiles[i] = System.IO.File.Exists(
-                $"{System.IO.Directory.GetCurrentDirectory()}" +
-                $"/Saves/File {(char)('A' + i)}.nimmy");
-
-            if (!contButton.interactable)
-                contButton.interactable = existingFiles[i];
-        }
-        
-        return contButton.interactable;
-    }
-
-    void UpdateSelectButtons()
-    {
-        for (int i = 0; i < fileSelectButtons.Length; i++)
-            fileSelectButtons[i].interactable = existingFiles[i];
-    }
-
-    string UpdateStats()
-    {
-        return SysManager.profile.clscSaveData != null ? 
-            $"Current bits : " +
-            $"{SysManager.profile.clscSaveData.CurrencyCurrent:#,0.#}\n" +
-            $"Total bits   : " +
-            $"{SysManager.profile.clscSaveData.CurrencyTotal:#,0.#}\n" +
-            $"Current BPS  : " +
-            $"{SysManager.profile.clscSaveData.BitsPerSecond:#,0.#}\n" +
-            $"Time played  : " +
-            $"{ "TIME PLAYED PLACEHOLDER" } seconds\n" +
-            $"Time started : " +
-            $"{ "TIME STARTED PLACEHOLDER" }" : "";
     }
 
     void CreateMenuObjects()
@@ -292,9 +245,10 @@ public class MainMenu
 
                     if (!newGame)
                     {
-                        SysManager.fileManager.FileLoad(fileChoice);
-                        SysManager.LoadAchievementsInterface();
+                        SysManager.fileManager.FileLoad(activeFile);
+                        SysManager.UpdateAchievements();
                     }
+                        
                     LoadScreen(newGame ? newGameMenu : profileMenu);
                 });
             InterfaceTool.FormatRect(l_img.rectTransform,
@@ -361,11 +315,9 @@ public class MainMenu
                 SysManager.defaultButton,
                 () =>
                 {
-                    SysManager.fileManager.NewFile(
-                        activeFile, (Difficulty)i);
-                    SysManager.LoadAchievementsInterface();
+                    SysManager.fileManager.NewFile(activeFile);
+                    SysManager.UpdateAchievements();
 
-                    fileCheck = CheckExistingFiles();
                     newGame = false;
                     UpdateSelectButtons();
 
@@ -459,18 +411,17 @@ public class MainMenu
             switch (i)
             {
                 case 0: action = null; break;
-                case 1: action = () =>
-                {
-                    SysManager.LoadClassicMode();
-                    EndMainMenu();
-                }; break;
+                case 1: action = SysManager.LoadCLMode; break;
                 case 2: action = null; break;
-                case 3: action = () => LoadScreen(recordsMenu);
+                case 3: action = () =>
+                {
+                    PrintProfileStats();
+                    LoadScreen(recordsMenu);
+                };
                     break;
                 case 4: action = () =>
                 {
                     SysManager.fileManager.DeleteFile();
-                    SysManager.QuitAchievementsInterface();
                     CheckExistingFiles();
                     GoToStart();
                 }; break;
@@ -665,10 +616,9 @@ public class MainMenu
             .ButtonSetup("Achievements Button",
             recordsMenu.transform, out Image achievements_img,
             out Button achievements_button, SysManager.defaultButton,
-            () => SysManager.achievementsInterface
-                .Display_Achievements(true));
+            () => SysManager.DisplayAchievements());
         InterfaceTool.FormatRect(achievements_img.rectTransform,
-            new Vector2(-80, 200), Vector2.right, Vector2.up,
+            new Vector2(-80, 200), Vector2.up, Vector2.one,
             new Vector2(0.5f, 1), new Vector2(0, -50));
 
         GameObject achievement_button_txt = InterfaceTool.TextSetup(
@@ -699,13 +649,45 @@ public class MainMenu
         InterfaceTool.FormatText(stats_txt, SysManager.DEFAULT_FONT,
             28, Color.white, TextAnchor.UpperLeft, FontStyle.Normal);
         stats_txt.lineSpacing = 1.5f;
-        stats_txt.text = UpdateStats();
 
         recordsMenu.SetActive(false);
     }
 
-    void EndMainMenu()
+    void UpdateSelectButtons()
     {
-        Object.Destroy(transform.gameObject);
+        for (int i = 0; i < fileSelectButtons.Length; i++)
+            fileSelectButtons[i].interactable = existingFiles[i];
+    }
+
+    bool CheckExistingFiles()
+    {
+        contButton.interactable = false;
+
+        for (int i = 0; i < 3; i++)
+        {
+            existingFiles[i] = System.IO.File.Exists(
+                $"{System.IO.Directory.GetCurrentDirectory()}" +
+                $"/Saves/File {(char)('A' + i)}.nimmy");
+
+            if (!contButton.interactable)
+                contButton.interactable = existingFiles[i];
+        }
+
+        return contButton.interactable;
+    }
+
+    string PrintProfileStats()
+    {
+        return SysManager.activeProfile.cl != null ?
+            $"Current bits : " +
+            $"{SysManager.activeProfile.cl.CurrencyCurrent:#,0.#}\n" +
+            $"Total bits   : " +
+            $"{SysManager.activeProfile.cl.CurrencyTotal:#,0.#}\n" +
+            $"Current BPS  : " +
+            $"{SysManager.activeProfile.cl.BitsPerSecond:#,0.#}\n" +
+            $"Time played  : " +
+            $"{"TIME PLAYED PLACEHOLDER"} seconds\n" +
+            $"Time started : " +
+            $"{"TIME STARTED PLACEHOLDER"}" : "";
     }
 }

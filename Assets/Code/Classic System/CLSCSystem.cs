@@ -8,7 +8,7 @@ public class CLSCSystem : MonoBehaviour
     public CLSCBuildings buildingSystem;
     public CLSCUpgrades upgradeSystem;
     public CLSCFeverSystem feverSystem = new CLSCFeverSystem();
-    public CLSCSaveData clscData = SysManager.profile.clscSaveData;
+    public CLSaveData clscData = SysManager.activeProfile.cl;
     public CLSCInterface clscInterface;
 
     void Start()
@@ -37,7 +37,7 @@ public class CLSCSystem : MonoBehaviour
         {
             ++clscData.misc.TimePlayed;
 
-            SysManager.profile.achievements.CheckAchievements();
+            SysManager.UpdateAchievements();
 
             tickSecond = 0;
         }
@@ -66,10 +66,8 @@ public class CLSCSystem : MonoBehaviour
 
     public void Click()
     {
-        // Increment total clicks
         ++clscData.TotalClicks; 
 
-        // Add base click power
         double finalClickPower = clscData.ClickPower; 
 
         // Add any building modifiers
@@ -83,11 +81,10 @@ public class CLSCSystem : MonoBehaviour
             finalClickPower *= feverSystem.FeverData.ClickMultiplier;
         }
 
-        // Add the final amount to stored currency
         clscData.AddToCurrency(finalClickPower);
 
         // Display the number of bits earned
-        clscInterface.clickPopups.Broadcast($"+ { BitNotation.ToBitNotation(finalClickPower, "#,0.#") } bits", StatusType.NEWS);
+        clscInterface.clickPopups.Broadcast($"+ { BitNotation.ToBitNotation(finalClickPower) } bits", StatusType.NEWS);
     }
 
     public void PurchaseUpgrade(CLSCUpgradeButton upgrade)

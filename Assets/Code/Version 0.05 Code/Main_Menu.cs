@@ -428,7 +428,7 @@ public class Main_Menu : MonoBehaviour
 
         GameObject achievements_button_obj = UI_Tool.ButtonSetup("Achievements Button", menus[5].transform,
             out Image achievements_img, out Button achievements_button, Database.default_button, 
-            () => { Database.achievements.Display_Achievements(true); });
+            () => { Database.achievements.DisplayAchievements(true); });
 
         UI_Tool.FormatRect(achievements_img.rectTransform, new Vector2(-80, 200),
             new Vector2(0, 1), new Vector2(1, 1), new Vector2(0.5f, 1), new Vector2(0, -50));

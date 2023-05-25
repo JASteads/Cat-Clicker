@@ -899,7 +899,7 @@ public class Classic_Interface : MonoBehaviour
         opt_txt[3].text = "Quit";
 
         options[0].onClick.AddListener(() => { if (File_Manager.File_Save()) Status_Update(status_msgs, "File saved!", Status_Msg.Type.Bonus); });
-        options[1].onClick.AddListener(() => { achievements.Display_Achievements(true); });
+        options[1].onClick.AddListener(() => { achievements.DisplayAchievements(true); });
         options[2].onClick.AddListener(Toggle_Fullscreen);
         options[3].onClick.AddListener(Quit_Classic);
 

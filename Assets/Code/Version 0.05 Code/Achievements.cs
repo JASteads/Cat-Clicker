@@ -207,7 +207,7 @@ public class Achievements : MonoBehaviour
             new Vector2(30, -90), new Vector2(1, 0), new Vector2(1, 1), new Vector2(1, 0.5f), new Vector2(-30, -15));
 
         GameObject back_button_obj = UI_Tool.ButtonSetup("Back Button", a_panel.transform, out Image back_img, out Button back_button, Database.default_button,
-            () => Display_Achievements(false));
+            () => DisplayAchievements(false));
         UI_Tool.FormatRect(back_img.rectTransform, new Vector2(70, 70),
             new Vector2(0, 1), new Vector2(0, 1), new Vector2(0.5f, 0.5f), new Vector2(10, -10));
         GameObject back_button_txt_obj = UI_Tool.TextSetup("B Button Text", back_button_obj.transform, out Text back_button_txt, false);
@@ -218,7 +218,7 @@ public class Achievements : MonoBehaviour
         gameObject.SetActive(false);
     }
 
-    public void Display_Achievements(bool set_active)
+    public void DisplayAchievements(bool set_active)
     {
         if (set_active) Update_Listing();
         gameObject.SetActive(set_active);

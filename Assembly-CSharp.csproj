@@ -55,8 +55,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Code\Achievements\ABlock.cs" />
+     <Compile Include="Assets\Code\Achievements\AchievementInfo.cs" />
      <Compile Include="Assets\Code\Achievements\AchievementSystem.cs" />
      <Compile Include="Assets\Code\Achievements\AchievementsInterface.cs" />
+     <Compile Include="Assets\Code\CLMode.cs" />
      <Compile Include="Assets\Code\Classic System\CLSCBuildings.cs" />
      <Compile Include="Assets\Code\Classic System\CLSCFeverSystem.cs" />
      <Compile Include="Assets\Code\Classic System\CLSCInterface.cs" />
@@ -69,11 +72,13 @@
      <Compile Include="Assets\Code\Classic System\Interface Elements\CLSCTooltip.cs" />
      <Compile Include="Assets\Code\Classic System\Interface Elements\CLSCUpgradeButton.cs" />
      <Compile Include="Assets\Code\Classic System\Interface Elements\CLSCUpgradeTab.cs" />
+     <Compile Include="Assets\Code\GameMode.cs" />
      <Compile Include="Assets\Code\MainMenu.cs" />
-     <Compile Include="Assets\Code\Profile Data\AchievementData.cs" />
+     <Compile Include="Assets\Code\Profile Data\AchievementData\AchieveData.cs" />
+     <Compile Include="Assets\Code\Profile Data\AchievementData\AchieveDataBlock.cs" />
      <Compile Include="Assets\Code\Profile Data\ClassicData\BuildingData.cs" />
      <Compile Include="Assets\Code\Profile Data\ClassicData\CLSCMiscStats.cs" />
-     <Compile Include="Assets\Code\Profile Data\ClassicData\CLSCSaveData.cs" />
+     <Compile Include="Assets\Code\Profile Data\ClassicData\CLSaveData.cs" />
      <Compile Include="Assets\Code\Profile Data\ClassicData\FeverData.cs" />
      <Compile Include="Assets\Code\Profile Data\ClassicData\UpgradeData.cs" />
      <Compile Include="Assets\Code\Profile Data\Profile.cs" />

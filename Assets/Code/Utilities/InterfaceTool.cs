@@ -5,16 +5,15 @@ public class InterfaceTool
 {
     public static Font DEFAULT_FONT = SysManager.DEFAULT_FONT;
 
-    public static void ToggleCanvasPriority(GameObject parent,
+    public static void ToggleCanvasPriority(Transform parent,
         Canvas priority)
     {
-        for (int i = 0; i < parent.transform.childCount; i++)
-        {
-            GraphicRaycaster ray = parent.transform.GetChild(i)
-                .GetComponent<Canvas>()
-                .GetComponent<GraphicRaycaster>();
-            ray.enabled = !ray.IsActive();
-        }
+        GraphicRaycaster[] rays = 
+            parent.GetComponentsInChildren<GraphicRaycaster>();
+
+        for (int i = 0; i < rays.Length; i++)
+            rays[i].enabled = !rays[i].IsActive();
+
         priority.GetComponent<GraphicRaycaster>().enabled = true;
     }
 

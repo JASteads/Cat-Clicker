@@ -1,19 +1,19 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class SysManager
 {
     public readonly static Font DEFAULT_FONT;
-    public static Sprite defaultButton, defaultBox;
+    public readonly static Sprite defaultButton, defaultBox;
     public static Sprite[] uiSprites;
     public static Camera mainCam;
-
-    public static Transform baseTF;
-    public static MainMenu mainMenu;
-    public static CLSCSystem classicMode;
-    public static AchievementsInterface achievementsInterface;
-
+    
     public static FileManagement fileManager;
-    public static Profile profile;
+    public static Profile activeProfile;
+
+    static GameMode gameMode;
+    static AchievementSystem achieveSys;
+
 
     static SysManager()
     {
@@ -26,50 +26,33 @@ public class SysManager
         mainCam.backgroundColor = new Color(0.2f, 0.15f, 0.3f);
 
         fileManager = new FileManagement();
-        profile = new Profile();
-
-        baseTF = new GameObject("Base").transform;
+        achieveSys = new AchievementSystem();
     }
 
     [RuntimeInitializeOnLoadMethod]
     static void StartApplication()
-    {
-        LoadMainMenu();
-    }
-    
-    /* Start and stop for Main_Menu */
+    { LoadMainMenu(); }
+
+    public static Transform GetMainTF()
+    { return gameMode.transform; }
     public static void LoadMainMenu()
-    {
-        mainMenu = new MainMenu(baseTF);
-    }
+    { ChangeMode(new MainMenu()); }
+    public static void LoadCLMode()
+    { ChangeMode(new CLMode()); }
+    public static void DisplayAchievements()
+    { achieveSys.DisplayInterface(); }
+    public static List<AchievementInfo> GetADB()
+    { return achieveSys.database; }
+    public static List<AchievementInfo> UpdateAchievements()
+    { return achieveSys.UpdateDB(); }
+    public static void ForceUnlockAchievement(string name)
+    { GetADB().Find(a => a.Title == name)?.Unlock(); }
 
-    /* Start and stop for Classic */
-    public static void LoadClassicMode()
+    static void ChangeMode(GameMode newMode)
     {
-        classicMode = new GameObject("Classic System")
-            .AddComponent<CLSCSystem>();
-    }
-    public static void QuitClassic()
-    {
-        LoadMainMenu();
-        Object.Destroy(classicMode.gameObject);
-    }
-
-    /* Starts Achievements system */
-    public static void LoadAchievementsInterface()
-    {
-        // Make sure to clear the old achievement
-        // interface when loading a new profile
-        if (achievementsInterface != null)
-            QuitAchievementsInterface();
-
-        achievementsInterface = new GameObject
-            ("Achievements Interface")
-            .AddComponent<AchievementsInterface>();
-    }
-    public static void QuitAchievementsInterface()
-    {
-        Object.Destroy(achievementsInterface.gameObject);
+        if (gameMode != null)
+            Object.Destroy(gameMode.transform.gameObject);
+        gameMode = newMode;
     }
 
     public static void QuitGame()

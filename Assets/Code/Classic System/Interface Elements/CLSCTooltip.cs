@@ -98,24 +98,24 @@ public class CLSCTooltip
         {
             CheckFormat(DisplayFormat.FEVER);
         }
-        else if (profile.clscSaveData.buildingsData.Exists(building => building.Name == targetName))
+        else if (activeProfile.cl.buildingsData.Exists(building => building.Name == targetName))
         {
-            BuildingData building = profile.clscSaveData.buildingsData.Find(b => b.Name == targetName);
+            BuildingData building = activeProfile.cl.buildingsData.Find(b => b.Name == targetName);
 
             CheckFormat(DisplayFormat.BUILDING);
 
             title.text = building.Name;
-            price.text = BitNotation.ToBitNotation(building.Price, "#,0.#");
+            price.text = BitNotation.ToBitNotation(building.Price);
             desc.text = building.Desc;
-            extra_1.text = $"BPS   |   {BitNotation.ToBitNotation(building.BaseValue * building.Amount, "#,0.#")}";
-            extra_2.text = $"Value   |   {BitNotation.ToBitNotation(building.AccumulativeValue, "#,0.#")}";
+            extra_1.text = $"BPS   |   {BitNotation.ToBitNotation(building.BaseValue * building.Amount)}";
+            extra_2.text = $"Value   |   {BitNotation.ToBitNotation(building.AccumulativeValue)}";
 
             InterfaceTool.FormatRect(tf, tf.sizeDelta,
                 new Vector2(1, 0), new Vector2(1, 0), new Vector2(1, 0), new Vector2(-340, 220));
         }
-        else if (profile.clscSaveData.upgradesData.Exists(up => up.Name == targetName))
+        else if (activeProfile.cl.upgradesData.Exists(up => up.Name == targetName))
         {
-            UpgradeData upgrade = profile.clscSaveData.upgradesData.Find(up => up.Name == targetName);
+            UpgradeData upgrade = activeProfile.cl.upgradesData.Find(up => up.Name == targetName);
 
             CheckFormat(DisplayFormat.UPGRADE);
 
@@ -126,7 +126,7 @@ public class CLSCTooltip
             {
                 case UpgradeType.CP:
                     extra_1.text = "[CP]";
-                    extra_2.text = $"{BitNotation.ToBitNotation(profile.clscSaveData.ClickPower, "#,0.#")}";
+                    extra_2.text = $"{BitNotation.ToBitNotation(activeProfile.cl.ClickPower)}";
                     break;
                 case UpgradeType.BUILDING:
                     extra_1.text = "[Building]";
@@ -134,7 +134,7 @@ public class CLSCTooltip
                     break;
                 case UpgradeType.CPS:
                     extra_1.text = "[BPS]";
-                    extra_2.text = $"{BitNotation.ToBitNotation(profile.clscSaveData.BitsPerSecond, "#,0.#")}";
+                    extra_2.text = $"{BitNotation.ToBitNotation(activeProfile.cl.BitsPerSecond)}";
                     break;
                 case UpgradeType.SPECIAL:
                     extra_1.text = "[Misc]";
@@ -156,13 +156,13 @@ public class CLSCTooltip
         if (format == DisplayFormat.FEVER) { }
         else if (format == DisplayFormat.BUILDING)
         {
-            BuildingData building = profile.clscSaveData.buildingsData.Find(b => b.Name == targetName);
+            BuildingData building = activeProfile.cl.buildingsData.Find(b => b.Name == targetName);
 
             if (building != null)
             {
-                price.text = BitNotation.ToBitNotation(building.Price, "#,0.#");
-                extra_1.text = $"BPS   |   {BitNotation.ToBitNotation(building.BaseValue * building.Amount, "#,0.#")}";
-                extra_2.text = $"Value   |   {BitNotation.ToBitNotation(building.AccumulativeValue, "#,0.#")}";
+                price.text = BitNotation.ToBitNotation(building.Price);
+                extra_1.text = $"BPS   |   {BitNotation.ToBitNotation(building.BaseValue * building.Amount)}";
+                extra_2.text = $"Value   |   {BitNotation.ToBitNotation(building.AccumulativeValue)}";
             }
             
         }
@@ -234,7 +234,7 @@ public class CLSCTooltip
             }
             case DisplayFormat.FEVER:
             {
-                FeverData feverData = profile.clscSaveData.feverData;
+                FeverData feverData = activeProfile.cl.feverData;
 
                 InterfaceTool.FormatRect(tf, new Vector2(550, 220),
                     new Vector2(0, 0), new Vector2(0, 0), new Vector2(0, 0), new Vector2(15, 315));

@@ -2,7 +2,7 @@
 using UnityEngine;
 
 [System.Serializable]
-public class CLSCSaveData
+public class CLSaveData
 {
     public double CurrencyTotal { get; set; }
     public double CurrencyCurrent { get; set; }
@@ -17,9 +17,8 @@ public class CLSCSaveData
     public int TotalClicks { get; set; }
 
 
-
     // CONSTRUCTOR
-    public CLSCSaveData()
+    public CLSaveData()
     {
         CurrencyTotal = 0;
         CurrencyCurrent = 0;
@@ -52,22 +51,43 @@ public class CLSCSaveData
     {
         return new List<BuildingData>
         {
-            new BuildingData("Generator", "A plant that blossoms into a bundle of bits. Takes time to grow.", 0.1f, 15),
-            new BuildingData("Planter", "Digs into the soil to find bits. May take some extraction.", 1, 85),
-            new BuildingData("Digger", "Extracts bits from everyday items. You really can find bits anywhere.", 6, 700),
-            new BuildingData("Fabricator", "Turns everyday items into bits. Careful what you wish for.", 20, 5000),
+            // Primary Characters
+            new BuildingData(
+                "Cello", "Your personal bit cat companion! Train" +
+                " him to be active, and he'll produce more bits.",
+                0.1f, 15),
+            new BuildingData(
+                "Dig-Dig", "The robot cat drill finds bits in" +
+                " the ground. It ain't no trick to get rich quick!",
+                1, 85),
+            new BuildingData(
+                "Smithy", "Smithy likes to take raw bits and turn" +
+                "them into useful tools. For making more bits" +
+                " of course!", 6, 700),
+            new BuildingData(
+                "Magic Orb", "The orb somehow creates bits out of" +
+                " thin air! There seems to be a mysterious cat" +
+                " inside the orb...", 20, 5000),
 
-            // Cat-driven Generators
-            new BuildingData("Wheel", "A wheel that converts energy into bits. Cats love walks, you know.", 100, 25000),
-            new BuildingData("Treadmill", "A treadmill that converts energy into bits. It's like the wheel, but forces the cat to run instead.", 500, 200000),
-            new BuildingData("Game System", "Virtual Reality that converts energy into bits. Let's take everything the cat does and makes bits out of that.", 1500, 420690),
-            new BuildingData("VR", "A simulation of cats that converts their activities into bits. They're basically competitive gamer cats now.", 3400, 1431100),
+            // Bit Cats
+            new BuildingData(
+                "Work Cat", "", 100, 25000),
+            new BuildingData(
+                "Engy Cat", "", 500, 200000),
+            new BuildingData(
+                "Magic Cat", "", 1500, 420690),
+            new BuildingData(
+                "Science Cat", "", 3400, 1431100),
 
-            // Hybrid Generators
-            new BuildingData("House Cat", "", 10000, 5000000),
-            new BuildingData("Farmer Cat", "", 25000, 20000000),
-            new BuildingData("Miner Cat", "A cat that digs into soil to find bits. These cats are cunning, so they work faster than your diggers", 500000, 100000000),
-            new BuildingData("Science Cat", "A cat that researches bit extraction. They think they're smarter than you, but little do they know.", 1000000, 500000000)
+            // Bases
+            new BuildingData(
+                "Mine", "", 10000, 5000000),
+            new BuildingData(
+                "Factory", "", 25000, 20000000),
+            new BuildingData(
+                "Tower", "", 500000, 100000000),
+            new BuildingData(
+                "Laboratory", "", 1000000, 500000000)
         };
     }
 
@@ -128,7 +148,7 @@ public class CLSCSaveData
             (up) => { return GetCurrencyTotal() >= 10000000; },
             () =>
             {
-                SysManager.profile.achievements.data.Find(achievement => achievement.Title == "Beat the Game").Unlock();
+                SysManager.ForceUnlockAchievement("Beat the Game");
                 SysManager.fileManager.FileSave();
                 SysManager.QuitGame();
             }),

@@ -37,7 +37,7 @@ public class CLSCFeverSystem
 
         isActive = false;
 
-        FeverData = profile.clscSaveData.feverData;
+        FeverData = activeProfile.cl.feverData;
     }
 
     public void UpdateSystem()
@@ -127,6 +127,7 @@ public class CLSCFeverSystem
         feverMeterSecondary = new CLSCFeverMeter();
 
         feverCanvas = InterfaceTool.CanvasSetup("Fever Canvas", parentTf, out Canvas canvas);
+        InterfaceTool.FormatRect(feverCanvas.GetComponent<RectTransform>());
 
         feverBar = new GameObject("Fever Meter");
         feverBar.transform.SetParent(feverCanvas.transform, false);

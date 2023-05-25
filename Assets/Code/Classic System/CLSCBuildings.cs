@@ -6,7 +6,7 @@ using static SysManager;
 
 public class CLSCBuildings : MonoBehaviour
 {
-    CLSCSaveData saveData;
+    CLSaveData saveData;
 
     public GameObject buildingsCanvas;
     public GameObject buildingShop;
@@ -22,8 +22,8 @@ public class CLSCBuildings : MonoBehaviour
 
     public void UpdateSystem()
     {
-        float currentBits = profile.clscSaveData.GetCurrencyCurrent();
-        float totalBits = profile.clscSaveData.GetCurrencyTotal();
+        float currentBits = activeProfile.cl.GetCurrencyCurrent();
+        float totalBits = activeProfile.cl.GetCurrencyTotal();
         Button targetButton;
 
         for (int i = 0; i < buildingButtons.Count; i++)
@@ -67,9 +67,10 @@ public class CLSCBuildings : MonoBehaviour
 
         const int BUTTON_HEIGHT = 150;
 
-        saveData = profile.clscSaveData;
+        saveData = activeProfile.cl;
 
         buildingsCanvas = InterfaceTool.CanvasSetup("Buildings Canvas", parentTf, out Canvas canvas);
+        InterfaceTool.FormatRect(buildingsCanvas.GetComponent<RectTransform>());
 
         // Length of shop panels (340 * 2), plus the width of each building and respective spacing,
         // minus the spacing for the first and last button.
@@ -130,12 +131,12 @@ public class CLSCBuildings : MonoBehaviour
         {
             Vector2 buttonPosition = new Vector2((i * 210) + 15, 0);
 
-            buildingButtons.Add(GenerateShopButton(profile.clscSaveData.buildingsData[i], buildingListTf, buttonPosition, tooltip));
+            buildingButtons.Add(GenerateShopButton(activeProfile.cl.buildingsData[i], buildingListTf, buttonPosition, tooltip));
 
             buildingButtons[i].button.gameObject.SetActive(false);
-            buildingButtons[i].name.text =  $"{saveData.buildingsData[i].Name}";
-            buildingButtons[i].price.text = $"$ {BitNotation.ToBitNotation(saveData.buildingsData[i].Price, "#,0")}";
-            buildingButtons[i].count.text = $"{BitNotation.ToBitNotation(saveData.buildingsData[i].Amount, "#,0")}";
+            buildingButtons[i].name.text  = saveData.buildingsData[i].Name;
+            buildingButtons[i].price.text = $"$ {BitNotation.ToBitNotation(saveData.buildingsData[i].Price)}";
+            buildingButtons[i].count.text = BitNotation.ToBitNotation(saveData.buildingsData[i].Amount);
         }
 
         buildingButtons[0].active = true;
@@ -208,8 +209,8 @@ public class CLSCBuildings : MonoBehaviour
             targetBuilding.Buy();
 
             // Update building text
-            shopItem.price.text = "$ " + BitNotation.ToBitNotation(targetBuilding.Price, "#,0");
-            shopItem.count.text = BitNotation.ToBitNotation(targetBuilding.Amount, "#,0");
+            shopItem.price.text = "$ " + BitNotation.ToBitNotation(targetBuilding.Price);
+            shopItem.count.text = BitNotation.ToBitNotation(targetBuilding.Amount);
 
             UpdateBPS();
         }

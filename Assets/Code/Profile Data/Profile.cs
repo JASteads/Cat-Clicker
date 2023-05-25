@@ -1,33 +1,16 @@
 ﻿[System.Serializable]
 public class Profile
 {
-    /* 
-     * WHEN ADDING ANYMORE MODES, MONITOR THE COMPLIEXITY OF THE PROFILE MANAGEMENT.
-     * IF IT BECOMES DIFFICULT TO CONTROL, CONSIDER BREAKING INTO MULTIPLE LOAD FILES.
-    */
     public int Slot { get; }
-    public Difficulty Difficulty { get; }
 
-    public CLSCSaveData clscSaveData;
-    public AchievementSystem achievements;
+    public CLSaveData cl;
+    public AchieveData achievements;
 
-    public Profile()
+    public Profile(int slot)
     {
-
-    }
-    public Profile(int slot, Difficulty difficulty)
-    {
-        clscSaveData = new CLSCSaveData();
-        achievements = new AchievementSystem();
+        cl = new CLSaveData();
+        achievements = new AchieveData(SysManager.GetADB());
         
         Slot = slot;
-        Difficulty = difficulty;
     }
-}
-
-public enum Difficulty
-{
-    BASIC,
-    STANDARD,
-    ADVANCED
 }

@@ -13,7 +13,7 @@ public class CLSCUpgrades : MonoBehaviour
 
     public CLSCUpgradeTab[] upgradeTabs = new CLSCUpgradeTab[4];
 
-    List<UpgradeData> upgradesData = profile.clscSaveData.upgradesData;
+    List<UpgradeData> upgradesData = activeProfile.cl.upgradesData;
     List<UpgradeData> activeUpgrades = new List<UpgradeData>(); // Index for active_upgrades array
     List<CLSCUpgradeButton> upgradeButtons = new List<CLSCUpgradeButton>();
     CLSCStatusMessagesList upgradeMessages;
@@ -25,7 +25,7 @@ public class CLSCUpgrades : MonoBehaviour
         bool newUpgrades = false;
 
         // Check for new upgrades that are available
-        profile.clscSaveData.upgradesData.ForEach(upgrade =>
+        activeProfile.cl.upgradesData.ForEach(upgrade =>
         {
             if (upgrade.Status == Status.LOCKED)
             {
@@ -55,7 +55,7 @@ public class CLSCUpgrades : MonoBehaviour
             Button targetButton = upgradeButtons.Find(
                     button => button.data.Name == upgrade.Name).button;
 
-            if (profile.clscSaveData.GetCurrencyCurrent() >= upgrade.Price)
+            if (activeProfile.cl.GetCurrencyCurrent() >= upgrade.Price)
             {
                 if (!targetButton.IsInteractable())
                 {
@@ -79,6 +79,7 @@ public class CLSCUpgrades : MonoBehaviour
         system = sys;
 
         upgradesCanvas = InterfaceTool.CanvasSetup("Upgrades Canvas", transform, out Canvas canvas);
+        InterfaceTool.FormatRect(upgradesCanvas.GetComponent<RectTransform>());
 
         upgradesShop = new GameObject("Upgrades");
         upgradesShop.AddComponent<RectTransform>();

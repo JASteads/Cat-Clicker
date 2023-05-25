@@ -1,42 +1,49 @@
 ﻿public static class BitNotation
 {
-    /* To_Bit_Notation() : Condenses value into custom variant of scientific notation */
-    public static string ToBitNotation(double val, string format)
-    {
-        if (val >= 1.000e6)
-        {
-            string numStr, suffixStr = "";
-            float remainder;
+    const double MILLION = 1.000e6;
 
+    /* To_Bit_Notation() : Condenses value into custom
+     *                     variant of scientific notation */
+    public static string ToBitNotation(double val)
+    {
+        if (val >= MILLION)
+        {
+            string numStr, suffixStr;
+            float remainder;
+            
             // Convert val into string with four decimal points
             numStr = val.ToString("e5");
 
-            // PARSING IS SLOW. Consider making custom parse if this causes problems.
-            float.TryParse(numStr.Substring(0, 7), out float prefix); // Number
-            int.TryParse(numStr.Substring(numStr.Length - 3), out int suffixNum); // Tail
+            float.TryParse(numStr.Substring(0, 7),
+                out float prefix); // Number
+            int.TryParse(numStr.Substring(numStr.Length - 3),
+                out int suffixNum); // Tail
 
 
             remainder = suffixNum * 0.333f;
             while (remainder > 1) --remainder;
             if ((int)(remainder + 0.2f) != 1)
-                for (int i = 0; i < (int)((remainder * 3) + 0.5f); i++) prefix *= 10;
+                for (int i = 0; i < (int)((remainder * 3) + 0.5f); i++)
+                    prefix *= 10;
 
-            // Returns the appropriate suffix based on suffixNum's value
+            // Returns the appropriate suffix based on
+            // suffixNum's value
             suffixStr = GetSuffix(suffixNum);
 
             // Concatenate both num_str and suffix_str
-            numStr = $"{prefix.ToString("##0.000")} {suffixStr}";
+            numStr = $"{prefix:##0.000} {suffixStr}";
             return numStr;
         }
-        return val.ToString(format);
+        return val.ToString("#,0.#");
     }
 
-    /* Get_Suffix() : If exoponent would display a value over 1M, return custom suffix. */
+    /* Get_Suffix() : If exoponent would display a value over 1M,
+     *                return custom suffix. */
     static string GetSuffix(int suffixNum)
     {
         if (suffixNum > 5)
         {
-            if (suffixNum < 9) return "million";
+            if (suffixNum < 9)  return "million";
             if (suffixNum < 12) return "billion";
             if (suffixNum < 15) return "trillion";
             if (suffixNum < 18) return "quadillion";
