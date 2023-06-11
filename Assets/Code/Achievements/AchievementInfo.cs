@@ -3,6 +3,7 @@
 public class AchievementInfo
 {
     public delegate bool Condition();
+    public delegate void Effect();
 
     public string Title { get; }
     public string Desc { get; }
@@ -68,18 +69,15 @@ public class AchievementInfo
 
         SysManager.activeProfile.achievements.data
             .Find(a => a.name == Title).dateEarned = DateTime.Now;
-
-        Progress = Max;
         Status = AchievementStatus.UNLOCKED;
-
         OnUnlock?.Invoke();
+        Progress = Max;
     }
 
     bool CheckCondition()
     {
-        if (UnlockCondition != null)
-            return UnlockCondition();
-        return false;
+        if (UnlockCondition == null) return false;
+        return UnlockCondition();
     }
 }
 

@@ -4,7 +4,7 @@
 
     /* To_Bit_Notation() : Condenses value into custom
      *                     variant of scientific notation */
-    public static string ToBitNotation(double val)
+    public static string Format(double val)
     {
         if (val >= MILLION)
         {
@@ -12,13 +12,12 @@
             float remainder;
             
             // Convert val into string with four decimal points
-            numStr = val.ToString("e5");
+            numStr = $"{val:e5}";
 
             float.TryParse(numStr.Substring(0, 7),
                 out float prefix); // Number
             int.TryParse(numStr.Substring(numStr.Length - 3),
                 out int suffixNum); // Tail
-
 
             remainder = suffixNum * 0.333f;
             while (remainder > 1) --remainder;
@@ -26,15 +25,13 @@
                 for (int i = 0; i < (int)((remainder * 3) + 0.5f); i++)
                     prefix *= 10;
 
-            // Returns the appropriate suffix based on
-            // suffixNum's value
             suffixStr = GetSuffix(suffixNum);
 
             // Concatenate both num_str and suffix_str
             numStr = $"{prefix:##0.000} {suffixStr}";
             return numStr;
         }
-        return val.ToString("#,0.#");
+        return $"{val:#,0.#}";
     }
 
     /* Get_Suffix() : If exoponent would display a value over 1M,

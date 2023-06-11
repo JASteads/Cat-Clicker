@@ -9,7 +9,8 @@ public class Profile
     public Profile(int slot)
     {
         cl = new CLSaveData();
-        achievements = new AchieveData(SysManager.GetADB());
+        achievements = new AchieveData(
+            SysManager.achieveSys.GetADB());
         
         Slot = slot;
     }

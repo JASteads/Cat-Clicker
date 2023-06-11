@@ -4,19 +4,20 @@ using UnityEngine.UI;
 
 public class AchievementsInterface
 {
-    const int BLOCK_HEIGHT = 185;
+    const int BLOCK_HEIGHT = 200;
 
     readonly Transform transform;
-    RectTransform aList;
+    RectTransform list;
     ABlock[] aBlocks;
 
     public AchievementsInterface(List<AchievementInfo> db)
     {
         transform = InterfaceTool.CanvasSetup("Achievements Canvas",
-            null, out _).transform;
+            null, out Canvas canvas).transform;
+        canvas.sortingOrder = 1;
         transform.gameObject.SetActive(false);
 
-        CreateInterface(db);
+        CreateInterface(db.Count);
         CreateBlocks(db);
     }
 
@@ -38,13 +39,13 @@ public class AchievementsInterface
 
         for (int i = 0; i < db.Count; i++)
         {
-            aBlocks[i] = new ABlock(aList, db[i], BLOCK_HEIGHT);
+            aBlocks[i] = new ABlock(list, db[i], BLOCK_HEIGHT);
             aBlocks[i].transform.anchoredPosition =
                 new Vector2(0, -BLOCK_HEIGHT * i);
         }
     }
 
-    void CreateInterface(List<AchievementInfo> db)
+    void CreateInterface(int aCount)
     {
         Vector2 panelSize   = new Vector2(1300, 900),
                 bodySize    = new Vector2(-90, -90),
@@ -55,60 +56,48 @@ public class AchievementsInterface
                 cPanel = Color.white,
                 cBody  = new Color(0.29f, 0.27f, 0.3f);
 
+        Transform panel;
 
-        GameObject backdrop = InterfaceTool.ImgSetup("Backdrop",
-            transform, out Image backdropImg, true);
-        InterfaceTool.FormatRect(backdropImg.rectTransform);
+        InterfaceTool.ImgSetup("Backdrop", transform,
+            out Image backdropImg, true);
+        InterfaceTool.FormatRect(backdropImg);
         backdropImg.color = cBG;
 
-        GameObject aPanel = InterfaceTool.ImgSetup("Panel",
-            transform, out Image panelImg,
-            SysManager.defaultBox, false);
-        InterfaceTool.FormatRectNPos(panelImg.rectTransform,
-            panelSize);
+        panel = InterfaceTool.ImgSetup("Panel", transform,
+            out Image panelImg, SysManager.defaultBox, false);
+        InterfaceTool.FormatRectNPos(panelImg, panelSize);
         panelImg.color = cPanel;
 
-        GameObject aBody = InterfaceTool.ImgSetup("Body",
-            aPanel.transform, out Image bodyImg, false);
-        InterfaceTool.FormatRect(bodyImg.rectTransform,
-            bodySize, Vector2.zero, Vector2.one,
-            new Vector2(-15, -15));
-        aBody.AddComponent<RectMask2D>();
+        Transform aBody = InterfaceTool.ImgSetup("Body",
+            panel, out Image bodyImg, false);
+        InterfaceTool.FormatRect(bodyImg, bodySize,
+            Vector2.zero, Vector2.one, new Vector2(-15, -15));
+        aBody.gameObject.AddComponent<RectMask2D>();
         bodyImg.color = cBody;
 
-        aList = new GameObject("List").AddComponent<RectTransform>();
-        aList.transform.SetParent(aBody.transform, false);
-        InterfaceTool.FormatRectNPos(aList, new Vector2(
-            0, BLOCK_HEIGHT * db.Count),
-            Vector2.up, Vector2.one, new Vector2(0.5f, 1));
+        list = new GameObject("List").AddComponent<RectTransform>();
+        list.SetParent(aBody, false);
+        InterfaceTool.FormatRectNPos(list, new Vector2(
+            0, BLOCK_HEIGHT * aCount), Vector2.up, Vector2.one,
+            new Vector2(0.5f, 1));
 
-        GameObject aHeader = InterfaceTool.ImgSetup("Header",
-            aPanel.transform, out Image headerImg,
-            SysManager.defaultBox, false);
-        InterfaceTool.FormatRectNPos(headerImg.rectTransform,
-            headerSize, new Vector2(0.5f, 1),
-            new Vector2(0.5f, 1), new Vector2(0.5f, 0.5f));
-        GameObject aHeaderTxtObj = InterfaceTool.TextSetup("Title",
-            aHeader.transform, out Text aHeaderTxt, false);
-        InterfaceTool.FormatRect(aHeaderTxt.rectTransform);
-        InterfaceTool.FormatText(aHeaderTxt, SysManager.DEFAULT_FONT,
-            48, Color.white, TextAnchor.MiddleCenter,
-            FontStyle.Normal);
-        aHeaderTxt.text = "ACHIEVEMENTS";
+        Transform aHeader = InterfaceTool.ImgSetup("Header", panel,
+            out Image headerImg, SysManager.defaultBox, false);
+        InterfaceTool.FormatRectNPos(headerImg, headerSize,
+            new Vector2(0.5f, 1), new Vector2(0.5f, 1),
+            new Vector2(0.5f, 0.5f));
+        InterfaceTool.CreateBody("ACHIEVEMENTS", aHeader, 48);
 
-        GameObject bButtonObj = InterfaceTool.ButtonSetup(
-            "Back Button", aPanel.transform, out Image backImg,
-            out Button backButton, SysManager.defaultButton,
-            HideInterface);
-        InterfaceTool.FormatRect(backImg.rectTransform,
-            bButtonSize, Vector2.up, Vector2.up,
-            new Vector2(0.5f, 0.5f), new Vector2(10, -10));
-        Text bButtonTxt = InterfaceTool.CreateBody(
-            "X", bButtonObj.transform, 36);
+        Transform bButton = InterfaceTool.ButtonSetup("Back Button",
+            panel, out Image backImg, out Button _,
+            SysManager.defaultButton, HideInterface);
+        InterfaceTool.FormatRect(backImg, bButtonSize,
+            Vector2.up, Vector2.up, new Vector2(0.5f, 0.5f),
+            new Vector2(10, -10));
+        InterfaceTool.CreateBody("X", bButton, 36);
 
-        GameObject scrollObj = InterfaceTool.ScrollbarSetup(
-            aPanel.transform, aBody, aList, new Vector2(30, -90),
-            Vector2.right, Vector2.one, new Vector2(1, 0.5f),
-            new Vector2(-30, -15));
+        InterfaceTool.ScrollbarSetup(panel, aBody.gameObject, list,
+            new Vector2(30, -90), Vector2.right, Vector2.one,
+            new Vector2(1, 0.5f), new Vector2(-30, -15));
     }
 }

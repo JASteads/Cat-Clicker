@@ -3,16 +3,16 @@ using UnityEngine;
 
 public class SysManager
 {
+    public readonly static FileManagement fileManager;
+
     public readonly static Font DEFAULT_FONT;
     public readonly static Sprite defaultButton, defaultBox;
+    public readonly static Camera mainCam;
     public static Sprite[] uiSprites;
-    public static Camera mainCam;
-    
-    public static FileManagement fileManager;
-    public static Profile activeProfile;
 
+    public static readonly AchievementSystem achieveSys;
+    public static Profile activeProfile;
     static GameMode gameMode;
-    static AchievementSystem achieveSys;
 
 
     static SysManager()
@@ -33,26 +33,26 @@ public class SysManager
     static void StartApplication()
     { LoadMainMenu(); }
 
-    public static Transform GetMainTF()
-    { return gameMode.transform; }
+    /* Game Modes */
     public static void LoadMainMenu()
     { ChangeMode(new MainMenu()); }
     public static void LoadCLMode()
     { ChangeMode(new CLMode()); }
-    public static void DisplayAchievements()
-    { achieveSys.DisplayInterface(); }
-    public static List<AchievementInfo> GetADB()
-    { return achieveSys.database; }
-    public static List<AchievementInfo> UpdateAchievements()
-    { return achieveSys.UpdateDB(); }
-    public static void ForceUnlockAchievement(string name)
-    { GetADB().Find(a => a.Title == name)?.Unlock(); }
 
     static void ChangeMode(GameMode newMode)
     {
-        if (gameMode != null)
-            Object.Destroy(gameMode.transform.gameObject);
+        gameMode?.Reset();
         gameMode = newMode;
+    }
+
+    public static void ToggleFullscreen()
+    {
+        if (Screen.fullScreen)
+            Screen.SetResolution(1280, 720, false);
+        else
+            Screen.SetResolution(
+                Screen.currentResolution.width,
+                Screen.currentResolution.height, true);
     }
 
     public static void QuitGame()

@@ -5,7 +5,7 @@ public class ABlock
 {
     public RectTransform transform;
 
-    Image block, icon, progressBar, cover, bar;
+    Image block, icon, pBarImg, cover, bar;
     Text value, title, desc, date, progressTxt;
 
     readonly AchievementInfo target;
@@ -21,9 +21,13 @@ public class ABlock
 
     public void UpdateBlock()
     {
+        string newProgress =
+            BitNotation.Format(target.Progress) + "/" +
+            BitNotation.Format(target.Max);
+
         bar.rectTransform.localScale =
             new Vector3((float)(target.Progress / target.Max), 1, 1);
-        progressTxt.text = $"{target.Progress:#,0.#} / {target.Max}";
+        progressTxt.text = newProgress;
 
         if (target.Status == AchievementStatus.UNLOCKED)
         {
@@ -42,40 +46,38 @@ public class ABlock
     void GenerateBlock(Transform parent, int blockHeight)
     {
         Vector2 blockSize = new Vector2(0, blockHeight),
-                iconSize  = new Vector2(100, 100),
+                iconSize = new Vector2(100, 100),
                 titleSize = new Vector2(800, 40),
-                descSize  = new Vector2(800, 80),
+                descSize = new Vector2(800, 80),
                 valueSize = new Vector2(190, 40),
-                dateSize  = new Vector2(190, 80),
-                pBarSize  = new Vector2(1020, 40);
+                dateSize = new Vector2(190, 80),
+                pBarSize = new Vector2(1000, 40);
 
-        Color   cBlock    = new Color(0.75f, 0.72f, 0.8f),
+        Color cBlock = new Color(0.75f, 0.72f, 0.8f),
                 cBlockBar = new Color(0.9f, 0.75f, 0),
-                cPBar     = new Color(0.4f, 0.4f, 0.4f),
-                cStory    = Color.white,
-                cCP       = new Color(1, 0, 0.3334f),
-                cBPS      = new Color(0, 0.5f, 1),
+                cPBar = new Color(0.4f, 0.4f, 0.4f),
+                cStory = Color.white,
+                cCP = new Color(1, 0, 0.3334f),
+                cBPS = new Color(0, 0.5f, 1),
                 cResearch = new Color(0, 0.75f, 0.3f),
-                cSecret   = new Color(0.45f, 0.35f, 1),
-                cCover    = new Color(0, 0, 0, 0.3f);
+                cSecret = new Color(0.45f, 0.35f, 1),
+                cCover = new Color(0, 0, 0, 0.3f);
 
-        GameObject iconObj, valueObj, progressBarObj, titleObj;
+        Transform iconObj, val, progressBar, titleObj;
 
 
         transform = InterfaceTool.ImgSetup(
             $"{target.Title} Block", parent, out block,
             SysManager.defaultBox, false)
             .GetComponent<RectTransform>();
+        InterfaceTool.FormatRectNPos(block, blockSize,
+            Vector2.up, Vector2.one, new Vector2(0.5f, 1));
         block.color = cBlock;
-        InterfaceTool.FormatRectNPos(block.rectTransform,
-            blockSize, Vector2.up, Vector2.one,
-            new Vector2(0.5f, 1));
 
         iconObj = InterfaceTool.ImgSetup("Icon", transform,
             out Image icon, false);
-        InterfaceTool.FormatRect(icon.rectTransform,
-            iconSize, Vector2.up, Vector2.up, Vector2.up,
-            new Vector2(40, -40));
+        InterfaceTool.FormatRect(icon, iconSize, Vector2.up,
+            Vector2.up, Vector2.up, new Vector2(40, -40));
 
         switch (target.Type)
         {
@@ -94,78 +96,40 @@ public class ABlock
         }
 
         titleObj = InterfaceTool.TextSetup("Title",
-            iconObj.transform, out title, false);
-        InterfaceTool.FormatRect(title.rectTransform,
-            titleSize, Vector2.one, Vector2.one, Vector2.up,
-            new Vector2(30, 0));
-        InterfaceTool.FormatText(title,
-            SysManager.DEFAULT_FONT, 32, Color.white,
-            TextAnchor.UpperLeft, FontStyle.Bold);
+            iconObj, out title, false);
+        InterfaceTool.FormatRect(title, titleSize, Vector2.one,
+            Vector2.one, Vector2.up, new Vector2(30, 0));
+        InterfaceTool.FormatText(title, SysManager.DEFAULT_FONT, 32,
+            Color.white, TextAnchor.UpperLeft, FontStyle.Bold);
         title.text = target.Title;
+        Text desc = InterfaceTool.CreateFooter(target.Desc, titleObj,
+            55, Vector2.zero, 24);
+        desc.alignment = TextAnchor.UpperLeft;
 
-        InterfaceTool.TextSetup("Desc", titleObj.transform,
-            out Text desc, false);
-        InterfaceTool.FormatRectNPos(desc.rectTransform,
-            descSize, Vector2.zero, Vector2.zero, Vector2.up);
-        InterfaceTool.FormatText(desc, SysManager.DEFAULT_FONT,
-            24, Color.white, TextAnchor.UpperLeft,
-            FontStyle.Normal);
-        desc.text = target.Desc;
+        progressBar = InterfaceTool.ImgSetup("Progress Bar",
+            desc.transform, out pBarImg, false);
+        InterfaceTool.FormatRectNPos(pBarImg, pBarSize, Vector2.zero,
+            Vector2.zero, Vector2.up);
+        pBarImg.color = cPBar;
 
-        valueObj = InterfaceTool.TextSetup("Value",
-            transform, out value, false);
-        InterfaceTool.FormatRect(value.rectTransform,
-            valueSize, Vector2.one, Vector2.one, Vector2.one,
-            new Vector2(-15, -15));
-        InterfaceTool.FormatText(value,
-            SysManager.DEFAULT_FONT, 32, Color.white,
-            TextAnchor.UpperRight, FontStyle.Italic);
-        value.text = $"{target.BitAmount}";
-
-        InterfaceTool.TextSetup("Date", valueObj.transform,
-            out date, false);
-        InterfaceTool.FormatRectNPos(
-            date.rectTransform, dateSize,
-            Vector2.right, Vector2.right, Vector2.one);
-        InterfaceTool.FormatText(date,
-            SysManager.DEFAULT_FONT, 28, Color.white,
-            TextAnchor.UpperRight, FontStyle.Normal);
-        date.text = "";
-
-        progressBarObj = InterfaceTool.ImgSetup("Progress Bar",
-            transform, out progressBar, false);
-        InterfaceTool.FormatRect(
-            progressBar.rectTransform,
-            pBarSize, Vector2.right, Vector2.right,
-            Vector2.right, new Vector2(-15, 10));
-        progressBar.color = cPBar;
-
-        InterfaceTool.ImgSetup("Bar", progressBarObj.transform,
-            out bar, false);
-        InterfaceTool.FormatRectNPos(
-            bar.rectTransform,
-            new Vector2(progressBar.rectTransform
-                .sizeDelta.x, 0), Vector2.zero, Vector2.up,
-            new Vector2(0, 0.5f));
+        InterfaceTool.ImgSetup("Bar", progressBar, out bar, false);
+        InterfaceTool.FormatRect(bar);
         bar.color = cBlockBar;
-        bar.rectTransform.localScale =
-            new Vector2(target.Status == 0 ?
-            1 : (float)(target.Progress / target.Max), 1);
+        progressTxt = InterfaceTool.CreateBody("", progressBar, 32);
 
-        InterfaceTool.TextSetup("Value",
-            progressBarObj.transform,
-            out progressTxt, false);
-        InterfaceTool.FormatRect(progressTxt
-            .rectTransform);
-        InterfaceTool.FormatText(progressTxt,
-            SysManager.DEFAULT_FONT, 32, Color.black,
-            TextAnchor.MiddleCenter, FontStyle.Normal);
-        progressTxt.text =
-            BitNotation.ToBitNotation(target.Progress) +
-            $"/ {target.Max}";
+        val = InterfaceTool.TextSetup("Value", transform,
+            out value, false);
+        InterfaceTool.FormatRect(value, valueSize, Vector2.one,
+            Vector2.one, Vector2.one, new Vector2(-30, -20));
+        InterfaceTool.FormatText(value, SysManager.DEFAULT_FONT, 32,
+            Color.white, TextAnchor.UpperRight, FontStyle.Italic);
+        value.text = $"{target.BitAmount}";
+        date = InterfaceTool.CreateFooter("", val, 75,
+            Vector2.zero, 28);
+        date.alignment = TextAnchor.UpperRight;
 
         InterfaceTool.ImgSetup("Cover", transform, out cover, true);
-        InterfaceTool.FormatRect(cover.rectTransform);
+        InterfaceTool.FormatRect(cover);
         cover.color = cCover;
         cover.enabled = target.Status != 0;
     }

@@ -4,6 +4,7 @@ using UnityEngine.UI;
 public class InterfaceTool
 {
     public static Font DEFAULT_FONT = SysManager.DEFAULT_FONT;
+    
 
     public static void ToggleCanvasPriority(Transform parent,
         Canvas priority)
@@ -17,75 +18,80 @@ public class InterfaceTool
         priority.GetComponent<GraphicRaycaster>().enabled = true;
     }
 
-    public static GameObject CanvasSetup(string name,
-        Transform parentTF, out Canvas newCanvas)
+    public static Transform CanvasSetup(string name,
+        Transform parent, out Canvas newCanvas)
     {
+        Vector2 REF_RESOLUTION = new Vector2(1920, 1080);
+
         GameObject obj = new GameObject(name);
-        obj.transform.SetParent(parentTF, false);
+        obj.transform.SetParent(parent, false);
 
         newCanvas = obj.AddComponent<Canvas>();
-        CanvasScaler scaler = obj.AddComponent<CanvasScaler>();
-        GraphicRaycaster ray = obj.AddComponent<GraphicRaycaster>();
-        RectMask2D mask = obj.AddComponent<RectMask2D>();
-
-        newCanvas.worldCamera = Camera.main;
+        newCanvas.worldCamera = SysManager.mainCam;
         newCanvas.renderMode = RenderMode.ScreenSpaceCamera;
 
-        scaler.uiScaleMode = CanvasScaler
+        if (parent == null || parent.GetComponent<Canvas>() == null)
+        {
+            CanvasScaler scaler = obj.AddComponent<CanvasScaler>();
+            scaler.uiScaleMode = CanvasScaler
             .ScaleMode.ScaleWithScreenSize;
-        scaler.referenceResolution = new Vector2(1920, 1080);
-        scaler.screenMatchMode = CanvasScaler
-            .ScreenMatchMode.MatchWidthOrHeight;
-        scaler.matchWidthOrHeight = 1;
-        scaler.referencePixelsPerUnit = 100;
+            scaler.referenceResolution = REF_RESOLUTION;
+            scaler.screenMatchMode = CanvasScaler
+                .ScreenMatchMode.MatchWidthOrHeight;
+            scaler.matchWidthOrHeight = 1;
+            scaler.referencePixelsPerUnit = 100;
+        }
+        
+        obj.AddComponent<GraphicRaycaster>();
+        obj.AddComponent<RectMask2D>();
 
-        return obj;
+        return obj.transform;
     }
-    public static GameObject ImgSetup(string objName,
-        Transform parentTF, out Image img, bool raycasted)
+    public static Transform ImgSetup(string objName,
+        Transform parent, out Image img, bool raycasted)
     {
-        GameObject imgObj = new GameObject(objName);
-        imgObj.transform.SetParent(parentTF, false);
-        img = imgObj.AddComponent<Image>();
+        GameObject obj = new GameObject(objName);
+        obj.transform.SetParent(parent, false);
+        img = obj.AddComponent<Image>();
 
         img.raycastTarget = raycasted;
 
-        return imgObj;
+        return obj.transform;
     }
-    public static GameObject ImgSetup(string objName,
-        Transform parentTF, out Image img, Sprite sprite,
+    public static Transform ImgSetup(string objName,
+        Transform parent, out Image img, Sprite sprite,
         bool raycasted)
     {
-        GameObject imgObj = new GameObject(objName);
-        imgObj.transform.SetParent(parentTF, false);
-        img = imgObj.AddComponent<Image>();
+        GameObject obj = new GameObject(objName);
+        obj.transform.SetParent(parent, false);
+        img = obj.AddComponent<Image>();
         img.sprite = sprite;
         img.type = Image.Type.Sliced;
         img.pixelsPerUnitMultiplier = 15;
 
         img.raycastTarget = raycasted;
 
-        return imgObj;
+        return obj.transform;
     }
-    public static GameObject TextSetup(string objName,
-        Transform parentTF, out Text txt, bool raycasted)
+    public static Transform TextSetup(string objName,
+        Transform parent, out Text txt, bool raycasted)
     {
-        GameObject txtObj = new GameObject(objName);
-        txtObj.transform.SetParent(parentTF, false);
-        txt = txtObj.AddComponent<Text>();
+        GameObject obj = new GameObject(objName);
+        obj.transform.SetParent(parent, false);
+        txt = obj.AddComponent<Text>();
 
         txt.raycastTarget = raycasted;
 
-        return txtObj;
+        return obj.transform;
     }
-    public static GameObject ButtonSetup(string objName,
-        Transform parentTF, out Image img, out Button button,
+    public static Transform ButtonSetup(string objName,
+        Transform parent, out Image img, out Button button,
         Sprite sprite, UnityEngine.Events.UnityAction call)
-    {
-        GameObject buttonObj = new GameObject(objName);
-        buttonObj.transform.SetParent(parentTF, false);
-        img = buttonObj.AddComponent<Image>();
-        button = buttonObj.AddComponent<Button>();
+    {   
+        GameObject obj = new GameObject(objName);
+        obj.transform.SetParent(parent, false);
+        img = obj.AddComponent<Image>();
+        button = obj.AddComponent<Button>();
 
         img.sprite = sprite;
         img.type = Image.Type.Sliced;
@@ -93,33 +99,34 @@ public class InterfaceTool
         if (call != null)
             button.onClick.AddListener(call);
 
-        return buttonObj;
+        return obj.transform;
     }
-    public static GameObject ScrollbarSetup(Transform parentTF,
+    public static Transform ScrollbarSetup(Transform parent,
         GameObject scrollObj, RectTransform contentTF, int width)
     {
-        GameObject scrollbar = ImgSetup("Scrollbar", parentTF,
-            out Image scrollImg, null, true);
-        FormatRectNPos(scrollImg.rectTransform,
-            new Vector2(width, 0), new Vector2(1, 0),
-            Vector2.one, new Vector2(0, 0.5f));
+        GameObject obj = ImgSetup("Scrollbar", parent,
+            out Image scrollImg, null, true).gameObject;
+        FormatRectNPos(scrollImg, new Vector2(width, 0),
+            new Vector2(1, 0), Vector2.one, new Vector2(0, 0.5f));
         scrollImg.pixelsPerUnitMultiplier = 15;
         scrollImg.type = Image.Type.Sliced;
-        Scrollbar scroll = scrollbar.AddComponent<Scrollbar>();
+        Scrollbar scroll = obj.AddComponent<Scrollbar>();
         scroll.direction = Scrollbar.Direction.BottomToTop;
         scrollImg.color = new Color(0.6f, 0.6f, 0.6f);
 
         GameObject scrollArea = new GameObject("Sliding Area");
-        scrollArea.transform.SetParent(scrollbar.transform, false);
-        FormatRectNPos(scrollArea.AddComponent<RectTransform>(),
-            Vector2.zero, Vector2.zero, Vector2.one,
-            new Vector2(0.5f, 0.5f));
+        scrollArea.transform.SetParent(obj.transform, false);
+        RectTransform areaTF = scrollArea
+            .AddComponent<RectTransform>();
+        areaTF.sizeDelta = Vector2.zero;
+        areaTF.anchorMin = Vector2.zero;
+        areaTF.anchorMax = Vector2.one;
+        areaTF.pivot = new Vector2(0.5f, 0.5f);
 
-        GameObject scrollHandle = ImgSetup("Handle",
-            scrollArea.transform, out Image scrollHandleImg,
-            null, true);
-        FormatRectNPos(scrollHandleImg.rectTransform,
-            Vector2.zero, new Vector2(0, 0.5f), new Vector2(1, 0.5f),
+        ImgSetup("Handle", scrollArea.transform,
+            out Image scrollHandleImg, null, true);
+        FormatRectNPos(scrollHandleImg, Vector2.zero,
+            new Vector2(0, 0.5f), new Vector2(1, 0.5f),
             new Vector2(0.5f, 0.5f));
         scroll.handleRect = scrollHandleImg.rectTransform;
         scrollHandleImg.pixelsPerUnitMultiplier = 15;
@@ -133,35 +140,37 @@ public class InterfaceTool
         scrollRect.scrollSensitivity = 80;
         scrollRect.verticalScrollbar = scroll;
 
-        return scrollbar;
+        return obj.transform;
     }
-    public static GameObject ScrollbarSetup(Transform parentTF,
+    public static Transform ScrollbarSetup(Transform parent,
         GameObject scrollObj, RectTransform contentTF,
         Vector2 size, Vector2 aMin, Vector2 aMax,
         Vector2 pivot, Vector2 aPos)
     {
-        GameObject scrollbar = ImgSetup("Scrollbar", parentTF,
-            out Image scrollImg, null, true);
-        FormatRect(scrollImg.rectTransform, size, aMin,
+        GameObject obj = ImgSetup("Scrollbar", parent,
+            out Image scrollImg, null, true).gameObject;
+        FormatRect(scrollImg, size, aMin,
             aMax, pivot, aPos);
         scrollImg.pixelsPerUnitMultiplier = 15;
         scrollImg.type = Image.Type.Sliced;
-        Scrollbar scroll = scrollbar.AddComponent<Scrollbar>();
+        Scrollbar scroll = obj.AddComponent<Scrollbar>();
         scroll.direction = Scrollbar.Direction.BottomToTop;
         scrollImg.color = new Color(0.6f, 0.6f, 0.6f);
 
         GameObject scrollArea = new GameObject("Sliding Area");
-        scrollArea.transform.SetParent(scrollbar.transform, false);
-        FormatRectNPos(scrollArea.AddComponent<RectTransform>(),
-            Vector2.zero, Vector2.zero, Vector2.one,
-            new Vector2(0.5f, 0.5f));
+        scrollArea.transform.SetParent(obj.transform, false);
+        RectTransform areaTF = scrollArea
+            .AddComponent<RectTransform>();
+        areaTF.sizeDelta = Vector2.zero;
+        areaTF.anchorMin = Vector2.zero;
+        areaTF.anchorMax = Vector2.one;
+        areaTF.pivot = new Vector2(0.5f, 0.5f);
 
-        GameObject scrollHandle = ImgSetup("Handle",
-            scrollArea.transform, out Image scrollHandleImg,
-            null, true);
-        FormatRectNPos(scrollHandleImg.rectTransform,
-            Vector2.zero, new Vector2(0, 0.5f),
-            new Vector2(1, 0.5f), new Vector2(0.5f, 0.5f));
+        ImgSetup("Handle", scrollArea.transform,
+            out Image scrollHandleImg, null, true);
+        FormatRectNPos(scrollHandleImg, Vector2.zero, 
+            new Vector2(0, 0.5f), new Vector2(1, 0.5f),
+            new Vector2(0.5f, 0.5f));
         scroll.handleRect = scrollHandleImg.rectTransform;
         scrollHandleImg.pixelsPerUnitMultiplier = 15;
         scrollHandleImg.type = Image.Type.Sliced;
@@ -173,21 +182,17 @@ public class InterfaceTool
         scrollRect.scrollSensitivity = 80;
         scrollRect.verticalScrollbar = scroll;
 
-        return scrollbar;
+        return obj.transform;
     }
 
     public static Text CreateHeader(string text, Transform parent,
-        Vector2 size, Vector2 offset, int fontSize)
+         int height, Vector2 offset, int fontSize)
     {
-        GameObject headerObj = TextSetup(
-            "Header", parent,
-            out Text header, false);
-        FormatRect(header.rectTransform,
-            size, new Vector2(0, 1),
-            Vector2.one, new Vector2(),
-            offset);
-        FormatText(header, DEFAULT_FONT, fontSize,
-            Color.white, TextAnchor.UpperLeft, FontStyle.Normal);
+        TextSetup("Header", parent, out Text header, false);
+        FormatRect(header, new Vector2(-offset.x, height),
+            Vector2.up, Vector2.one, Vector2.zero, offset);
+        FormatText(header, DEFAULT_FONT, fontSize, Color.white,
+            TextAnchor.MiddleLeft, FontStyle.Normal);
         header.text = text;
 
         return header;
@@ -195,15 +200,25 @@ public class InterfaceTool
     public static Text CreateBody(string text, Transform parent,
         int fontSize)
     {
-        GameObject bodyObj = TextSetup("Body", parent,
-            out Text body, false);
-        FormatRect(body.rectTransform);
-        FormatText(body, DEFAULT_FONT,
-            fontSize, Color.black, TextAnchor.MiddleCenter,
-            FontStyle.Normal);
+        TextSetup("Body", parent, out Text body, false);
+        FormatRect(body);
+        FormatText(body, DEFAULT_FONT, fontSize,
+            Color.black, TextAnchor.MiddleCenter, FontStyle.Normal);
         body.text = text;
 
         return body;
+    }
+    public static Text CreateFooter(string text, Transform parent,
+         int height, Vector2 offset, int fontSize)
+    {
+        TextSetup("Footer", parent, out Text header, false);
+        FormatRect(header, new Vector2(0, height),
+            Vector2.zero, Vector2.right, Vector2.up, offset);
+        FormatText(header, DEFAULT_FONT, fontSize, Color.white,
+            TextAnchor.MiddleLeft, FontStyle.Normal);
+        header.text = text;
+
+        return header;
     }
     public static void FormatText(Text txt, Font font, int fontSize,
         Color color, TextAnchor alignment, FontStyle style)
@@ -223,8 +238,20 @@ public class InterfaceTool
         tf.anchorMax = aMax;
         tf.pivot = pivot;
     }
+    public static void FormatRectNPos(Graphic graphic, Vector2 size,
+        Vector2 aMin, Vector2 aMax, Vector2 pivot)
+    {
+        RectTransform tf = graphic.rectTransform;
+
+        tf.sizeDelta = size;
+        tf.anchorMin = aMin;
+        tf.anchorMax = aMax;
+        tf.pivot = pivot;
+    }
     public static void FormatRectNPos(RectTransform tf, Vector2 size)
     { tf.sizeDelta = size; }
+    public static void FormatRectNPos(Graphic graphic, Vector2 size)
+    { graphic.rectTransform.sizeDelta = size; }
 
     // For simple text objects : Stretch to fill parent area
     public static void FormatRect(RectTransform tf)
@@ -233,9 +260,25 @@ public class InterfaceTool
         tf.anchorMin = new Vector2();
         tf.anchorMax = Vector2.one;
     }
+    public static void FormatRect(Graphic graphic)
+    {
+        RectTransform tf = graphic.rectTransform;
+
+        tf.sizeDelta = new Vector2();
+        tf.anchorMin = new Vector2();
+        tf.anchorMax = Vector2.one;
+    }
     public static void FormatRect(RectTransform tf, Vector2 size,
         Vector2 aPos)
     {
+        tf.sizeDelta = size;
+        tf.anchoredPosition = aPos;
+    }
+    public static void FormatRect(Graphic graphic, Vector2 size,
+        Vector2 aPos)
+    {
+        RectTransform tf = graphic.rectTransform;
+
         tf.sizeDelta = size;
         tf.anchoredPosition = aPos;
     }
@@ -247,9 +290,30 @@ public class InterfaceTool
         tf.anchorMax = aMax;
         tf.anchoredPosition = aPos;
     }
+    public static void FormatRect(Graphic graphic, Vector2 size,
+        Vector2 aMin, Vector2 aMax, Vector2 aPos)
+    {
+        RectTransform tf = graphic.rectTransform;
+
+        tf.sizeDelta = size;
+        tf.anchorMin = aMin;
+        tf.anchorMax = aMax;
+        tf.anchoredPosition = aPos;
+    }
     public static void FormatRect(RectTransform tf, Vector2 size,
         Vector2 aMin, Vector2 aMax, Vector2 pivot, Vector2 aPos)
     {
+        tf.sizeDelta = size;
+        tf.anchorMin = aMin;
+        tf.anchorMax = aMax;
+        tf.pivot = pivot;
+        tf.anchoredPosition = aPos;
+    }
+    public static void FormatRect(Graphic graphic, Vector2 size,
+        Vector2 aMin, Vector2 aMax, Vector2 pivot, Vector2 aPos)
+    {
+        RectTransform tf = graphic.rectTransform;
+
         tf.sizeDelta = size;
         tf.anchorMin = aMin;
         tf.anchorMax = aMax;
